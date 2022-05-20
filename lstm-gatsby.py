@@ -4,8 +4,8 @@ import time
 import torch
 from torch import nn
 from torch.nn import functional as F
-from utils import Accumulator
 import utils
+from utils import Accumulator
 
 batch_size, num_steps = 32, 35
 train_iter, vocab = utils.load_data_gatsby(batch_size, num_steps)
@@ -24,24 +24,36 @@ class RNNModelScratch(nn.Module):
         input_size = output_size = vocab_size
         self.vocab_size, self.num_hiddens = vocab_size, num_hiddens
 
-        self.i2h = nn.Linear(input_size + num_hiddens, num_hiddens, device=device)
-        self.h2o = nn.Linear(num_hiddens, output_size, device=device)
+        # reference: https://en.wikipedia.org/wiki/Long_short-term_memory#LSTM_with_a_forget_gate
+        self.in2f = nn.Linear(input_size + num_hiddens, num_hiddens, device=device)
+        self.in2i = nn.Linear(input_size + num_hiddens, num_hiddens, device=device)
+        self.in2o = nn.Linear(input_size + num_hiddens, num_hiddens, device=device)
+        self.in2c_tilde = nn.Linear(input_size + num_hiddens, num_hiddens, device=device)
+        self.h2out = nn.Linear(num_hiddens, output_size, device=device)
 
     def forward(self, X, state):
         X = F.one_hot(X.T, self.vocab_size).type(torch.float32)
         # Shape of `X`: (`sequence_size`,`batch_size`, `vocab_size`)
 
-        H, = state
+        H, C = state
         outputs = []
         # Shape of `X_step`: (`batch_size`, `vocab_size`)
         for X_step in X:
-            H = torch.tanh(self.i2h(torch.cat((X_step, H), 1)))
-            Y = self.h2o(H)
+            f = torch.sigmoid(self.in2f(torch.concat((X_step, H), 1)))
+            i = torch.sigmoid(self.in2i(torch.concat((X_step, H), 1)))
+            o = torch.sigmoid(self.in2o(torch.concat((X_step, H), 1)))
+
+            c_tilde = torch.tanh(self.in2c_tilde(torch.concat((X_step, H), 1)))
+            C = f * C + i * c_tilde
+            H = o * torch.tanh(C)
+
+            Y = self.h2out(H)
             outputs.append(Y)
-        return torch.cat(outputs, dim=0), (H,)
+        return torch.cat(outputs, dim=0), (H, C)
 
     def begin_state(self, batch_size, device):
-        return torch.zeros((batch_size, num_hiddens), device=device),
+        return torch.zeros((batch_size, num_hiddens), device=device), torch.zeros((batch_size, num_hiddens),
+                                                                                  device=device)
 
 
 def predict(prefix, num_preds, net, vocab, device):
@@ -86,6 +98,7 @@ def train_epoch(net, train_iter, loss, updater, device):
         grad_clipping(net, 1)
         updater.step()
 
+        # this way of computing the perplexity works only because the cross-entropy loss is used!
         metric.add(l * y.numel(), y.numel())
     return math.exp(metric[0] / metric[1]), metric[1] / (time.time() - start_time)
 
@@ -106,10 +119,14 @@ def train(net, train_iter, vocab, lr, num_epochs, device):
             print(predict_seq('she wanted'))
 
             print(f'perplexity {ppl:.1f}, {speed:.1f} tokens/sec on {str(device)}')
+
+    # inference after training
     print(predict_seq('she wanted'))
     print(predict_seq('she'))
 
+
 num_hiddens = 512
 net = RNNModelScratch(len(vocab), num_hiddens, get_device())
-num_epochs, lr = 500, 0.001
+
+num_epochs, lr = 1000, 0.001
 train(net, train_iter, vocab, lr, num_epochs, get_device())

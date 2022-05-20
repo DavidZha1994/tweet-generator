@@ -4,8 +4,8 @@ import time
 import torch
 from torch import nn
 from torch.nn import functional as F
-from utils import Accumulator
 import utils
+from utils import Accumulator
 
 batch_size, num_steps = 32, 35
 train_iter, vocab = utils.load_data_gatsby(batch_size, num_steps)
@@ -24,6 +24,9 @@ class RNNModelScratch(nn.Module):
         input_size = output_size = vocab_size
         self.vocab_size, self.num_hiddens = vocab_size, num_hiddens
 
+        # reference: https://en.wikipedia.org/wiki/Gated_recurrent_unit#Fully_gated_unit
+        self.i2z = nn.Linear(input_size + num_hiddens, num_hiddens, device=device)
+        self.i2r = nn.Linear(input_size + num_hiddens, num_hiddens, device=device)
         self.i2h = nn.Linear(input_size + num_hiddens, num_hiddens, device=device)
         self.h2o = nn.Linear(num_hiddens, output_size, device=device)
 
@@ -35,8 +38,12 @@ class RNNModelScratch(nn.Module):
         outputs = []
         # Shape of `X_step`: (`batch_size`, `vocab_size`)
         for X_step in X:
-            H = torch.tanh(self.i2h(torch.cat((X_step, H), 1)))
+            z = torch.sigmoid(self.i2z(torch.cat((X_step, H), 1)))
+            r = torch.sigmoid(self.i2r(torch.cat((X_step, H), 1)))
+            h = torch.tanh(self.i2h(torch.cat((X_step, r * H), 1)))
+            H = z * h + (1 - z) * H
             Y = self.h2o(H)
+
             outputs.append(Y)
         return torch.cat(outputs, dim=0), (H,)
 
@@ -44,7 +51,7 @@ class RNNModelScratch(nn.Module):
         return torch.zeros((batch_size, num_hiddens), device=device),
 
 
-def predict(prefix, num_preds, net, vocab, device):
+def predict_ch8(prefix, num_preds, net, vocab, device):
     """Generate new characters following the `prefix`."""
     state = net.begin_state(batch_size=1, device=device)
     outputs = [vocab[prefix[0]]]
@@ -97,19 +104,20 @@ def train(net, train_iter, vocab, lr, num_epochs, device):
     # Initialize
     optimizer = torch.optim.Adam(net.parameters(), lr)
 
-    predict_seq = lambda prefix: predict(prefix, 50, net, vocab, device)
+    predict = lambda prefix: predict_ch8(prefix, 50, net, vocab, device)
     # Train and predict
     for epoch in range(num_epochs):
         ppl, speed = train_epoch(
             net, train_iter, loss, optimizer, device)
         if (epoch + 1) % 10 == 0:
-            print(predict_seq('she wanted'))
+            print(predict('she wanted'))
 
             print(f'perplexity {ppl:.1f}, {speed:.1f} tokens/sec on {str(device)}')
-    print(predict_seq('she wanted'))
-    print(predict_seq('she'))
+    print(predict('she wanted'))
+    print(predict('she'))
 
-num_hiddens = 512
+
+num_hiddens = 256
 net = RNNModelScratch(len(vocab), num_hiddens, get_device())
 num_epochs, lr = 500, 0.001
 train(net, train_iter, vocab, lr, num_epochs, get_device())
