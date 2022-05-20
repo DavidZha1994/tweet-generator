@@ -1,56 +1,173 @@
 import random
+import collections
+import re
 
 import torch
 
 
-def load_data_gatsby() -> tuple:
-    with open('./dataset/gatsby.txt', 'r', encoding="utf8") as file:
-        data = file.read().replace('\n', '')
-
-    data_processed = ""
-    data.replace('-', '')
-
-    vocab = set()
-
-    last_char = ''
-    for idx, char in enumerate(data):
-        vocab.add(char)
-        if not (char == '-' == last_char or char == ' ' == last_char):
-            data_processed += char
-        last_char = char
-
-    return data_processed, list(vocab)
+def read_great_gatsby():
+    """Load great gatsby text"""
+    with open('dataset/gatsby.txt', 'r', encoding="utf8") as f:
+        lines = f.readlines()
+    return [re.sub('[^A-Za-z]+', ' ', line).strip().lower() for line in lines]
 
 
-def input_tensor(seq: str, vocab: list):
-    tensor = torch.zeros(len(seq), 1, len(vocab))
-    for char_idx in range(len(seq)):
-        char = seq[char_idx]
-        tensor[char_idx][0][vocab.index(char)] = 1
+def tokenize(lines, token='word'):
+    """Split text lines into word or character tokens."""
 
-    return tensor
-
-
-def target_tensor(seq: str, vocab: list):
-    indices = [vocab.index(char) for char in seq]
-    return torch.LongTensor(indices)
+    if token == 'word':
+        return [line.split() for line in lines]
+    elif token == 'char':
+        return [list(line) for line in lines]
+    else:
+        print('ERROR: unknown token type: ' + token)
 
 
-# return x, y data point (a sequence of defined length)
-def dg_gatsby(seq_len=20):
-    corpus, vocab = load_data_gatsby()
-    corpus_len = len(corpus)
+class Vocab:
+    """Vocabulary for text."""
 
-    while True:
-        start_idx = random.randint(0, corpus_len - seq_len - 1)
-        yield input_tensor(corpus[start_idx:start_idx + seq_len], vocab), target_tensor(
-            corpus[start_idx + 1:start_idx + seq_len + 1], vocab)
+    def __init__(self, tokens=None, min_freq=0, reserved_tokens=None):
+        """Defined in :numref:`sec_text_preprocessing`"""
+        if tokens is None:
+            tokens = []
+        if reserved_tokens is None:
+            reserved_tokens = []
+        # Sort according to frequencies
+        counter = count_corpus(tokens)
+        self._token_freqs = sorted(counter.items(), key=lambda x: x[1],
+                                   reverse=True)
+        # The index for the unknown token is 0
+        self.idx_to_token = ['<unk>'] + reserved_tokens
+        self.token_to_idx = {token: idx
+                             for idx, token in enumerate(self.idx_to_token)}
+        for token, freq in self._token_freqs:
+            if freq < min_freq:
+                break
+            if token not in self.token_to_idx:
+                self.idx_to_token.append(token)
+                self.token_to_idx[token] = len(self.idx_to_token) - 1
+
+    def __len__(self):
+        return len(self.idx_to_token)
+
+    def __getitem__(self, tokens):
+        if not isinstance(tokens, (list, tuple)):
+            return self.token_to_idx.get(tokens, self.unk)
+        return [self.__getitem__(token) for token in tokens]
+
+    def to_tokens(self, indices):
+        if not isinstance(indices, (list, tuple)):
+            return self.idx_to_token[indices]
+        return [self.idx_to_token[index] for index in indices]
+
+    @property
+    def unk(self):  # Index for the unknown token
+        return 0
+
+    @property
+    def token_freqs(self):  # Index for the unknown token
+        return self._token_freqs
 
 
-if __name__ == '__main__':
-    # just some testing
-    corpus, vocab = load_data_gatsby()
-    input = input_tensor("bac", ["a", "b", "c", "d"])
-    target = target_tensor("bac", ["a", "b", "c", "d"])
-    print(input)
-    print(target.unsqueeze(-1).shape)
+def count_corpus(tokens):
+    """Count token frequencies."""
+    # Here `tokens` is a 1D list or 2D list
+    if len(tokens) == 0 or isinstance(tokens[0], list):
+        # Flatten a list of token lists into a list of tokens
+        tokens = [token for line in tokens for token in line]
+    return collections.Counter(tokens)
+
+
+def load_corpus_time_machine(max_tokens=-1):
+    """Return token indices and the vocabulary of the time machine dataset."""
+    lines = read_great_gatsby()
+    tokens = tokenize(lines, 'char')
+    vocab = Vocab(tokens)
+    # Since each text line in the time machine dataset is not necessarily a
+    # sentence or a paragraph, flatten all the text lines into a single list
+    corpus = [vocab[token] for line in tokens for token in line]
+    if max_tokens > 0:
+        corpus = corpus[:max_tokens]
+    return corpus, vocab
+
+
+def seq_data_iter_random(corpus, batch_size, num_steps):
+    """Generate a minibatch of subsequences using random sampling."""
+    # Start with a random offset (inclusive of `num_steps - 1`) to partition a
+    # sequence
+    corpus = corpus[random.randint(0, num_steps - 1):]
+    # Subtract 1 since we need to account for labels
+    num_subseqs = (len(corpus) - 1) // num_steps
+    # The starting indices for subsequences of length `num_steps`
+    initial_indices = list(range(0, num_subseqs * num_steps, num_steps))
+    # In random sampling, the subsequences from two adjacent random
+    # minibatches during iteration are not necessarily adjacent on the
+    # original sequence
+    random.shuffle(initial_indices)
+
+    def data(pos):
+        # Return a sequence of length `num_steps` starting from `pos`
+        return corpus[pos: pos + num_steps]
+
+    num_batches = num_subseqs // batch_size
+    for i in range(0, batch_size * num_batches, batch_size):
+        # Here, `initial_indices` contains randomized starting indices for
+        # subsequences
+        initial_indices_per_batch = initial_indices[i: i + batch_size]
+        X = [data(j) for j in initial_indices_per_batch]
+        Y = [data(j + 1) for j in initial_indices_per_batch]
+        yield torch.tensor(X), torch.tensor(Y)
+
+
+def seq_data_iter_sequential(corpus, batch_size, num_steps):
+    """Generate a minibatch of subsequences using sequential partitioning."""
+    # Start with a random offset to partition a sequence
+    offset = random.randint(0, num_steps)
+    num_tokens = ((len(corpus) - offset - 1) // batch_size) * batch_size
+    Xs = torch.tensor(corpus[offset: offset + num_tokens])
+    Ys = torch.tensor(corpus[offset + 1: offset + 1 + num_tokens])
+    Xs, Ys = Xs.reshape(batch_size, -1), Ys.reshape(batch_size, -1)
+    num_batches = Xs.shape[1] // num_steps
+    for i in range(0, num_steps * num_batches, num_steps):
+        X = Xs[:, i: i + num_steps]
+        Y = Ys[:, i: i + num_steps]
+        yield X, Y
+
+
+class SeqDataLoader:
+    """An iterator to load sequence data."""
+
+    def __init__(self, batch_size, num_steps, use_random_iter, max_tokens):
+        if use_random_iter:
+            self.data_iter_fn = seq_data_iter_random
+        else:
+            self.data_iter_fn = seq_data_iter_sequential
+        self.corpus, self.vocab = load_corpus_time_machine(max_tokens)
+        self.batch_size, self.num_steps = batch_size, num_steps
+
+    def __iter__(self):
+        return self.data_iter_fn(self.corpus, self.batch_size, self.num_steps)
+
+
+def load_data_gatsby(batch_size, num_steps,
+                     use_random_iter=False, max_tokens=10000):
+    """Return the iterator and the vocabulary of the gatsby dataset."""
+    data_iter = SeqDataLoader(
+        batch_size, num_steps, use_random_iter, max_tokens)
+    return data_iter, data_iter.vocab
+
+
+class Accumulator:
+    """For accumulating sums over `n` variables."""
+
+    def __init__(self, n):
+        self.data = [0.0] * n
+
+    def add(self, *args):
+        self.data = [a + float(b) for a, b in zip(self.data, args)]
+
+    def reset(self):
+        self.data = [0.0] * len(self.data)
+
+    def __getitem__(self, idx):
+        return self.data[idx]
