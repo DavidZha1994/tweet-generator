@@ -78,16 +78,21 @@ def count_corpus(tokens):
     return collections.Counter(tokens)
 
 
-def load_corpus_time_machine(max_tokens=-1):
-    """Return token indices and the vocabulary of the time machine dataset."""
+def load_corpus_gatsby(start_token=0, max_tokens=-1, relative_size=False):
+    """Return token indices and the vocabulary of the gatsby machine dataset."""
     lines = read_great_gatsby()
     tokens = tokenize(lines, 'char')
     vocab = Vocab(tokens)
-    # Since each text line in the time machine dataset is not necessarily a
+    # Since each text line in the gatsby dataset is not necessarily a
     # sentence or a paragraph, flatten all the text lines into a single list
     corpus = [vocab[token] for line in tokens for token in line]
-    if max_tokens > 0:
-        corpus = corpus[:max_tokens]
+    if not relative_size:
+        corpus = corpus[start_token:max_tokens]
+    else:
+        corp_size = len(corpus)
+        start = int(start_token * corp_size)
+        end = int(max_tokens * corp_size)
+        corpus = corpus[start:end]
     return corpus, vocab
 
 
@@ -137,12 +142,12 @@ def seq_data_iter_sequential(corpus, batch_size, num_steps):
 class SeqDataLoader:
     """An iterator to load sequence data."""
 
-    def __init__(self, batch_size, num_steps, use_random_iter, max_tokens):
+    def __init__(self, batch_size, num_steps, use_random_iter, start_token, max_tokens, relative_size):
         if use_random_iter:
             self.data_iter_fn = seq_data_iter_random
         else:
             self.data_iter_fn = seq_data_iter_sequential
-        self.corpus, self.vocab = load_corpus_time_machine(max_tokens)
+        self.corpus, self.vocab = load_corpus_gatsby(start_token, max_tokens, relative_size)
         self.batch_size, self.num_steps = batch_size, num_steps
 
     def __iter__(self):
@@ -150,10 +155,10 @@ class SeqDataLoader:
 
 
 def load_data_gatsby(batch_size, num_steps,
-                     use_random_iter=False, max_tokens=10000):
+                     use_random_iter=False, start_token=0, max_tokens=10000, relative_size=False):
     """Return the iterator and the vocabulary of the gatsby dataset."""
     data_iter = SeqDataLoader(
-        batch_size, num_steps, use_random_iter, max_tokens)
+        batch_size, num_steps, use_random_iter,start_token, max_tokens, relative_size)
     return data_iter, data_iter.vocab
 
 
