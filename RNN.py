@@ -1,22 +1,29 @@
-# Installing Python Packages from Jupyter Notebook
-# import sys
-# !{sys.executable} -m pip3 install torchtext
-# !{sys.executable} -m pip3 uninstall -y torchtext
-# !python -m pip uninstall torchtext --yes
-
 # Package Settings
-import torch
+import time
+
+import torch  # pytorch == 1.11.0
 import torch.nn as nn
-import preprocessor as pp
-import pandas as pd
+import preprocessor as pp  # tweet-preprocessor == 0.6.0
+import pandas as pd  # pandas == 1.4.2
 import timeit
 import torchtext  # torchtext==0.4/0.6.0
 import logging
 import random
+from torch.nn import functional as F
+from tqdm import tqdm
+from transformers import BertTokenizer, AutoModelForMaskedLM
 
+# Directories Settings
 PROJECT_DIR = '/Users/yhe/Documents/LocalRepository-Public/tweet-generator'
-RAW_CSV_DIR = '/Users/yhe/Documents/LocalRepository-Public/tweet-generator/dataset/realdonaldtrump.csv'
-CLEANED_CSV_DIR = '/Users/yhe/Documents/LocalRepository-Public/tweet-generator/dataset/cleaned_tweets.csv'
+RAW_CSV_DIR = '/Users/yhe/Documents/LocalRepository-Public/tweet-generator/dataset/elons_val.csv'
+CLEANED_CSV_DIR = '/Users/yhe/Documents/LocalRepository-Public/tweet-generator/dataset/'
+
+# Hyperparameter Settings
+batch_size = 21  # (training) 16779 = 3 * 7 * 17 * 47 , (validation) 179
+num_epochs = 30  # each epoch = BatchSize * Iteration
+lr = 0.001
+iterations = 799 + 1
+num_hiddens = 64  # 64
 
 # Log settings
 mylogs = logging.getLogger(__name__)
@@ -24,8 +31,11 @@ mylogs.setLevel(logging.INFO)
 
 
 ########################################################################################################################
+def get_device():
+    return torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
-# Define RNN
+
+# Default RNN
 class TweetGenerator(nn.Module):
     def __init__(self, input_size, hidden_size, n_layers=1):
         super(TweetGenerator, self).__init__()
@@ -50,53 +60,93 @@ class TweetGenerator(nn.Module):
         return output, h_state
 
 
+class RNNModelScratch(nn.Module):
+    """A RNN Model implemented from scratch."""
+
+    def __init__(self, vocab_size, num_hiddens, device=get_device()):
+        super(RNNModelScratch, self).__init__()
+
+        input_size = output_size = vocab_size
+        self.vocab_size, self.num_hiddens = vocab_size, num_hiddens
+
+        self.i2h = nn.Linear(input_size + num_hiddens, num_hiddens, device=device)
+        self.h2o = nn.Linear(num_hiddens, output_size, device=device)
+
+    def forward(self, X, state):
+        X = F.one_hot(X.T, self.vocab_size).type(torch.float32)
+        # Shape of `X`: (`sequence_size`,`batch_size`, `vocab_size`)
+
+        H, = state
+        outputs = []
+        # Shape of `X_step`: (`batch_size`, `vocab_size`)
+        for X_step in X:
+            H = torch.tanh(self.i2h(torch.cat((X_step, H), 1)))
+            Y = self.h2o(H)
+            outputs.append(Y)
+        return torch.cat(outputs, dim=0), (H,)
+
+    def begin_state(self, batch_size, device):
+        return torch.zeros((batch_size, num_hiddens), device=device),
+
+
 def pre_processor():
     tweets_csv = pd.read_csv(RAW_CSV_DIR)
     df = pd.DataFrame(tweets_csv)
-
-    cleaned_tweets_list = [pp.clean(content) for content in df['content'] if pp.clean(content) != '']
+    # 'content' or 'tweet'
+    cleaned_tweets_list = [pp.clean(content) for content in df['tweet'] if pp.clean(content) != '']
     cleaned_tweets_dict = {'content': cleaned_tweets_list}
     cleaned_tweets_df = pd.DataFrame(cleaned_tweets_dict)
-    cleaned_tweets_df.to_csv(CLEANED_CSV_DIR)
+    cleaned_tweets_df.to_csv(CLEANED_CSV_DIR + 'cleaned_elons_tweet.csv')
 
     return cleaned_tweets_df, cleaned_tweets_dict
 
 
 # homemade dataLoader for csv-files
-def brewed_dataLoader(ds_path, ds_format, fields_name):
+def brewed_dataLoader(which_data):  # which_ds could be 'training', 'validation'
+
+    # Subword-based tokenization
+    tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+    # Character-based tokenization
+    # tokenize = lambda x:x
+    # Word-based tokenization
+    # tokenize = lambda x: x.split()
+
+    # it is for character/word-based tokenization
     text_field = torchtext.data.Field(sequential=True,  # text sequence
-                                      tokenize=lambda x: x,  # because are building a character-RNN
+                                      tokenize=tokenizer.tokenize,  # because are building a character/subword/word-RNN
                                       include_lengths=True,  # to track the length of sequences, for batching
                                       batch_first=True,
-                                      use_vocab=True,  # to turn each character into an integer index
+                                      use_vocab=True,  # to turn each character/word/subword into an integer index
                                       init_token="<BOS>",  # BOS token
-                                      eos_token="<EOS>")  # EOS token
+                                      eos_token="<EOS>",  # EOS token
+                                      unk_token=None)
 
-    # Set up the fields objects for the TabularDataset
-    trump_tweets = torchtext.data.TabularDataset(
-        path=ds_path,
-        format=ds_format,
+    train_data, val_data = torchtext.data.TabularDataset.splits(
+        path=CLEANED_CSV_DIR,
+        train='train_cleaned.csv',
+        validation='val_cleaned.csv',
+        format='csv',
+        skip_header=True,
         fields=[
             ('', None),  # first column is unnamed
-            (fields_name, text_field)
+            ('content', text_field)
         ])
 
-    text_field.build_vocab(trump_tweets)
+    text_field.build_vocab(train_data, val_data)
     vocab_stoi = text_field.vocab.stoi
     vocab_itos = text_field.vocab.itos
     vocab_size = len(text_field.vocab.itos)
 
-    print("tweets content: ", trump_tweets.examples[6].content)
-    print("tweets length: ", len(trump_tweets))
-    # print('vocab of text_field: ', text_field)
-    print("vocab_stoi: ", vocab_stoi)
+    if which_data == 'validation':
+        data = val_data
+    else:
+        data = train_data
+
+    print("tweets content: ", data.examples[6].content)
+    print("tweets length: ", len(data))
     print("vocab_size: ", vocab_size)
 
-    data_iter = torchtext.data.BucketIterator(trump_tweets,
-                                              batch_size=1,
-                                              sort_key=lambda x: len(x.content),
-                                              sort_within_batch=True)
-    return trump_tweets, data_iter, vocab_stoi, vocab_itos, vocab_size
+    return data, vocab_stoi, vocab_itos, vocab_size
 
 
 def gen_log():
@@ -107,37 +157,45 @@ def gen_log():
     file_format = logging.Formatter("%(asctime)s:%(levelname)s:%(message)s", datefmt="%H:%M:%S")
     file.setFormatter(file_format)
     mylogs.addHandler(file)
-    # os.getcwd()
-    # os.system('tail -f ' + PROJECT_DIR + "/" + log_name)
 
 
-def train(model, data, batch_size=1, num_epochs=1, lr=0.001, print_every=100):
+def train(model, training_data, val_data, vocab_size, batch_size=1, num_epochs=1, lr=0.001,
+          print_every=100):
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     criterion = nn.CrossEntropyLoss()
-    data_iter = torchtext.data.BucketIterator(data,
+    data_iter = torchtext.data.BucketIterator(training_data,
                                               batch_size=batch_size,
                                               sort_key=lambda x: len(x.content),
                                               sort_within_batch=True)
+    val_iter = torchtext.data.BucketIterator(val_data,
+                                             batch_size=32,
+                                             sort_key=lambda x: len(x.content),
+                                             sort_within_batch=True)
+
     ################################## logging #####################################
     gen_log()
-    mylogs.info("[Parameter Setting] batch_size={} num_epochs={} step_size={:g} iter={}".format(batch_size,
-                                                                                                num_epochs,
-                                                                                                lr,
-                                                                                                print_every))
+    mylogs.info("[Hyperparameter Settings] batch_size={} num_epochs={} step_size={:g} iter={}".format(batch_size,
+                                                                                                      num_epochs,
+                                                                                                      lr,
+                                                                                                      print_every))
     ################################################################################
     it = 0
-    for e in range(num_epochs):
-        # get training set
-        avg_loss = 0
-        for (tweet, lengths), label in data_iter:
+    for e in tqdm(range(num_epochs), desc='epoch'):
+        avg_loss = 0.0
+        avg_val_loss = 0.0
+
+        for (tweet, lengths), label in tqdm(data_iter, desc='training'):
             target = tweet[:, 1:]
             inp = tweet[:, :-1]
-            # cleanup
-            optimizer.zero_grad()
+
             # forward pass
+            # state = model.begin_state(batch_size=batch_size, device=get_device())
+            # output, state = model(inp, state)
             output, _ = model(inp)
             loss = criterion(output.reshape(-1, vocab_size), target.reshape(-1))
+
             # backward pass
+            optimizer.zero_grad()
             loss.backward()
             optimizer.step()
 
@@ -145,22 +203,38 @@ def train(model, data, batch_size=1, num_epochs=1, lr=0.001, print_every=100):
             it += 1  # increment iteration count
 
             if it % print_every == 0:
+                # val_state = model.begin_state(batch_size=batch_size, device=get_device())
+                for (val_tweet, _), _ in tqdm(val_iter, desc='validation'):
+                    val_target = val_tweet[:, 1:]
+                    val_inp = val_tweet[:, :-1]
+
+                    # forward pass
+                    # val_output, _ = model(val_inp, val_state)
+                    val_output, _ = model(val_inp)
+                    val_loss = criterion(val_output.reshape(-1, vocab_size), val_target.reshape(-1))
+                    avg_val_loss += val_loss
+
                 ################################## logging #####################################
-                mylogs.info("[Epoch {} Iter {}] Loss {:g} Perplexity {:g}".format(e, it + 1,
-                                                                                  float(avg_loss / print_every),
-                                                                                  torch.exp(
-                                                                                      avg_loss / print_every)))
+                mylogs.info("[Epoch {}] Loss {:f} Val_Loss {:f} Perplexity {:g}".format(e,
+                                                                                        float(
+                                                                                            avg_loss / len(data_iter)),
+                                                                                        float(
+                                                                                            avg_val_loss / len(
+                                                                                                val_iter)),
+                                                                                        torch.exp(
+                                                                                            avg_loss / len(data_iter))
+                                                                                        )
+                            )
                 mylogs.info("[Generated Sequence] {}".format(sample_sequence(model, 140, 0.8)))
                 ################################################################################
-                # print("[Epoch %d Iter %d] Loss %f" % (e, it + 1, float(avg_loss / print_every)))
-                # print("[Generated Sequence] ", sample_sequence(model, 140, 0.8))
-                avg_loss = 0
+                avg_loss, avg_val_loss = 0, 0  # reset two loss values to zero
 
 
-def training_start():
+def training_start(model, training_iter, val_iter, vocab_size, batch=1, epochs=1,
+                   lr=0.001, iterations=100):
     print('[Starting]')
     start = timeit.default_timer()
-    train(model, trump_tweets, batch_size=3, num_epochs=30, lr=0.001, print_every=20000)
+    train(model, training_iter, val_iter, vocab_size, batch, epochs, lr, iterations)
     stop = timeit.default_timer()
     print('[Done]')
     print('[Runtime] %.2f ' % float((stop - start) / 60))
@@ -168,11 +242,12 @@ def training_start():
 
     # Save the model checkpoint
     torch.save(model.state_dict(),
-               '/Users/yhe/Documents/LocalRepository-Public/tweet-generator/' + '[' + random.random().__str__() + ']'
+               PROJECT_DIR + '/' + '[' + random.random().__str__() + ']'
                + 'RNN.ckpt')
     print('model saved.done')
 
 
+# A sequence generator for string/character prediction
 def sample_sequence(model, max_len=100, temperature=0.8):
     generated_sequence = ""
     # one-to-many
@@ -193,18 +268,42 @@ def sample_sequence(model, max_len=100, temperature=0.8):
     return generated_sequence
 
 
+# A sequence generator for word prediction
+def sample_word_sequence(model, max_len=100, temperature=0.8):
+    # TODO: define a seed input
+    generated_sequence = ""
+    # one-to-many
+    inp = torch.Tensor([vocab_stoi["<BOS>"]]).long()
+    for p in range(max_len):
+        output, hidden = model(inp.unsqueeze(0))
+        # Sample from the network as a multinomial distribution
+        output_dist = output.data.view(-1).div(temperature).exp()
+        top_i = int(torch.multinomial(output_dist, 1)[0])
+        # Add predicted word to string and use as next input
+        predicted_word = vocab_itos[top_i]
+
+        if predicted_word == "<EOS>":
+            break
+        generated_sequence += ' ' + predicted_word
+        inp = torch.Tensor([top_i]).long()
+    return generated_sequence
+
+
 ########################################################################################################################
 
 # Train the Tweet Generator
-trump_tweets, data_iter, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader(
-    ds_path=CLEANED_CSV_DIR,
-    ds_format='csv', fields_name='content')
-model = TweetGenerator(vocab_size, hidden_size=64)
-training_start()
+training_data, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('training')
+val_data, _, _, _ = brewed_dataLoader('validation')
+# testing_data, testing_iter, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('testing')
+
+model = TweetGenerator(vocab_size, hidden_size=num_hiddens)
+# model = RNNModelScratch(vocab_size, num_hiddens, get_device())
+training_start(model, training_data, val_data, vocab_size, batch_size, num_epochs, lr,
+               iterations)
 
 # Load stored model
 # ckpt_model =  torch.save(model.state_dict(),
-#                '/Users/yhe/Documents/LocalRepository-Public/tweet-generator/'+'['+datetime.now().__str__()+']'+'rnn.ckpt')
+#                PROJECT_DIR + '/' + '[' + datetime.now().__str__()+'] '+' rnn.ckpt')
 # print(ckpt_model)
 
 # Generate fake tweets
