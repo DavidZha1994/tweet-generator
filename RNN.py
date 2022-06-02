@@ -12,18 +12,24 @@ import random
 from torch.nn import functional as F
 from tqdm import tqdm
 from transformers import BertTokenizer, AutoModelForMaskedLM
+import os
+import pathlib
 
 # Directories Settings
-PROJECT_DIR = '/Users/yhe/Documents/LocalRepository-Public/tweet-generator'
 RAW_CSV_DIR = '/Users/yhe/Documents/LocalRepository-Public/tweet-generator/dataset/elons_val.csv'
-CLEANED_CSV_DIR = '/Users/yhe/Documents/LocalRepository-Public/tweet-generator/dataset/'
+
+PROJECT_DIR = pathlib.Path(os.path.abspath(__file__)).parent
+CLEANED_CSV_DIR = PROJECT_DIR / 'dataset'
+
+PROJECT_DIR = str(PROJECT_DIR)
+CLEANED_CSV_DIR = str(CLEANED_CSV_DIR)
 
 # Hyperparameter Settings
-batch_size = 21  # (training) 16779 = 3 * 7 * 17 * 47 , (validation) 179
-num_epochs = 30  # each epoch = BatchSize * Iteration
+batch_size = 64  # (training) 16779 = 3 * 7 * 17 * 47 , (validation) 179
+num_epochs = 150  # each epoch = BatchSize * Iteration
 lr = 0.001
 iterations = 799 + 1
-num_hiddens = 64  # 64
+num_hiddens = 128  # 64
 
 # Log settings
 mylogs = logging.getLogger(__name__)
@@ -41,17 +47,18 @@ class TweetGenerator(nn.Module):
         super(TweetGenerator, self).__init__()
 
         # identiy matrix for generating one-hot vectors
-        self.ident = torch.eye(input_size)
+        self.ident = torch.eye(input_size, device=get_device())
 
         # recurrent neural network
         self.rnn = nn.RNN(
             input_size,
             hidden_size,
             n_layers,
-            batch_first=True
+            batch_first=True,
+            device=get_device()
         )
         # FC layer as decoder to the output
-        self.fc = nn.Linear(hidden_size, input_size)
+        self.fc = nn.Linear(hidden_size, input_size, device=get_device())
 
     def forward(self, x, h_state=None):
         x = self.ident[x]  # generate one-hot vectors of input
@@ -83,6 +90,7 @@ class RNNModelScratch(nn.Module):
             H = torch.tanh(self.i2h(torch.cat((X_step, H), 1)))
             Y = self.h2o(H)
             outputs.append(Y)
+
         return torch.cat(outputs, dim=0), (H,)
 
     def begin_state(self, batch_size, device):
@@ -150,7 +158,8 @@ def brewed_dataLoader(which_data):  # which_ds could be 'training', 'validation'
 
 
 def gen_log():
-    log_name = '[' + random.randint(0, 100).__str__() + ']' + 'RNN.log'
+    log_name = f"[{random.randint(0, 1000)}]RNN.log"
+    (pathlib.Path(PROJECT_DIR) / 'log').mkdir(exist_ok=True)
     print("log file generated: " + log_name)
     file = logging.FileHandler(PROJECT_DIR + "/log/" + log_name)
     file.setLevel(logging.INFO)
@@ -168,7 +177,7 @@ def train(model, training_data, val_data, vocab_size, batch_size=1, num_epochs=1
                                               sort_key=lambda x: len(x.content),
                                               sort_within_batch=True)
     val_iter = torchtext.data.BucketIterator(val_data,
-                                             batch_size=32,
+                                             batch_size=16,
                                              sort_key=lambda x: len(x.content),
                                              sort_within_batch=True)
 
@@ -185,13 +194,15 @@ def train(model, training_data, val_data, vocab_size, batch_size=1, num_epochs=1
         avg_val_loss = 0.0
 
         for (tweet, lengths), label in tqdm(data_iter, desc='training'):
-            target = tweet[:, 1:]
-            inp = tweet[:, :-1]
+            # print(f"mem reserved: {torch.cuda.memory_reserved(torch.device(get_device())) / 1.074e+9:.1f}GiB")
+
+            target = tweet[:, 1:].to(get_device())
+            inp = tweet[:, :-1].to(get_device())
 
             # forward pass
-            # state = model.begin_state(batch_size=batch_size, device=get_device())
-            # output, state = model(inp, state)
-            output, _ = model(inp)
+            # state = model.begin_state(batch_size=inp.shape[0], device=get_device())
+            output, state = model(inp) # , state
+            # output, _ = model(inp)
             loss = criterion(output.reshape(-1, vocab_size), target.reshape(-1))
 
             # backward pass
@@ -203,31 +214,37 @@ def train(model, training_data, val_data, vocab_size, batch_size=1, num_epochs=1
             it += 1  # increment iteration count
 
             if it % print_every == 0:
-                # val_state = model.begin_state(batch_size=batch_size, device=get_device())
-                for (val_tweet, _), _ in tqdm(val_iter, desc='validation'):
-                    val_target = val_tweet[:, 1:]
-                    val_inp = val_tweet[:, :-1]
+                torch.cuda.empty_cache()
+                with torch.no_grad():
+                    for (val_tweet, _), _ in tqdm(val_iter, desc='validation'):
+                        # print(f"memory: {torch.cuda.memory_reserved(torch.device(get_device())) / 1.074e+9:.1f}GiB")
 
-                    # forward pass
-                    # val_output, _ = model(val_inp, val_state)
-                    val_output, _ = model(val_inp)
-                    val_loss = criterion(val_output.reshape(-1, vocab_size), val_target.reshape(-1))
-                    avg_val_loss += val_loss
+                        val_target = val_tweet[:, 1:].to(get_device())
+                        val_inp = val_tweet[:, :-1].to(get_device())
+                        # val_state = model.begin_state(batch_size=val_inp.shape[0], device=get_device())
 
-                ################################## logging #####################################
-                mylogs.info("[Epoch {}] Loss {:f} Val_Loss {:f} Perplexity {:g}".format(e,
-                                                                                        float(
-                                                                                            avg_loss / len(data_iter)),
-                                                                                        float(
-                                                                                            avg_val_loss / len(
-                                                                                                val_iter)),
-                                                                                        torch.exp(
-                                                                                            avg_loss / len(data_iter))
-                                                                                        )
-                            )
-                mylogs.info("[Generated Sequence] {}".format(sample_sequence(model, 140, 0.8)))
-                ################################################################################
-                avg_loss, avg_val_loss = 0, 0  # reset two loss values to zero
+                        # forward pass
+                        val_output, _ = model(val_inp) #, val_state
+                        # val_output, _ = model(val_inp)
+                        val_loss = criterion(val_output.reshape(-1, vocab_size), val_target.reshape(-1))
+                        avg_val_loss += val_loss
+
+                    ################################## logging #####################################
+                    mylogs.info("[Epoch {}] Loss {:f} Val_Loss {:f} Perplexity {:g}".format(e,
+                                                                                            float(
+                                                                                                avg_loss / len(
+                                                                                                    data_iter)),
+                                                                                            float(
+                                                                                                avg_val_loss / len(
+                                                                                                    val_iter)),
+                                                                                            torch.exp(
+                                                                                                avg_loss / len(
+                                                                                                    data_iter))
+                                                                                            )
+                                )
+                    mylogs.info("[Generated Sequence] {}".format(sample_sequence(model, 140, 0.8)))
+                    ################################################################################
+                    avg_loss, avg_val_loss = 0, 0  # reset two loss values to zero
 
 
 def training_start(model, training_iter, val_iter, vocab_size, batch=1, epochs=1,
@@ -251,10 +268,10 @@ def training_start(model, training_iter, val_iter, vocab_size, batch=1, epochs=1
 def sample_sequence(model, max_len=100, temperature=0.8):
     generated_sequence = ""
     # one-to-many
-    inp = torch.Tensor([vocab_stoi["<BOS>"]]).long()
-    hidden = None
+    inp = torch.Tensor([vocab_stoi["<BOS>"]]).long().to(get_device())
+    # hidden = model.begin_state(inp.shape[0], get_device())
     for p in range(max_len):
-        output, hidden = model(inp.unsqueeze(0), hidden)
+        output, hidden = model(inp.unsqueeze(0)) # , hidden
         # Sample from the network as a multinomial distribution
         output_dist = output.data.view(-1).div(temperature).exp()
         top_i = int(torch.multinomial(output_dist, 1)[0])
@@ -264,7 +281,7 @@ def sample_sequence(model, max_len=100, temperature=0.8):
         if predicted_char == "<EOS>":
             break
         generated_sequence += predicted_char
-        inp = torch.Tensor([top_i]).long()
+        inp = torch.Tensor([top_i]).long().to(get_device())
     return generated_sequence
 
 
@@ -273,9 +290,10 @@ def sample_word_sequence(model, max_len=100, temperature=0.8):
     # TODO: define a seed input
     generated_sequence = ""
     # one-to-many
-    inp = torch.Tensor([vocab_stoi["<BOS>"]]).long()
+    inp = torch.Tensor([vocab_stoi["<BOS>"]]).long().to(get_device())
+    # hidden = model.begin_state(inp.shape[0], get_device())
     for p in range(max_len):
-        output, hidden = model(inp.unsqueeze(0))
+        output, hidden = model(inp.unsqueeze(0)) # , hidden
         # Sample from the network as a multinomial distribution
         output_dist = output.data.view(-1).div(temperature).exp()
         top_i = int(torch.multinomial(output_dist, 1)[0])
@@ -285,13 +303,14 @@ def sample_word_sequence(model, max_len=100, temperature=0.8):
         if predicted_word == "<EOS>":
             break
         generated_sequence += ' ' + predicted_word
-        inp = torch.Tensor([top_i]).long()
+        inp = torch.Tensor([top_i]).long().to(get_device())
     return generated_sequence
 
 
 ########################################################################################################################
 
 # Train the Tweet Generator
+print(f"Training on device: {get_device()}")
 training_data, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('training')
 val_data, _, _, _ = brewed_dataLoader('validation')
 # testing_data, testing_iter, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('testing')
@@ -307,4 +326,4 @@ training_start(model, training_data, val_data, vocab_size, batch_size, num_epoch
 # print(ckpt_model)
 
 # Generate fake tweets
-# print(sample_sequence(model, temperature=0.8))
+print(sample_sequence(model, temperature=0.8))
