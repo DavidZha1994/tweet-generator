@@ -1,9 +1,23 @@
 import random
 import collections
 import re
+import os
+from tokenize import Whitespace
 
 import torch
+import logging
+
+from tokenizers.implementations import ByteLevelBPETokenizer, CharBPETokenizer, SentencePieceBPETokenizer, \
+    BertWordPieceTokenizer
 from transformers import BertTokenizer
+from tokenizers import Tokenizer, pre_tokenizers, trainers, models
+from tokenizers.models import BPE
+from tokenizers.trainers import BpeTrainer
+from datasets import load_dataset
+from pathlib import Path
+
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+CLEANED_CSV_DIR = '/Users/yhe/Documents/LocalRepository-Public/tweet-generator/dataset/gatsby.txt'
 
 
 def read_great_gatsby():
@@ -14,17 +28,50 @@ def read_great_gatsby():
 
 
 def tokenize(lines, token='word'):
-    """Split text lines into word or character tokens."""
+    """Split text lines into word or character tokens by using the pre-trained tokenizer."""
 
     if token == 'word':
+        print(f"[Tokenizer] {token}")
         return [line.split() for line in lines]
     elif token == 'char':
+        print(f"[Tokenizer] {token}")
         return [list(line) for line in lines]
     elif token == 'subword':
-        tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-        return [tokenizer.tokenize(line) for line in lines]
+        print(f"[Tokenizer] {token}")
+        tok = BertTokenizer.from_pretrained("bert-base-uncased")
+        return [tok.tokenize(line) for line in lines]
     else:
         print('ERROR: unknown token type: ' + token)
+
+
+def get_training_corpus():
+    dataset = load_dataset("wikitext", name="wikitext-2-raw-v1", split="train")
+    for i in range(0, len(dataset), 1000):
+        yield dataset[i: i + 1000]["text"]
+
+    with open("wikitext-2.txt", "w", encoding="utf-8") as f:
+        for i in range(len(dataset)):
+            f.write(dataset[i]["text"] + "\n")
+
+
+def train_tokenizer():
+    """Train a tokenizer from scratch"""
+    # Initialize an empty tokenizer from
+    # ByteLevelBPETokenizer/ CharBPETokenizer/ BertWordPieceTokenizer/ SentencePieceBPETokenizer
+    tokenizer = CharBPETokenizer()
+    tokenizer.train(files='./dataset/gatsby.txt',
+                    vocab_size=20000,
+                    min_frequency=2,
+                    show_progress=True,
+                    special_tokens=[
+                        "<s>",
+                        "<pad>",
+                        "</s>",
+                        "<unk>",
+                        "<mask>",
+                    ])
+    tokenizer.save('./my_token/' + type(tokenizer).__name__ + '.json')
+    return tokenizer
 
 
 class Vocab:
@@ -162,8 +209,18 @@ def load_data_gatsby(batch_size, num_steps,
                      use_random_iter=False, start_token=0, max_tokens=10000, relative_size=False):
     """Return the iterator and the vocabulary of the gatsby dataset."""
     data_iter = SeqDataLoader(
-        batch_size, num_steps, use_random_iter,start_token, max_tokens, relative_size)
+        batch_size, num_steps, use_random_iter, start_token, max_tokens, relative_size)
     return data_iter, data_iter.vocab
+
+
+def load_data_mask():
+    # TODO: put the dataLoader of mask's tweets
+    pass
+
+
+def load_data_trump():
+    # TODO: put the dataLoader of trump's tweets
+    pass
 
 
 class Accumulator:
@@ -180,3 +237,25 @@ class Accumulator:
 
     def __getitem__(self, idx):
         return self.data[idx]
+
+
+def gen_log(dir_to_save=ROOT_DIR):
+    mylogs = logging.getLogger(__name__)
+    mylogs.setLevel(logging.INFO)
+
+    log_name = '[' + random.randint(0, 100).__str__() + ']' + 'RNN.log'
+    print(f"log file \'{log_name}\' is generated. ")
+    file = logging.FileHandler(dir_to_save + "/log/" + log_name)
+    file.setLevel(logging.INFO)
+    file_format = logging.Formatter("%(asctime)s:%(levelname)s:%(message)s", datefmt="%H:%M:%S")
+    file.setFormatter(file_format)
+    mylogs.addHandler(file)
+    return mylogs
+
+
+if __name__ == "__main__":
+    # ByteLevelBPETokenizer/ CharBPETokenizer/ BertWordPieceTokenizer/ SentencePieceBPETokenizer
+    tok = Tokenizer.from_file('./my_token/ByteLevelBPETokenizer.json')
+    res = tok.encode("I made the mistake of using the tokenizers library with a ByteLevelBPETokenizer, "
+                     "which uses the 0th and 1st for '!' and '' no matter what I do. ")
+    print(res.tokens)

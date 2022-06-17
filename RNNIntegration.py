@@ -9,6 +9,8 @@ from utils import Accumulator
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 
+logs = utils.gen_log()
+
 batch_size, num_steps = 128, 35
 train_iter, vocab = utils.load_data_gatsby(batch_size, num_steps, start_token=0, max_tokens=.9, relative_size=True)
 val_iter, _ = utils.load_data_gatsby(batch_size, num_steps, start_token=0.9, max_tokens=1, relative_size=True)
@@ -26,7 +28,6 @@ class LstmCell(nn.Module):
         # input_size = output_size = vocab_size
         # self.vocab_size, self.num_hiddens = vocab_size, num_hiddens
         self.input_size, self.output_size = input_size, output_size
-        # num_hiddens=output_size?
 
         # reference: https://en.wikipedia.org/wiki/Long_short-term_memory#LSTM_with_a_forget_gate
         self.in2f = nn.Linear(input_size + num_hiddens, output_size, device=device)
@@ -107,7 +108,7 @@ def predict(prefix, num_preds, net, vocab, device):
 def evaluate(net, val_iter, loss, device):
     metric = Accumulator(2)
 
-    for X, Y in val_iter:
+    for X, Y in tqdm(val_iter, desc='eval'):
         state_1 = net.begin_state(batch_size=X.shape[0], device=device)
         state_2 = net.begin_state(batch_size=X.shape[0], device=device)
 
@@ -135,7 +136,8 @@ def train_epoch(net, train_iter, loss, updater, device):
     """Train a net within one epoch"""
     start_time = time.time()
     metric = Accumulator(2)  # Sum of training loss, no. of tokens
-
+    loss_val = 0
+    loss_val_list = []
     for X, Y in tqdm(train_iter, desc='training'):
         # create new hidden state at start of each batch
         # state_1 = net.begin_state(batch_size=X.shape[0], device=device)
@@ -153,6 +155,11 @@ def train_epoch(net, train_iter, loss, updater, device):
 
         # this way of computing the perplexity works only because the cross-entropy loss is used!
         metric.add(l * y.numel(), y.numel())
+        # TODO: It can be removed if it doesn't need in the end.
+        loss_val = float(l)
+        loss_val_list.append(loss_val)
+    logs.info(f"[Loss value of the epoch] {loss_val}")
+
     return math.exp(metric[0] / metric[1]), metric[1] / (time.time() - start_time)
 
 
@@ -161,7 +168,7 @@ def train(net, train_iter, vocab, lr, num_epochs, device):
     loss = nn.CrossEntropyLoss()
     train_results = []
     val_results = []
-
+    logs.info(f"[Hyperparameter Settings] batch_size={batch_size} num_epochs={num_epochs} step_size={lr}")
     # Initialize
     optimizer = torch.optim.Adam(net.parameters(), lr)
 
@@ -175,10 +182,17 @@ def train(net, train_iter, vocab, lr, num_epochs, device):
         val_ppl = evaluate(net, val_iter, loss, device)
         val_results.append(val_ppl)
         print(f'epoch {epoch} - val-ppl: {val_ppl:.1f}, train-ppl: {train_ppl:.1f}')
+        logs.info(f"[epoch {epoch}] Train_ppl {train_ppl} Val_ppl {val_ppl}")
 
         if (epoch + 1) % 10 == 0:
-            print(predict_seq('she wanted'))
-            print(predict_seq('i am'))
+            print(predict_seq('she wanted '))
+            print(predict_seq('i am '))
+            print(predict_seq(' '))
+            logs.info(f"[epoch] {epoch}")
+            logs.info(f"[Generated Sequence Started from 'she wanted '] {predict_seq('i am ')}")
+            logs.info(f"[Generated Sequence Started from 'i am '] {predict_seq('i am ')}")
+            logs.info(f"[Generated Sequence Started from '<unk>'] {predict_seq(' ')}")
+
             # print(f'perplexity {ppl:.1f}, {speed:.1f} tokens/sec on {str(device)}')
             # plt results
             plt.plot(train_results, label='train')
