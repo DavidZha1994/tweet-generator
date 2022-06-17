@@ -19,13 +19,14 @@ def get_device():
 
 
 class LstmCell(nn.Module):
-    def __init__(self, input_size, output_size, device):
+    def __init__(self, input_size, output_size, num_hiddens=256, device='cpu'):
         super(LstmCell, self).__init__()
 
         # output size determines the number of hidden units (hidden_size = output_size)
         # input_size = output_size = vocab_size
         # self.vocab_size, self.num_hiddens = vocab_size, num_hiddens
         self.input_size, self.output_size = input_size, output_size
+        # num_hiddens=output_size?
 
         # reference: https://en.wikipedia.org/wiki/Long_short-term_memory#LSTM_with_a_forget_gate
         self.in2f = nn.Linear(input_size + num_hiddens, output_size, device=device)
@@ -47,22 +48,29 @@ class LstmCell(nn.Module):
         return (H, C)
 
 
-class RNNModelScratch(nn.Module):
+class StackedLstm(nn.Module):
     """A RNN Model implemented from scratch."""
 
     def __init__(self, vocab_size, num_hiddens, device):
-        super(RNNModelScratch, self).__init__()
+        super(StackedLstm, self).__init__()
 
         input_size = output_size = vocab_size
         self.vocab_size, self.num_hiddens = vocab_size, num_hiddens
+        self.device = device
 
-        self.cell1 = LstmCell(input_size, num_hiddens, device)
-        self.cell2 = LstmCell(num_hiddens, num_hiddens, device)
+        self.cell1 = LstmCell(input_size, num_hiddens, device=device)
+        self.cell2 = LstmCell(num_hiddens, num_hiddens, device=device)
         self.h2out = nn.Linear(num_hiddens, output_size, device=device)
 
-    def forward(self, X, state1, state2):
+    def forward(self, X, states=None):
         X = F.one_hot(X.T, self.vocab_size).type(torch.float32)
         # Shape of `X`: (`sequence_size`,`batch_size`, `vocab_size`)
+
+        if (states is None):
+            state1 = self.begin_state(X.shape[1], self.device)
+            state2 = self.begin_state(X.shape[1], self.device)
+        else:
+            state1, state2 = states
 
         H_1, C_1 = state1
         H_2, C_2 = state2
@@ -73,10 +81,10 @@ class RNNModelScratch(nn.Module):
             (H_2, C_2) = self.cell2(H_1, (H_2, C_2))
             Y = self.h2out(H_2)
             outputs.append(Y)
-        return torch.cat(outputs, dim=0), (H_1, C_1), (H_2, C_2)
+        return torch.cat(outputs, dim=0), ((H_1, C_1), (H_2, C_2))
 
     def begin_state(self, batch_size, device):
-        return torch.zeros((batch_size, num_hiddens), device=device), torch.zeros((batch_size, num_hiddens),
+        return torch.zeros((batch_size, self.num_hiddens), device=device), torch.zeros((batch_size, self.num_hiddens),
                                                                                   device=device)
 
 
@@ -87,10 +95,10 @@ def predict(prefix, num_preds, net, vocab, device):
     outputs = [vocab[prefix[0]]]
     get_input = lambda: torch.tensor([outputs[-1]], device=device).reshape((1, 1))
     for y in prefix[1:]:  # Warm-up period
-        _, state_1, state_2 = net(get_input(), state_1, state_2)
+        _, (state_1, state_2) = net(get_input(), (state_1, state_2))
         outputs.append(vocab[y])
     for _ in range(num_preds):  # Predict `num_preds` steps
-        y, state_1, state_2 = net(get_input(), state_1, state_2)
+        y, (state_1, state_2) = net(get_input(), (state_1, state_2))
         outputs.append(int(y.argmax(dim=1).reshape(1)))
     return ''.join([vocab.idx_to_token[i] for i in outputs])
 
@@ -105,7 +113,7 @@ def evaluate(net, val_iter, loss, device):
 
         y = Y.T.reshape(-1)
         X, y = X.to(device), y.to(device)
-        y_hat, state_1, state_2 = net(X, state_1, state_2)
+        y_hat, (state_1, state_2) = net(X, (state_1, state_2))
         l = loss(y_hat, y.long()).mean()
 
         metric.add(l * y.numel(), y.numel())
@@ -130,12 +138,12 @@ def train_epoch(net, train_iter, loss, updater, device):
 
     for X, Y in tqdm(train_iter, desc='training'):
         # create new hidden state at start of each batch
-        state_1 = net.begin_state(batch_size=X.shape[0], device=device)
-        state_2 = net.begin_state(batch_size=X.shape[0], device=device)
+        # state_1 = net.begin_state(batch_size=X.shape[0], device=device)
+        # state_2 = net.begin_state(batch_size=X.shape[0], device=device)
 
         y = Y.T.reshape(-1)
         X, y = X.to(device), y.to(device)
-        y_hat, state_1, state_2 = net(X, state_1, state_2)
+        y_hat, (state_1, state_2) = net(X)
         l = loss(y_hat, y.long()).mean()
 
         updater.zero_grad()
@@ -193,8 +201,8 @@ def train(net, train_iter, vocab, lr, num_epochs, device):
     plt.show()
 
 
-num_hiddens = 256
-net = RNNModelScratch(len(vocab), num_hiddens, get_device())
-
-num_epochs, lr = 500, 0.001
-train(net, train_iter, vocab, lr, num_epochs, get_device())
+# num_hiddens = 256
+# net = StackedLstm(len(vocab), num_hiddens, get_device())
+#
+# num_epochs, lr = 500, 0.001
+# train(net, train_iter, vocab, lr, num_epochs, get_device())
