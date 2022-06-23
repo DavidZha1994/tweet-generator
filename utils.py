@@ -6,7 +6,10 @@ import torch
 import logging
 import pandas as pd
 import preprocessor as pp  # tweet-preprocessor == 0.6.0
+import nltk
+import json
 
+from nltk.probability import FreqDist
 from tokenizers.implementations import ByteLevelBPETokenizer, CharBPETokenizer, SentencePieceBPETokenizer, \
     BertWordPieceTokenizer
 from tokenizers import Tokenizer
@@ -14,6 +17,7 @@ from transformers import BertTokenizer
 from datasets import load_dataset
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 def read_great_gatsby():
     """Load great gatsby text"""
@@ -265,17 +269,35 @@ def preprocessing(csv_dir, cleaned_csv_dir, col_name='tweet'):
     return cleaned_tweets_df, cleaned_tweets_dict
 
 
-def count_tokens_not_in_corpus(corpus_dir, training_source_dir):
-    old_tokenizer = Tokenizer.from_file(corpus_dir)
-    new_tokenizer = train_tokenizer(training_source_dir)
+def token_counter():
+    trained_tokenizer = Tokenizer.from_file('./my_token/CharBPETokenizer_Musk_cleaned.json')
+    df = pd.read_csv('./dataset/train_cleaned.csv')
+
+    token_list = []
+    for row in df.iterrows():
+        encode = trained_tokenizer.encode(row[1]['content'])
+        token_list.extend(encode.tokens)
+
+    token_fd = nltk.FreqDist(token_list)
+    json_dict = {'token_frequency': []}
+
+    with open('./my_token/token_freq.json', 'w') as f:
+        for key in token_fd:
+            json_dict['token_frequency'].append({key: token_fd[key]})
+        json_str = json.dumps(json_dict)
+        f.write(json_str)
+    f.close()
+
+    return token_fd
 
 
 if __name__ == "__main__":
     # ByteLevelBPETokenizer/ CharBPETokenizer/ BertWordPieceTokenizer/ SentencePieceBPETokenizer
-    train_tokenizer('./dataset/combined_Musks_tweets_cleaned.txt')
-    # tok = Tokenizer.from_file('./my_token/ByteLevelBPETokenizer.json')
-    # res = tok.encode("I made the mistake of using the tokenizers library with a ByteLevelBPETokenizer, "
-    #                  "which uses the 0th and 1st for '!' and '' no matter what I do. ")
+    # train_tokenizer('./dataset/combined_Musks_tweets_cleaned.txt')
+    # tok = Tokenizer.from_file('./my_token/CharBPETokenizer_Musk_cleaned.json')
+    # res = tok.encode("Vaccines are just the start. Its also capable in theory of curing almost anything. "
+    #                  "Turns medicine into a software &amp; simulation problem.")
     # print(res.tokens)
     # preprocessing('./dataset/combined_Musks_tweets.csv', './dataset/combined_Musks_tweets_cleaned.csv')
     # csv2txt('./dataset/combined_Musks_tweets_cleaned.csv', './dataset/combined_Musks_tweets_cleaned.txt', 'content')
+    token_counter()
