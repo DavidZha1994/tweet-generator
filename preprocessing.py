@@ -40,8 +40,8 @@ combined_csv.replace(to_replace=r'^\s*$', value=np.nan,
 combined_csv.dropna(subset=['tweet_clean'], inplace=True)
 
 
-if not os.path.exists("combined_csv.csv"):
-    combined_csv.to_csv("combined_csv.csv", index=False, encoding='utf-8')
+if not os.path.exists("combined_Musks_tweets.csv"):
+    combined_csv.to_csv("combined_Musks_tweets.csv", index=False, encoding='utf-8')
 
 
 df = combined_csv[0:int(combined_csv.shape[0] / 2)]

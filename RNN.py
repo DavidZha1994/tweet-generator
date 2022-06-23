@@ -16,10 +16,10 @@ import os
 import pathlib
 
 # Directories Settings
-RAW_CSV_DIR = '/Users/yhe/Documents/LocalRepository-Public/tweet-generator/dataset/elons_val.csv'
 
 PROJECT_DIR = pathlib.Path(os.path.abspath(__file__)).parent
 CLEANED_CSV_DIR = PROJECT_DIR / 'dataset'
+RAW_CSV_DIR = PROJECT_DIR /'dataset/test.csv'
 
 PROJECT_DIR = str(PROJECT_DIR)
 CLEANED_CSV_DIR = str(CLEANED_CSV_DIR)
@@ -95,18 +95,6 @@ class RNNModelScratch(nn.Module):
 
     def begin_state(self, batch_size, device):
         return torch.zeros((batch_size, num_hiddens), device=device),
-
-
-def pre_processor():
-    tweets_csv = pd.read_csv(RAW_CSV_DIR)
-    df = pd.DataFrame(tweets_csv)
-    # 'content' or 'tweet'
-    cleaned_tweets_list = [pp.clean(content) for content in df['tweet'] if pp.clean(content) != '']
-    cleaned_tweets_dict = {'content': cleaned_tweets_list}
-    cleaned_tweets_df = pd.DataFrame(cleaned_tweets_dict)
-    cleaned_tweets_df.to_csv(CLEANED_CSV_DIR + 'cleaned_elons_tweet.csv')
-
-    return cleaned_tweets_df, cleaned_tweets_dict
 
 
 # homemade dataLoader for csv-files
@@ -309,21 +297,20 @@ def sample_word_sequence(model, max_len=100, temperature=0.8):
 
 ########################################################################################################################
 
-# Train the Tweet Generator
-print(f"Training on device: {get_device()}")
-training_data, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('training')
-val_data, _, _, _ = brewed_dataLoader('validation')
-# testing_data, testing_iter, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('testing')
 
-model = TweetGenerator(vocab_size, hidden_size=num_hiddens)
-# model = RNNModelScratch(vocab_size, num_hiddens, get_device())
-training_start(model, training_data, val_data, vocab_size, batch_size, num_epochs, lr,
-               iterations)
+if __name__ == '__main__':
+    pre_processor()
 
-# Load stored model
-# ckpt_model =  torch.save(model.state_dict(),
-#                PROJECT_DIR + '/' + '[' + datetime.now().__str__()+'] '+' rnn.ckpt')
-# print(ckpt_model)
+    # Train the Tweet Generator
+    # print(f"Training on device: {get_device()}")
+    # training_data, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('training')
+    # val_data, _, _, _ = brewed_dataLoader('validation')
+    #
+    # model = TweetGenerator(vocab_size, hidden_size=num_hiddens)
+    # training_start(model, training_data, val_data, vocab_size, batch_size, num_epochs, lr,
+    #                iterations)
 
-# Generate fake tweets
-print(sample_sequence(model, temperature=0.8))
+    # Load stored model
+    # ckpt_model =  torch.save(model.state_dict(),
+    #                PROJECT_DIR + '/' + '[' + datetime.now().__str__()+'] '+' rnn.ckpt')
+    # print(ckpt_model)

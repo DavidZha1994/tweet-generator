@@ -2,24 +2,18 @@ import random
 import collections
 import re
 import os
-from tokenize import Whitespace
-
 import torch
 import logging
 import pandas as pd
+import preprocessor as pp  # tweet-preprocessor == 0.6.0
 
 from tokenizers.implementations import ByteLevelBPETokenizer, CharBPETokenizer, SentencePieceBPETokenizer, \
     BertWordPieceTokenizer
+from tokenizers import Tokenizer
 from transformers import BertTokenizer
-from tokenizers import Tokenizer, pre_tokenizers, trainers, models
-from tokenizers.models import BPE
-from tokenizers.trainers import BpeTrainer
 from datasets import load_dataset
-from pathlib import Path
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-CLEANED_CSV_DIR = '/Users/yhe/Documents/LocalRepository-Public/tweet-generator/dataset/gatsby.txt'
-
 
 def read_great_gatsby():
     """Load great gatsby text"""
@@ -55,12 +49,12 @@ def get_training_corpus():
             f.write(dataset[i]["text"] + "\n")
 
 
-def train_tokenizer():
+def train_tokenizer(training_source_dir='./dataset/gatsby.txt'):
     """Train a tokenizer from scratch"""
     # Initialize an empty tokenizer from
     # ByteLevelBPETokenizer/ CharBPETokenizer/ BertWordPieceTokenizer/ SentencePieceBPETokenizer
     tokenizer = CharBPETokenizer()
-    tokenizer.train(files='./dataset/gatsby.txt',
+    tokenizer.train(files=training_source_dir,
                     vocab_size=20000,
                     min_frequency=2,
                     show_progress=True,
@@ -254,15 +248,34 @@ def gen_log(dir_to_save=ROOT_DIR):
     return mylogs
 
 
-def csv2txt(csv_dir, colname):
+def csv2txt(csv_dir, txt_dir, col_name='content'):
     df = pd.read_csv(csv_dir, skip_blank_lines=True)
-    df[colname].to_csv('./dataset/csv2seq.txt', sep="\n", index=False, header=False)
+    df[col_name].to_csv(txt_dir, sep="\n", index=False, header=False)
+
+
+def preprocessing(csv_dir, cleaned_csv_dir, col_name='tweet'):
+    tweets_csv = pd.read_csv(csv_dir)
+    df = pd.DataFrame(tweets_csv)
+    # 'content' or 'tweet'
+    cleaned_tweets_list = [pp.clean(content) for content in df[col_name] if pp.clean(content) != '']
+    cleaned_tweets_dict = {'content': cleaned_tweets_list}
+    cleaned_tweets_df = pd.DataFrame(cleaned_tweets_dict)
+    cleaned_tweets_df.to_csv(cleaned_csv_dir)
+
+    return cleaned_tweets_df, cleaned_tweets_dict
+
+
+def count_tokens_not_in_corpus(corpus_dir, training_source_dir):
+    old_tokenizer = Tokenizer.from_file(corpus_dir)
+    new_tokenizer = train_tokenizer(training_source_dir)
 
 
 if __name__ == "__main__":
     # ByteLevelBPETokenizer/ CharBPETokenizer/ BertWordPieceTokenizer/ SentencePieceBPETokenizer
+    train_tokenizer('./dataset/combined_Musks_tweets_cleaned.txt')
     # tok = Tokenizer.from_file('./my_token/ByteLevelBPETokenizer.json')
     # res = tok.encode("I made the mistake of using the tokenizers library with a ByteLevelBPETokenizer, "
     #                  "which uses the 0th and 1st for '!' and '' no matter what I do. ")
     # print(res.tokens)
-    csv2txt('./dataset/train_cleaned.csv', 'content')
+    # preprocessing('./dataset/combined_Musks_tweets.csv', './dataset/combined_Musks_tweets_cleaned.csv')
+    # csv2txt('./dataset/combined_Musks_tweets_cleaned.csv', './dataset/combined_Musks_tweets_cleaned.txt', 'content')
