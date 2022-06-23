@@ -6,6 +6,7 @@ from tokenize import Whitespace
 
 import torch
 import logging
+import pandas as pd
 
 from tokenizers.implementations import ByteLevelBPETokenizer, CharBPETokenizer, SentencePieceBPETokenizer, \
     BertWordPieceTokenizer
@@ -253,9 +254,15 @@ def gen_log(dir_to_save=ROOT_DIR):
     return mylogs
 
 
+def csv2txt(csv_dir, colname):
+    df = pd.read_csv(csv_dir, skip_blank_lines=True)
+    df[colname].to_csv('./dataset/csv2seq.txt', sep="\n", index=False, header=False)
+
+
 if __name__ == "__main__":
     # ByteLevelBPETokenizer/ CharBPETokenizer/ BertWordPieceTokenizer/ SentencePieceBPETokenizer
-    tok = Tokenizer.from_file('./my_token/ByteLevelBPETokenizer.json')
-    res = tok.encode("I made the mistake of using the tokenizers library with a ByteLevelBPETokenizer, "
-                     "which uses the 0th and 1st for '!' and '' no matter what I do. ")
-    print(res.tokens)
+    # tok = Tokenizer.from_file('./my_token/ByteLevelBPETokenizer.json')
+    # res = tok.encode("I made the mistake of using the tokenizers library with a ByteLevelBPETokenizer, "
+    #                  "which uses the 0th and 1st for '!' and '' no matter what I do. ")
+    # print(res.tokens)
+    csv2txt('./dataset/train_cleaned.csv', 'content')
