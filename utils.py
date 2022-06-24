@@ -269,19 +269,21 @@ def preprocessing(csv_dir, cleaned_csv_dir, col_name='tweet'):
     return cleaned_tweets_df, cleaned_tweets_dict
 
 
-def token_counter():
-    trained_tokenizer = Tokenizer.from_file('./my_token/CharBPETokenizer_Musk_cleaned.json')
-    df = pd.read_csv('./dataset/train_cleaned.csv')
+def token_counter(tokenizer_dir='./my_token/CharBPETokenizer_Musk_cleaned.json',
+                  csv_dir='./dataset/val_cleaned.csv',
+                  json_dir='./my_token/val_token_freq.json'):
+    trained_tokenizer = Tokenizer.from_file(tokenizer_dir)
+    df = pd.read_csv(csv_dir)
 
     token_list = []
     for row in df.iterrows():
-        encode = trained_tokenizer.encode(row[1]['content'])
+        encode = trained_tokenizer.encode(row[1]['content'])  # 'content' can also be other column names.
         token_list.extend(encode.tokens)
 
     token_fd = nltk.FreqDist(token_list)
     json_dict = {'token_frequency': []}
 
-    with open('./my_token/token_freq.json', 'w') as f:
+    with open(json_dir, 'w') as f:
         for key in token_fd:
             json_dict['token_frequency'].append({key: token_fd[key]})
         json_str = json.dumps(json_dict)
@@ -289,6 +291,34 @@ def token_counter():
     f.close()
 
     return token_fd
+
+
+def token_freq_diff(json1_dir, json2_dir):
+    """This method is used to check whether the train contains the token of the test, and it returns a json file
+    containing all the tokens that do not exist in the train."""
+    with open(json1_dir, "r") as f1:
+        json1 = json.loads(f1.read())
+    with open(json2_dir, "r") as f2:
+        json2 = json.loads(f2.read())
+
+    diff_dict = {'token_frequency_diff': []}
+    in_list = False
+    with open('my_token/token_frequency_diff.json', 'w') as f:
+        for item2 in json2['token_frequency']:  # test token freq
+            for item1 in json1['token_frequency']:  # training token freq
+                if item2.keys() == '.</w>':
+                    print('found it')
+                if item2.keys() == item1.keys():
+                    in_list = True
+                    break
+            if not in_list:
+                key = list(item2.keys())[0]
+                value = list(item2.values())[0]
+                diff_dict['token_frequency_diff'].append({key: value})
+
+        json_str = json.dumps(diff_dict)
+        f.write(json_str)
+    f.close()
 
 
 if __name__ == "__main__":
@@ -300,4 +330,6 @@ if __name__ == "__main__":
     # print(res.tokens)
     # preprocessing('./dataset/combined_Musks_tweets.csv', './dataset/combined_Musks_tweets_cleaned.csv')
     # csv2txt('./dataset/combined_Musks_tweets_cleaned.csv', './dataset/combined_Musks_tweets_cleaned.txt', 'content')
-    token_counter()
+    # token_counter(csv_dir='./dataset/realdonaldtrump_cleaned.csv',
+    #               json_dir='./my_token/realdonaldtrump_token_freq.json')
+    token_freq_diff('./my_token/training_token_freq.json', './my_token/val_token_freq.json')
