@@ -12,6 +12,7 @@ import json
 from nltk.probability import FreqDist
 from tokenizers.implementations import ByteLevelBPETokenizer, CharBPETokenizer, SentencePieceBPETokenizer, \
     BertWordPieceTokenizer
+from transformers import BertTokenizer
 from tokenizers import Tokenizer
 from transformers import BertTokenizer
 from datasets import load_dataset
@@ -306,8 +307,6 @@ def token_freq_diff(json1_dir, json2_dir):
     with open('my_token/token_frequency_diff.json', 'w') as f:
         for item2 in json2['token_frequency']:  # test token freq
             for item1 in json1['token_frequency']:  # training token freq
-                if item2.keys() == '.</w>':
-                    print('found it')
                 if item2.keys() == item1.keys():
                     in_list = True
                     break
@@ -326,10 +325,21 @@ if __name__ == "__main__":
     # train_tokenizer('./dataset/combined_Musks_tweets_cleaned.txt')
     # tok = Tokenizer.from_file('./my_token/CharBPETokenizer_Musk_cleaned.json')
     # res = tok.encode("Vaccines are just the start. Its also capable in theory of curing almost anything. "
-    #                  "Turns medicine into a software &amp; simulation problem.")
-    # print(res.tokens)
+    #                  "fukushima Turns medicine into a software &amp; simulation problem.")
+    # print(res.ids)
+    # res_ids = res.ids
+    # print(tok.decode(res_ids))
     # preprocessing('./dataset/combined_Musks_tweets.csv', './dataset/combined_Musks_tweets_cleaned.csv')
     # csv2txt('./dataset/combined_Musks_tweets_cleaned.csv', './dataset/combined_Musks_tweets_cleaned.txt', 'content')
     # token_counter(csv_dir='./dataset/realdonaldtrump_cleaned.csv',
     #               json_dir='./my_token/realdonaldtrump_token_freq.json')
-    token_freq_diff('./my_token/training_token_freq.json', './my_token/val_token_freq.json')
+    # token_freq_diff('./my_token/training_token_freq.json', './my_token/val_token_freq.json')
+
+    bert_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+    print(
+        bert_tokenizer.tokenize("Vaccines are just the start. Its also capable in theory of curing almost anything. "))
+
+    brewed_tokenizer = Tokenizer.from_file('./my_token/CharBPETokenizer_Musk_cleaned.json')
+    print(
+        brewed_tokenizer.encode(
+            "Vaccines are just the start. Its also capable in theory of curing almost anything. ").tokens)
