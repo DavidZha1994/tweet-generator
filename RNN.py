@@ -9,17 +9,19 @@ import timeit
 import torchtext  # torchtext==0.4/0.6.0
 import logging
 import random
-from torch.nn import functional as F
-from tqdm import tqdm
-from transformers import BertTokenizer, AutoModelForMaskedLM
 import os
 import pathlib
 
+from tokenizers import Tokenizer
+from torch.nn import functional as F
+from tqdm import tqdm
+from transformers import BertTokenizer, AutoModelForMaskedLM
+
 # Directories Settings
-RAW_CSV_DIR = '/Users/yhe/Documents/LocalRepository-Public/tweet-generator/dataset/elons_val.csv'
 
 PROJECT_DIR = pathlib.Path(os.path.abspath(__file__)).parent
 CLEANED_CSV_DIR = PROJECT_DIR / 'dataset'
+RAW_CSV_DIR = PROJECT_DIR / 'dataset/test.csv'
 
 PROJECT_DIR = str(PROJECT_DIR)
 CLEANED_CSV_DIR = str(CLEANED_CSV_DIR)
@@ -97,31 +99,36 @@ class RNNModelScratch(nn.Module):
         return torch.zeros((batch_size, num_hiddens), device=device),
 
 
-def pre_processor():
-    tweets_csv = pd.read_csv(RAW_CSV_DIR)
-    df = pd.DataFrame(tweets_csv)
-    # 'content' or 'tweet'
-    cleaned_tweets_list = [pp.clean(content) for content in df['tweet'] if pp.clean(content) != '']
-    cleaned_tweets_dict = {'content': cleaned_tweets_list}
-    cleaned_tweets_df = pd.DataFrame(cleaned_tweets_dict)
-    cleaned_tweets_df.to_csv(CLEANED_CSV_DIR + 'cleaned_elons_tweet.csv')
-
-    return cleaned_tweets_df, cleaned_tweets_dict
-
-
 # homemade dataLoader for csv-files
 def brewed_dataLoader(which_data):  # which_ds could be 'training', 'validation'
+    """
+    Note that there are two steps should be done at the beginning if the developer wants to use subword-based tokenization:
+    (1) Create an instance of tokenizer.
+        (option 1) Use pre-trained tokenizer of Huggingface ('hf'):
+        hf_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 
+        (option 2) Use homemade ('hm') pre-trained tokenizer:
+        hm_tokenizer = Tokenizer.from_file(PROJECT_DIR + '/my_token/CharBPETokenizer_Musk_cleaned.json')
+
+    (2) Adapt the parameter 'tokenize' in torchtext.data.Field(...).
+        (option 1) For the instance 'hf_tokenizer':
+        tokenize = hf_tokenizer.tokenize
+
+        (option 2) For the instance 'hm_tokenizer':
+        tokenize = lambda x: hm_tokenizer.encode(x).tokens
+
+    Otherwise, there is no need to create an instance of tokenizer if the developer only wants to use character/word-based tokenization:
+        (character-based) tokenize = lambda x:x
+        (word-based) tokenize = lambda x: x.split()
+    """
     # Subword-based tokenization
-    tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-    # Character-based tokenization
-    # tokenize = lambda x:x
-    # Word-based tokenization
-    # tokenize = lambda x: x.split()
+    hm_tokenizer = Tokenizer.from_file(PROJECT_DIR + '/my_token/CharBPETokenizer_Musk_cleaned.json')
+    # tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 
     # it is for character/word-based tokenization
     text_field = torchtext.data.Field(sequential=True,  # text sequence
-                                      tokenize=tokenizer.tokenize,  # because are building a character/subword/word-RNN
+                                      tokenize=lambda x: hm_tokenizer.encode(x).tokens,
+                                      # because are building a character/subword/word-RNN
                                       include_lengths=True,  # to track the length of sequences, for batching
                                       batch_first=True,
                                       use_vocab=True,  # to turn each character/word/subword into an integer index
@@ -201,7 +208,7 @@ def train(model, training_data, val_data, vocab_size, batch_size=1, num_epochs=1
 
             # forward pass
             # state = model.begin_state(batch_size=inp.shape[0], device=get_device())
-            output, state = model(inp) # , state
+            output, state = model(inp)  # , state
             # output, _ = model(inp)
             loss = criterion(output.reshape(-1, vocab_size), target.reshape(-1))
 
@@ -224,7 +231,7 @@ def train(model, training_data, val_data, vocab_size, batch_size=1, num_epochs=1
                         # val_state = model.begin_state(batch_size=val_inp.shape[0], device=get_device())
 
                         # forward pass
-                        val_output, _ = model(val_inp) #, val_state
+                        val_output, _ = model(val_inp)  # , val_state
                         # val_output, _ = model(val_inp)
                         val_loss = criterion(val_output.reshape(-1, vocab_size), val_target.reshape(-1))
                         avg_val_loss += val_loss
@@ -271,7 +278,7 @@ def sample_sequence(model, max_len=100, temperature=0.8):
     inp = torch.Tensor([vocab_stoi["<BOS>"]]).long().to(get_device())
     # hidden = model.begin_state(inp.shape[0], get_device())
     for p in range(max_len):
-        output, hidden = model(inp.unsqueeze(0)) # , hidden
+        output, hidden = model(inp.unsqueeze(0))  # , hidden
         # Sample from the network as a multinomial distribution
         output_dist = output.data.view(-1).div(temperature).exp()
         top_i = int(torch.multinomial(output_dist, 1)[0])
@@ -293,7 +300,7 @@ def sample_word_sequence(model, max_len=100, temperature=0.8):
     inp = torch.Tensor([vocab_stoi["<BOS>"]]).long().to(get_device())
     # hidden = model.begin_state(inp.shape[0], get_device())
     for p in range(max_len):
-        output, hidden = model(inp.unsqueeze(0)) # , hidden
+        output, hidden = model(inp.unsqueeze(0))  # , hidden
         # Sample from the network as a multinomial distribution
         output_dist = output.data.view(-1).div(temperature).exp()
         top_i = int(torch.multinomial(output_dist, 1)[0])
@@ -309,21 +316,18 @@ def sample_word_sequence(model, max_len=100, temperature=0.8):
 
 ########################################################################################################################
 
-# Train the Tweet Generator
-print(f"Training on device: {get_device()}")
-training_data, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('training')
-val_data, _, _, _ = brewed_dataLoader('validation')
-# testing_data, testing_iter, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('testing')
 
-model = TweetGenerator(vocab_size, hidden_size=num_hiddens)
-# model = RNNModelScratch(vocab_size, num_hiddens, get_device())
-training_start(model, training_data, val_data, vocab_size, batch_size, num_epochs, lr,
-               iterations)
+if __name__ == '__main__':
+    # Train the Tweet Generator
+    print(f"Training on device: {get_device()}")
+    training_data, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('training')
+    val_data, _, _, _ = brewed_dataLoader('validation')
 
-# Load stored model
-# ckpt_model =  torch.save(model.state_dict(),
-#                PROJECT_DIR + '/' + '[' + datetime.now().__str__()+'] '+' rnn.ckpt')
-# print(ckpt_model)
+    model = TweetGenerator(vocab_size, hidden_size=num_hiddens)
+    training_start(model, training_data, val_data, vocab_size, batch_size, num_epochs, lr,
+                   iterations)
 
-# Generate fake tweets
-print(sample_sequence(model, temperature=0.8))
+    # Load stored model
+    # ckpt_model =  torch.save(model.state_dict(),
+    #                PROJECT_DIR + '/' + '[' + datetime.now().__str__()+'] '+' rnn.ckpt')
+    # print(ckpt_model)

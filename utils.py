@@ -2,22 +2,22 @@ import random
 import collections
 import re
 import os
-from tokenize import Whitespace
-
 import torch
 import logging
+import pandas as pd
+import preprocessor as pp  # tweet-preprocessor == 0.6.0
+import nltk
+import json
 
+from nltk.probability import FreqDist
 from tokenizers.implementations import ByteLevelBPETokenizer, CharBPETokenizer, SentencePieceBPETokenizer, \
     BertWordPieceTokenizer
 from transformers import BertTokenizer
-from tokenizers import Tokenizer, pre_tokenizers, trainers, models
-from tokenizers.models import BPE
-from tokenizers.trainers import BpeTrainer
+from tokenizers import Tokenizer
+from transformers import BertTokenizer
 from datasets import load_dataset
-from pathlib import Path
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-CLEANED_CSV_DIR = '/Users/yhe/Documents/LocalRepository-Public/tweet-generator/dataset/gatsby.txt'
 
 
 def read_great_gatsby():
@@ -54,12 +54,12 @@ def get_training_corpus():
             f.write(dataset[i]["text"] + "\n")
 
 
-def train_tokenizer():
+def train_tokenizer(training_source_dir='./dataset/gatsby.txt'):
     """Train a tokenizer from scratch"""
     # Initialize an empty tokenizer from
     # ByteLevelBPETokenizer/ CharBPETokenizer/ BertWordPieceTokenizer/ SentencePieceBPETokenizer
     tokenizer = CharBPETokenizer()
-    tokenizer.train(files='./dataset/gatsby.txt',
+    tokenizer.train(files=training_source_dir,
                     vocab_size=20000,
                     min_frequency=2,
                     show_progress=True,
@@ -253,9 +253,93 @@ def gen_log(dir_to_save=ROOT_DIR):
     return mylogs
 
 
+def csv2txt(csv_dir, txt_dir, col_name='content'):
+    df = pd.read_csv(csv_dir, skip_blank_lines=True)
+    df[col_name].to_csv(txt_dir, sep="\n", index=False, header=False)
+
+
+def preprocessing(csv_dir, cleaned_csv_dir, col_name='tweet'):
+    tweets_csv = pd.read_csv(csv_dir)
+    df = pd.DataFrame(tweets_csv)
+    # 'content' or 'tweet'
+    cleaned_tweets_list = [pp.clean(content) for content in df[col_name] if pp.clean(content) != '']
+    cleaned_tweets_dict = {'content': cleaned_tweets_list}
+    cleaned_tweets_df = pd.DataFrame(cleaned_tweets_dict)
+    cleaned_tweets_df.to_csv(cleaned_csv_dir)
+
+    return cleaned_tweets_df, cleaned_tweets_dict
+
+
+def token_counter(tokenizer_dir='./my_token/CharBPETokenizer_Musk_cleaned.json',
+                  csv_dir='./dataset/val_cleaned.csv',
+                  json_dir='./my_token/val_token_freq.json'):
+    trained_tokenizer = Tokenizer.from_file(tokenizer_dir)
+    df = pd.read_csv(csv_dir)
+
+    token_list = []
+    for row in df.iterrows():
+        encode = trained_tokenizer.encode(row[1]['content'])  # 'content' can also be other column names.
+        token_list.extend(encode.tokens)
+
+    token_fd = nltk.FreqDist(token_list)
+    json_dict = {'token_frequency': []}
+
+    with open(json_dir, 'w') as f:
+        for key in token_fd:
+            json_dict['token_frequency'].append({key: token_fd[key]})
+        json_str = json.dumps(json_dict)
+        f.write(json_str)
+    f.close()
+
+    return token_fd
+
+
+def token_freq_diff(json1_dir, json2_dir):
+    """This method is used to check whether the train contains the token of the test, and it returns a json file
+    containing all the tokens that do not exist in the train."""
+    with open(json1_dir, "r") as f1:
+        json1 = json.loads(f1.read())
+    with open(json2_dir, "r") as f2:
+        json2 = json.loads(f2.read())
+
+    diff_dict = {'token_frequency_diff': []}
+    in_list = False
+    with open('my_token/token_frequency_diff.json', 'w') as f:
+        for item2 in json2['token_frequency']:  # test token freq
+            for item1 in json1['token_frequency']:  # training token freq
+                if item2.keys() == item1.keys():
+                    in_list = True
+                    break
+            if not in_list:
+                key = list(item2.keys())[0]
+                value = list(item2.values())[0]
+                diff_dict['token_frequency_diff'].append({key: value})
+
+        json_str = json.dumps(diff_dict)
+        f.write(json_str)
+    f.close()
+
+
 if __name__ == "__main__":
     # ByteLevelBPETokenizer/ CharBPETokenizer/ BertWordPieceTokenizer/ SentencePieceBPETokenizer
-    tok = Tokenizer.from_file('./my_token/ByteLevelBPETokenizer.json')
-    res = tok.encode("I made the mistake of using the tokenizers library with a ByteLevelBPETokenizer, "
-                     "which uses the 0th and 1st for '!' and '' no matter what I do. ")
-    print(res.tokens)
+    # train_tokenizer('./dataset/combined_Musks_tweets_cleaned.txt')
+    # tok = Tokenizer.from_file('./my_token/CharBPETokenizer_Musk_cleaned.json')
+    # res = tok.encode("Vaccines are just the start. Its also capable in theory of curing almost anything. "
+    #                  "fukushima Turns medicine into a software &amp; simulation problem.")
+    # print(res.ids)
+    # res_ids = res.ids
+    # print(tok.decode(res_ids))
+    # preprocessing('./dataset/combined_Musks_tweets.csv', './dataset/combined_Musks_tweets_cleaned.csv')
+    # csv2txt('./dataset/combined_Musks_tweets_cleaned.csv', './dataset/combined_Musks_tweets_cleaned.txt', 'content')
+    # token_counter(csv_dir='./dataset/realdonaldtrump_cleaned.csv',
+    #               json_dir='./my_token/realdonaldtrump_token_freq.json')
+    # token_freq_diff('./my_token/training_token_freq.json', './my_token/val_token_freq.json')
+
+    bert_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+    print(
+        bert_tokenizer.tokenize("Vaccines are just the start. Its also capable in theory of curing almost anything. "))
+
+    brewed_tokenizer = Tokenizer.from_file('./my_token/CharBPETokenizer_Musk_cleaned.json')
+    print(
+        brewed_tokenizer.encode(
+            "Vaccines are just the start. Its also capable in theory of curing almost anything. ").tokens)
