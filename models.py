@@ -130,3 +130,39 @@ class StackedLstm(nn.Module):
     def begin_state(self, batch_size, device):
         return torch.zeros((batch_size, self.num_hiddens), device=device), torch.zeros((batch_size, self.num_hiddens),
                                                                                        device=device)
+
+
+class CNN(nn.Module):
+    def __init__(self, vocab_size, seq_len, device):
+        super(CNN, self).__init__()
+
+        self.device = device
+        self.vocab_size = vocab_size
+        self.seq_len = seq_len
+        self.pad_idx = 1    # vacab index for the padding
+
+        self.conv1 = nn.Conv1d(vocab_size, int(vocab_size/2), kernel_size=5, device=device)
+        self.pool = nn.MaxPool1d(2)
+        self.conv2 = nn.Conv1d(int(vocab_size/2), 100, 5, device=device)
+        self.conv3 = nn.Conv1d(100, 10, 3, device=device)
+        self.fc1 = nn.Linear(200, self.vocab_size, device=device)   # input size for linear layer?
+        self.fc2 = nn.Linear(120, 84, device=device)
+        self.fc3 = nn.Linear(84, 10, device=device)
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, X):
+        # trim or pad sequence if it doesn't has the required length
+        if X.shape[1] >= self.seq_len:
+            X = X[:, :self.seq_len]
+        else:
+            X = torch.column_stack((X, torch.ones((64, self.seq_len - X.shape[1]), dtype=int, device=self.device)))
+
+        X = F.one_hot(X.T, self.vocab_size).type(torch.float32)
+        X = X.permute([1, 2, 0])
+        X = self.pool(F.relu(self.conv1(X)))
+        X = self.pool(F.relu(self.conv2(X)))
+        X = torch.flatten(X, 1)
+        X = self.fc1(X)
+        X = self.sigmoid(X)
+
+        return X, ()

@@ -11,14 +11,15 @@ from transformers import BertTokenizer
 import os
 import pathlib
 
-from models import TweetGenerator, RNNModelScratch, StackedLstm
+from models import TweetGenerator, RNNModelScratch, StackedLstm, CNN
 from utils import Accumulator
 import math
 import matplotlib.pyplot as plt
 
 
 def get_device():
-    return torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    return 'cpu'
+    # return torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 
 def get_model_idx(log_dir, model_name):
@@ -76,13 +77,12 @@ def train(model, training_data, val_data, vocab_size, vocab_stoi, vocab_itos, op
 
             # forward pass
             output, state = model(inp)
-            loss = criterion(output.reshape(-1, vocab_size), target.reshape(-1)).mean()
+            loss = criterion(output.reshape(-1, vocab_size), target[:,-1].reshape(-1)).mean()
 
             # backward pass
             optimizer.zero_grad()
             loss.backward()
-            grad_clipping(model, 1)
-            optimizer.step()
+            # grad_clipping(model, 1)
 
             metric.add(loss * output.numel(), output.numel())
 
@@ -99,16 +99,6 @@ def train(model, training_data, val_data, vocab_size, vocab_stoi, vocab_itos, op
         val_results.append(val_ppl)
 
     return train_results, val_results
-
-
-def grad_clipping(net, theta):
-    """Clip the gradient."""
-    params = [p for p in net.parameters() if p.requires_grad]
-
-    norm = torch.sqrt(sum(torch.sum((p.grad ** 2)) for p in params))
-    if norm > theta:
-        for param in params:
-            param.grad[:] *= theta / norm
 
 
 @torch.no_grad()
@@ -244,9 +234,7 @@ if __name__ == '__main__':
     val_data, _, _, _ = brewed_dataLoader('validation', csv_dir)
     # testing_data, testing_iter, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('testing')
 
-    models = [RNNModelScratch(vocab_size, num_hiddens, device=get_device()),
-              TweetGenerator(vocab_size, hidden_size=num_hiddens, device=get_device()),
-              StackedLstm(vocab_size, num_hiddens, device=get_device())]
+    models = [CNN(vocab_size, 20, get_device())]
 
     for i in range(len(models)):
         optimizer = torch.optim.Adam(models[i].parameters(), lr=lr)
