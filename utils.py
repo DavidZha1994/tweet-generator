@@ -2,6 +2,9 @@ import random
 import collections
 import re
 
+from transformers import BertTokenizer
+import torchtext
+
 import torch
 
 
@@ -158,8 +161,67 @@ def load_data_gatsby(batch_size, num_steps,
                      use_random_iter=False, start_token=0, max_tokens=10000, relative_size=False):
     """Return the iterator and the vocabulary of the gatsby dataset."""
     data_iter = SeqDataLoader(
-        batch_size, num_steps, use_random_iter,start_token, max_tokens, relative_size)
+        batch_size, num_steps, use_random_iter, start_token, max_tokens, relative_size)
     return data_iter, data_iter.vocab
+
+
+def brewed_dataLoader(which_data, data_dir, tokenization='char'):  # which_ds could be 'training', 'validation'
+
+    # Subword-based tokenization
+    # tokenize = BertTokenizer.from_pretrained("bert-base-uncased").tokenize
+    # Character-based tokenization
+    # tokenize = lambda x:x
+    # Word-based tokenization
+    tokenize = lambda x: x.split()
+
+    if tokenization == 'char':
+        # character level tokenization
+        tokenize = lambda x: x
+    elif tokenization == 'word':
+        # word level tokenization
+        tokenize = lambda x: x.split()
+    elif tokenization == 'subword':
+        # sub-word level tokenization
+        tokenize = BertTokenizer.from_pretrained("bert-base-uncased").tokenize
+    else:
+        raise Exception("Wrong parameter for 'tokenization'-argument please use one of these: 'char', 'word', 'subword'")
+
+    # it is for character/word-based tokenization
+    text_field = torchtext.data.Field(sequential=True,  # text sequence
+                                      tokenize=tokenize,  # because are building a character/subword/word-RNN
+                                      include_lengths=True,  # to track the length of sequences, for batching
+                                      batch_first=True,
+                                      use_vocab=True,  # to turn each character/word/subword into an integer index
+                                      init_token="<BOS>",  # BOS token
+                                      eos_token="<EOS>",  # EOS token
+                                      unk_token=None)
+
+    train_data, val_data = torchtext.data.TabularDataset.splits(
+        path=data_dir,
+        train='train_cleaned.csv',
+        validation='val_cleaned.csv',
+        format='csv',
+        skip_header=True,
+        fields=[
+            ('', None),  # first column is unnamed
+            ('content', text_field)
+        ])
+
+    text_field.build_vocab(train_data, val_data)
+    vocab_stoi = text_field.vocab.stoi
+    vocab_itos = text_field.vocab.itos
+    vocab_size = len(text_field.vocab.itos)
+
+    if which_data == 'validation':
+        data = val_data
+    else:
+        data = train_data
+
+    print("tweets content: ", data.examples[6].content)
+    print("tweets length: ", len(data))
+    print("vocab_size: ", vocab_size)
+
+    return data, vocab_stoi, vocab_itos, vocab_size
 
 
 class Accumulator:
@@ -176,3 +238,7 @@ class Accumulator:
 
     def __getitem__(self, idx):
         return self.data[idx]
+
+
+def get_device():
+    return torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
