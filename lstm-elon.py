@@ -11,7 +11,7 @@ import sys
 import pathlib
 import torchtext
 from random import choice
-from models import StackedLstm, RNNModelScratch, TweetGenerator, LSTM
+from models import StackedLstm, RNNModelScratch, TweetGenerator, LSTM, GRU
 
 is_logger_adjusted = False
 
@@ -142,24 +142,22 @@ def train(net, train_iter, val_iter, vocab, lr, num_epochs, device, logger=None,
     plt.clf()
 
 
-def adjust_logger(project_dir: str, file_name: str, logger):
+def create_logger(project_dir: str, file_name: str):
     """
     Generate a logging file and add to logger
     :return: logger
     """
-    global is_logger_adjusted
 
     (pathlib.Path(project_dir) / 'log').mkdir(exist_ok=True)
     print("log file generated: " + file_name)
     file = logging.FileHandler(project_dir + "/log/" + file_name + ".log")
     file.setLevel(logging.INFO)
+    logger = logging.getLogger(file_name)
     logger.setLevel(logging.INFO)
     logger.addHandler(file)
 
-    if not is_logger_adjusted:
-        logger.addHandler(logging.StreamHandler(sys.stdout))
+    logger.addHandler(logging.StreamHandler(sys.stdout))
 
-    is_logger_adjusted = True
     return logger
 
 
@@ -170,8 +168,7 @@ def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str 
     csv_dir = project_dir / 'dataset'
     project_dir, csv_dir = str(project_dir), str(csv_dir)
 
-    logger = logging.getLogger(__name__)
-    logger = adjust_logger(project_dir, experiment_name, logger)
+    logger = create_logger(project_dir, experiment_name)
     logger.info(f"Starting run {experiment_name} with {model=} "
                 f"{tokenization=} {epochs=} {num_hiddens=} device={get_device()}")
 
@@ -180,6 +177,7 @@ def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str 
         'lstm': LSTM,
         'stacked_lstm': StackedLstm,
         'rnn_torch': TweetGenerator,
+        'gru': GRU
     }
 
     batch_size = 64
@@ -209,8 +207,9 @@ def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str 
 
 
 if __name__ == '__main__':
-    run_experiment('rnn_torch-subword', 'rnn_torch', epochs=100, num_hiddens=128)
-    run_experiment('rnn_scr-subword', 'rnn_scratch', epochs=100, num_hiddens=128)
+    run_experiment('gru-subword', 'gru', epochs=100, num_hiddens=128)
+    run_experiment('rnn_torch-subword', 'rnn_torch', epochs=10, num_hiddens=128)
+    run_experiment('rnn_scr-subword', 'rnn_scratch', epochs=10, num_hiddens=128)
     run_experiment('lstm-subword', 'lstm', epochs=100, num_hiddens=128)
     run_experiment('lstm_stacked-subword', 'stacked_lstm', epochs=100, num_hiddens=128)
     run_experiment('rnn_torch-char', 'rnn_torch', epochs=100, num_hiddens=128, tokenization='char')

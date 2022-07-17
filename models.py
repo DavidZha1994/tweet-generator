@@ -177,3 +177,43 @@ class StackedLstm(nn.Module):
     def begin_rand_state(self, batch_size, device):
         return torch.rand((batch_size, self.num_hiddens), device=device), torch.rand((batch_size, self.num_hiddens),
                                                                                      device=device)
+
+
+class GRU(nn.Module):
+    """A RNN Model implemented from scratch."""
+
+    def __init__(self, vocab_size, num_hiddens, device):
+        super(GRU, self).__init__()
+
+        input_size = output_size = vocab_size
+        self.vocab_size, self.num_hiddens = vocab_size, num_hiddens
+        self.device = device
+
+        # reference: https://en.wikipedia.org/wiki/Gated_recurrent_unit#Fully_gated_unit
+        self.i2z = nn.Linear(input_size + num_hiddens, num_hiddens, device=device)
+        self.i2r = nn.Linear(input_size + num_hiddens, num_hiddens, device=device)
+        self.i2h = nn.Linear(input_size + num_hiddens, num_hiddens, device=device)
+        self.h2o = nn.Linear(num_hiddens, output_size, device=device)
+
+    def forward(self, X, state=None):
+        X = F.one_hot(X.T, self.vocab_size).type(torch.float32)
+        # Shape of `X`: (`sequence_size`,`batch_size`, `vocab_size`)
+
+        if state is None:
+            state = self.begin_state(X.shape[1], self.device)
+
+        H, = state
+        outputs = []
+        # Shape of `X_step`: (`batch_size`, `vocab_size`)
+        for X_step in X:
+            z = torch.sigmoid(self.i2z(torch.cat((X_step, H), 1)))
+            r = torch.sigmoid(self.i2r(torch.cat((X_step, H), 1)))
+            h = torch.tanh(self.i2h(torch.cat((X_step, r * H), 1)))
+            H = z * h + (1 - z) * H
+            Y = self.h2o(H)
+
+            outputs.append(Y)
+        return torch.cat(outputs, dim=0), (H,)
+
+    def begin_state(self, batch_size, device):
+        return torch.zeros((batch_size, self.num_hiddens), device=device),
