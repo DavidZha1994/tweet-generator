@@ -11,7 +11,7 @@ from transformers import BertTokenizer
 import os
 import pathlib
 
-from models import TweetGenerator, RNNModelScratch, StackedLstm
+from models import RNNModelPyTorch, RNNModelScratch, StackedLstm
 from utils import Accumulator
 import math
 import matplotlib.pyplot as plt
@@ -165,12 +165,28 @@ def sample_sequence(model, vocab_stoi, vocab_itos, max_len=100, temperature=0.8)
 
         if predicted_char == "<EOS>":
             break
-        generated_sequence += predicted_char
+        generated_sequence += ' ' + predicted_char
         inp = torch.Tensor([top_i]).long().to(get_device())
     return generated_sequence
 
 
 def brewed_dataLoader(which_data, data_dir):  # which_ds could be 'training', 'validation'
+    """
+    Note that there are two steps should be done at the beginning if the developer wants to use subword-based tokenization:
+    (1) Create an instance of tokenizer.
+        (option 1) Use pre-trained tokenizer of Huggingface ('hf'):
+        hf_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+        (option 2) Use homemade ('hm') pre-trained tokenizer:
+        hm_tokenizer = Tokenizer.from_file(PROJECT_DIR + '/my_token/CharBPETokenizer_Musk_cleaned.json')
+    (2) Adapt the parameter 'tokenize' in torchtext.data.Field(...).
+        (option 1) For the instance 'hf_tokenizer':
+        tokenize = hf_tokenizer.tokenize
+        (option 2) For the instance 'hm_tokenizer':
+        tokenize = lambda x: hm_tokenizer.encode(x).tokens
+    Otherwise, there is no need to create an instance of tokenizer if the developer only wants to use character/word-based tokenization:
+        (character-based) tokenize = lambda x:x
+        (word-based) tokenize = lambda x: x.split()
+    """
 
     # Subword-based tokenization
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
@@ -245,7 +261,7 @@ if __name__ == '__main__':
     # testing_data, testing_iter, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('testing')
 
     models = [RNNModelScratch(vocab_size, num_hiddens, device=get_device()),
-              TweetGenerator(vocab_size, hidden_size=num_hiddens, device=get_device()),
+              RNNModelPyTorch(vocab_size, hidden_size=num_hiddens, device=get_device()),
               StackedLstm(vocab_size, num_hiddens, device=get_device())]
 
     for i in range(len(models)):
@@ -253,9 +269,10 @@ if __name__ == '__main__':
 
         model_name = models[i].__class__.__name__
         gen_log(project_dir, model_name, logger)
-        train_res, val_res = train_logged(models[i], train_data, val_data, vocab_size, vocab_stoi, vocab_itos, optimizer,
+        train_res, val_res = train_logged(models[i], train_data, val_data, vocab_size, vocab_stoi, vocab_itos,
+                                          optimizer,
                                           batch_size, num_epochs, iterations, logger, project_dir)
 
-        plot_title = f"{model_name}{get_model_idx(project_dir+'/', model_name)-1:03d}"
+        plot_title = f"{model_name}{get_model_idx(project_dir + '/', model_name) - 1:03d}"
         plot_train_val(train_res, val_res, scale='linear', title=plot_title)
         plot_train_val(train_res, val_res, scale='log', title=plot_title)

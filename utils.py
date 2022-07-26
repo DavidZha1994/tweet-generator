@@ -5,10 +5,11 @@ import os
 import torch
 import logging
 import pandas as pd
-import preprocessor as pp  # tweet-preprocessor == 0.6.0
+# import preprocessor as pp  # tweet-preprocessor == 0.6.0
 import nltk
 import json
 
+import torchtext
 from nltk.probability import FreqDist
 from tokenizers.implementations import ByteLevelBPETokenizer, CharBPETokenizer, SentencePieceBPETokenizer, \
     BertWordPieceTokenizer
@@ -213,32 +214,6 @@ def load_data_gatsby(batch_size, num_steps,
     return data_iter, data_iter.vocab
 
 
-def load_data_mask():
-    # TODO: put the dataLoader of mask's tweets
-    pass
-
-
-def load_data_trump():
-    # TODO: put the dataLoader of trump's tweets
-    pass
-
-
-class Accumulator:
-    """For accumulating sums over `n` variables."""
-
-    def __init__(self, n):
-        self.data = [0.0] * n
-
-    def add(self, *args):
-        self.data = [a + float(b) for a, b in zip(self.data, args)]
-
-    def reset(self):
-        self.data = [0.0] * len(self.data)
-
-    def __getitem__(self, idx):
-        return self.data[idx]
-
-
 def gen_log(dir_to_save=ROOT_DIR):
     mylogs = logging.getLogger(__name__)
     mylogs.setLevel(logging.INFO)
@@ -258,16 +233,18 @@ def csv2txt(csv_dir, txt_dir, col_name='content'):
     df[col_name].to_csv(txt_dir, sep="\n", index=False, header=False)
 
 
-def preprocessing(csv_dir, cleaned_csv_dir, col_name='tweet'):
-    tweets_csv = pd.read_csv(csv_dir)
-    df = pd.DataFrame(tweets_csv)
-    # 'content' or 'tweet'
-    cleaned_tweets_list = [pp.clean(content) for content in df[col_name] if pp.clean(content) != '']
-    cleaned_tweets_dict = {'content': cleaned_tweets_list}
-    cleaned_tweets_df = pd.DataFrame(cleaned_tweets_dict)
-    cleaned_tweets_df.to_csv(cleaned_csv_dir)
-
-    return cleaned_tweets_df, cleaned_tweets_dict
+# def preprocessing(csv_dir, cleaned_csv_dir, col_name='tweet'):
+#     tweets_csv = pd.read_csv(csv_dir)  # read the original csv. file.
+#     df = pd.DataFrame(tweets_csv)  # convert csv. file into DataFrame with a 2 dimensional data structure.
+#
+#     cleaned_tweets_list = [pp.clean(content) for content in df[col_name] if
+#                            pp.clean(content) != '']  # clean the content by using package 'preprocessor'.
+#
+#     cleaned_tweets_dict = {'content': cleaned_tweets_list}  # create a dictionary to save cleaned data.
+#     cleaned_tweets_df = pd.DataFrame(cleaned_tweets_dict)  # convert dictionary into DataFrame
+#     cleaned_tweets_df.to_csv(cleaned_csv_dir)  # convert DataFrame into csv. file and save in the same path.
+#
+#     return cleaned_tweets_df, cleaned_tweets_dict
 
 
 def token_counter(tokenizer_dir='./my_token/CharBPETokenizer_Musk_cleaned.json',
@@ -318,6 +295,111 @@ def token_freq_diff(json1_dir, json2_dir):
         json_str = json.dumps(diff_dict)
         f.write(json_str)
     f.close()
+
+
+def brewed_dataLoader(which_data, data_dir, tokenization='char', level_type=''):  # which_ds could be 'training', 'validation'
+    """
+    Note that there are two steps should be done at the beginning if the developer wants to use subword-based tokenization:
+    (1) Create an instance of tokenizer.
+        (option 1) Use pre-trained tokenizer of Huggingface ('hf'):
+        hf_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+        (option 2) Use homemade ('hm') pre-trained tokenizer:
+        hm_tokenizer = Tokenizer.from_file(PROJECT_DIR + '/my_token/CharBPETokenizer_Musk_cleaned.json')
+    (2) Adapt the parameter 'tokenize' in torchtext.data.Field(...).
+        (option 1) For the instance 'hf_tokenizer':
+        tokenize = hf_tokenizer.tokenize
+        (option 2) For the instance 'hm_tokenizer':
+        tokenize = lambda x: hm_tokenizer.encode(x).tokens
+    Otherwise, there is no need to create an instance of tokenizer if the developer only wants to use character/word-based tokenization:
+        (character-based) tokenize = lambda x:x
+        (word-based) tokenize = lambda x: x.split()
+    """
+
+    # Subword-based tokenization
+    # tokenize = BertTokenizer.from_pretrained("bert-base-uncased").tokenize
+    # Character-based tokenization
+    # tokenize = lambda x:x
+    # Word-based tokenization
+    tokenize = lambda x: x.split()
+
+    if tokenization == 'char':
+        # character level tokenization
+        tokenize = lambda x: x
+    elif tokenization == 'word':
+        # word level tokenization
+        tokenize = lambda x: x.split()
+    elif tokenization == 'subword':
+        # sub-word level tokenization
+        if level_type == 'wordLevel':
+            brewed_tokenizer = Tokenizer.from_file('./my_token/BertWordPieceTokenizer_train.json')
+            tokenize = lambda x: brewed_tokenizer.encode(x).tokens
+        elif level_type == 'byteLevel':
+            brewed_tokenizer = Tokenizer.from_file('./my_token/ByteLevelBPETokenizer_train.json')
+            tokenize = lambda x: brewed_tokenizer.encode(x).tokens
+        elif level_type == 'charLevel':
+            brewed_tokenizer = Tokenizer.from_file('./my_token/CharBPETokenizer_train.json')
+            tokenize = lambda x: brewed_tokenizer.encode(x).tokens
+        elif level_type == 'sentenceLevel':
+            brewed_tokenizer = Tokenizer.from_file('./my_token/SentencePieceBPETokenizer_train.json')
+            tokenize = lambda x: brewed_tokenizer.encode(x).tokens
+        else:
+            tokenize = BertTokenizer.from_pretrained("bert-base-uncased").tokenize
+    else:
+        raise Exception(
+            "Wrong parameter for 'tokenization'-argument please use one of these: 'char', 'word', 'subword'")
+
+    # it is for character/word-based tokenization
+    text_field = torchtext.data.Field(sequential=True,  # text sequence
+                                      tokenize=tokenize,  # because are building a character/subword/word-RNN
+                                      include_lengths=True,  # to track the length of sequences, for batching
+                                      batch_first=True,
+                                      use_vocab=True,  # to turn each character/word/subword into an integer index
+                                      init_token="<BOS>",  # BOS token
+                                      eos_token="<EOS>",  # EOS token
+                                      unk_token=None)
+
+    train_data, val_data = torchtext.data.TabularDataset.splits(
+        path=data_dir,
+        train='train_cleaned.csv',
+        validation='val_cleaned.csv',
+        format='csv',
+        skip_header=True,
+        fields=[
+            ('', None),  # first column is unnamed
+            ('content', text_field)
+        ])
+
+    text_field.build_vocab(train_data, val_data)
+    vocab_stoi = text_field.vocab.stoi
+    vocab_itos = text_field.vocab.itos
+    vocab_size = len(text_field.vocab.itos)
+
+    if which_data == 'validation':
+        data = val_data
+    else:
+        data = train_data
+
+    print("tweets content: ", data.examples[6].content)
+    print("tweets length: ", len(data))
+    print("vocab_size: ", vocab_size)
+
+    return data, vocab_stoi, vocab_itos, vocab_size
+
+
+class Accumulator:
+    """For accumulating sums over `n` variables."""
+
+    def __init__(self, n):
+        self.data = [0.0] * n
+
+    def add(self, *args):
+        self.data = [a + float(b) for a, b in zip(self.data, args)]
+
+    def reset(self):
+        self.data = [0.0] * len(self.data)
+
+    def __getitem__(self, idx):
+        return self.data[idx]
 
 
 if __name__ == "__main__":

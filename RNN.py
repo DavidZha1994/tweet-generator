@@ -293,7 +293,7 @@ def sample_sequence(model, max_len=100, temperature=0.8):
 
 
 # A sequence generator for word prediction
-def sample_word_sequence(model, max_len=100, temperature=0.8):
+def sample_word_sequence(model, max_len=100, temperature=0.8, vocab_stoi={}, vocab_itos={}):
     # TODO: define a seed input
     generated_sequence = ""
     # one-to-many
@@ -318,16 +318,10 @@ def sample_word_sequence(model, max_len=100, temperature=0.8):
 
 
 if __name__ == '__main__':
-    # Train the Tweet Generator
-    print(f"Training on device: {get_device()}")
-    training_data, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('training')
-    val_data, _, _, _ = brewed_dataLoader('validation')
-
-    model = TweetGenerator(vocab_size, hidden_size=num_hiddens)
-    training_start(model, training_data, val_data, vocab_size, batch_size, num_epochs, lr,
-                   iterations)
-
     # Load stored model
     # ckpt_model =  torch.save(model.state_dict(),
     #                PROJECT_DIR + '/' + '[' + datetime.now().__str__()+'] '+' rnn.ckpt')
     # print(ckpt_model)
+    model = TweetGenerator()
+
+    pass
