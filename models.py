@@ -5,17 +5,15 @@ from torch.nn import functional as F
 
 class RNNModelPyTorch(nn.Module):
     """An RNN Model implemented from PyTorch."""
+
     def __init__(self, input_size, hidden_size, device='cpu', n_layers=1):
         super(RNNModelPyTorch, self).__init__()
 
-        # identiy matrix for generating one-hot vectors
-        self.ident = torch.eye(input_size, device=device)
         self.input_size = input_size
         self.hidden_size = hidden_size
         self.output_size = input_size
         self.device = device
 
-        # recurrent neural network
         # batch_first means that the first dim of the input and output will be the batch_size
         self.rnn = nn.RNN(
             input_size,
@@ -30,9 +28,8 @@ class RNNModelPyTorch(nn.Module):
         self.fc = nn.Linear(hidden_size, self.output_size, device=device)
 
     def forward(self, x, h_state=None):
-        x = self.ident[x]  # generate one-hot vectors of input
-        # if h_state is None:
-        #     h_state = torch.zeros((x.shape[1], self.hidden_size), device=self.device)
+        # x = self.ident[x]  # generate one-hot vectors of input
+        x = F.one_hot(input=x, num_classes=self.input_size).type(torch.float32)  # generate one-hot vectors of input
         output, h_state = self.rnn(x, h_state)  # get the next output and hidden state
         output = self.fc(output)  # predict distribution over next tokens
         output = output.reshape(-1, self.input_size)  # reshape to 2D tensor

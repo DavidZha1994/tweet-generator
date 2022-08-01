@@ -1,3 +1,4 @@
+import pathlib
 import random
 import collections
 import re
@@ -13,13 +14,12 @@ import torchtext
 from nltk.probability import FreqDist
 from tokenizers.implementations import ByteLevelBPETokenizer, CharBPETokenizer, SentencePieceBPETokenizer, \
     BertWordPieceTokenizer
-from transformers import BertTokenizer
 from tokenizers import Tokenizer
 from transformers import BertTokenizer
 from datasets import load_dataset
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-
+nltk.download('punkt')
 
 def read_great_gatsby():
     """Load great gatsby text"""
@@ -55,11 +55,17 @@ def get_training_corpus():
             f.write(dataset[i]["text"] + "\n")
 
 
-def train_tokenizer(training_source_dir='./dataset/gatsby.txt'):
+def train_tokenizer(training_source_dir='./dataset/gatsby.txt', tokenizer_name='BPE'):
     """Train a tokenizer from scratch"""
     # Initialize an empty tokenizer from
-    # ByteLevelBPETokenizer/ CharBPETokenizer/ BertWordPieceTokenizer/ SentencePieceBPETokenizer
-    tokenizer = CharBPETokenizer()
+    # ByteLevelBPETokenizer/ BertWordPieceTokenizer/ SentencePieceBPETokenizer
+    init_tokenizer = {
+        'CBPE': CharBPETokenizer,
+        'BPE': ByteLevelBPETokenizer,
+        'BERT': BertWordPieceTokenizer,
+        'SBPE': SentencePieceBPETokenizer
+    }
+    tokenizer = init_tokenizer[tokenizer_name]
     tokenizer.train(files=training_source_dir,
                     vocab_size=20000,
                     min_frequency=2,
@@ -250,6 +256,15 @@ def csv2txt(csv_dir, txt_dir, col_name='content'):
 def token_counter(tokenizer_dir='./my_token/CharBPETokenizer_Musk_cleaned.json',
                   csv_dir='./dataset/val_cleaned.csv',
                   json_dir='./my_token/val_token_freq.json'):
+    """
+    * This method is used to calculate the frequency of each token in the given dataset.
+    * How it works?
+        - The tokenizer and the dataset must be given.
+        - The tokenizer will tokenize the dataset as tokens.
+        - The frequency of each token will be calculated and then stored in a JSON file.
+        - The JSON file will be returned.
+    """
+
     trained_tokenizer = Tokenizer.from_file(tokenizer_dir)
     df = pd.read_csv(csv_dir)
 
@@ -271,33 +286,34 @@ def token_counter(tokenizer_dir='./my_token/CharBPETokenizer_Musk_cleaned.json',
     return token_fd
 
 
-def token_freq_diff(json1_dir, json2_dir):
+def token_freq_diff(train_json_dir, test_json_dir):
     """This method is used to check whether the train contains the token of the test, and it returns a json file
     containing all the tokens that do not exist in the train."""
-    with open(json1_dir, "r") as f1:
+    with open(train_json_dir, "r") as f1:
         json1 = json.loads(f1.read())
-    with open(json2_dir, "r") as f2:
+    with open(test_json_dir, "r") as f2:
         json2 = json.loads(f2.read())
 
-    diff_dict = {'token_frequency_diff': []}
-    in_list = False
-    with open('my_token/token_frequency_diff.json', 'w') as f:
+    diff_dict = {'tokens_not_in_train': []}
+    with open('my_token/tokens_not_in_train.json', 'w') as f:
         for item2 in json2['token_frequency']:  # test token freq
+            in_list = False
             for item1 in json1['token_frequency']:  # training token freq
                 if item2.keys() == item1.keys():
-                    in_list = True
+                    in_list = True  # test token is found in training set
                     break
             if not in_list:
                 key = list(item2.keys())[0]
                 value = list(item2.values())[0]
-                diff_dict['token_frequency_diff'].append({key: value})
+                diff_dict['tokens_not_in_train'].append({key: value})
 
         json_str = json.dumps(diff_dict)
         f.write(json_str)
     f.close()
 
 
-def brewed_dataLoader(which_data, data_dir, tokenization='char', level_type=''):  # which_ds could be 'training', 'validation'
+def brewed_dataLoader(which_data, data_dir, tokenization='char',
+                      level_type=''):  # which_ds could be 'training', 'validation'
     """
     Note that there are two steps should be done at the beginning if the developer wants to use subword-based tokenization:
     (1) Create an instance of tokenizer.
@@ -320,7 +336,7 @@ def brewed_dataLoader(which_data, data_dir, tokenization='char', level_type=''):
     # Character-based tokenization
     # tokenize = lambda x:x
     # Word-based tokenization
-    tokenize = lambda x: x.split()
+    # tokenize = lambda x: x.split()
 
     if tokenization == 'char':
         # character level tokenization
@@ -386,6 +402,21 @@ def brewed_dataLoader(which_data, data_dir, tokenization='char', level_type=''):
     return data, vocab_stoi, vocab_itos, vocab_size
 
 
+def get_vocab(tokenization='word'):
+    csv_dir = pathlib.Path(os.path.abspath(__file__)).parent / 'dataset'
+    _, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('validation', csv_dir, tokenization=tokenization,
+                                                              level_type='')
+
+    vocab = vocab_itos, vocab_stoi, vocab_size
+    return vocab
+
+
+def load_ckpt_models(ckpt_name, net):
+    ckpt_dir = pathlib.Path(os.path.abspath(__file__)).parent / 'checkpoints'
+    ckpt = torch.load(ckpt_dir + ckpt_name + '.ckpt')
+    return net.load_state_dict(ckpt)
+
+
 class Accumulator:
     """For accumulating sums over `n` variables."""
 
@@ -413,15 +444,35 @@ if __name__ == "__main__":
     # print(tok.decode(res_ids))
     # preprocessing('./dataset/combined_Musks_tweets.csv', './dataset/combined_Musks_tweets_cleaned.csv')
     # csv2txt('./dataset/combined_Musks_tweets_cleaned.csv', './dataset/combined_Musks_tweets_cleaned.txt', 'content')
-    # token_counter(csv_dir='./dataset/realdonaldtrump_cleaned.csv',
-    #               json_dir='./my_token/realdonaldtrump_token_freq.json')
-    # token_freq_diff('./my_token/training_token_freq.json', './my_token/val_token_freq.json')
+    # token_counter(tokenizer_dir='./my_token/BertWordPieceTokenizer_train.json',
+    #               csv_dir='./dataset/train_cleaned.csv',
+    #               json_dir='./my_token/WordPiece_Musks_training_token_freq.json')
 
-    bert_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-    print(
-        bert_tokenizer.tokenize("Vaccines are just the start. Its also capable in theory of curing almost anything. "))
+    token_freq_diff(train_json_dir='./my_token/WordPiece_Musks_training_token_freq.json',
+                    test_json_dir='./my_token/WordPiece_Musks_val_token_freq.json')
 
-    brewed_tokenizer = Tokenizer.from_file('./my_token/CharBPETokenizer_Musk_cleaned.json')
-    print(
-        brewed_tokenizer.encode(
-            "Vaccines are just the start. Its also capable in theory of curing almost anything. ").tokens)
+    # bert_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+    # print(
+    #     bert_tokenizer.tokenize("Vaccines are just the start. Its also capable in theory of curing almost anything. "))
+    #
+    # brewed_tokenizer = Tokenizer.from_file('./my_token/CharBPETokenizer_Musk_cleaned.json')
+    # print(
+    #     brewed_tokenizer.encode(
+    #         "Vaccines are just the start. Its also capable in theory of curing almost anything. ").tokens)
+
+    # char_tokenizer = lambda str: [char for char in str]
+    # word_tokenizer = lambda inp: inp
+    # subword_tokenizer = Tokenizer.from_file('./my_token/ByteLevelBPETokenizer_combination.json')
+    #
+    # text = 'Don\'t you love Transformers? We sure do.'
+    # char_tokens = char_tokenizer(text)
+    # word_tokens = word_tokenizer(text)
+    # subword_tokens = subword_tokenizer.encode(text).tokens
+    # sentence_tokens = nltk.sent_tokenize(text)
+    #
+    # print(
+    #     f'char-level: {char_tokens}\n'
+    #     f'word-level: {word_tokens}\n'
+    #     f'subword-level: {subword_tokens}\n'
+    #     f'sentence-level: {sentence_tokens}\n'
+    # )
