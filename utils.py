@@ -2,7 +2,7 @@ import random
 import collections
 import re
 
-from transformers import BertTokenizer
+from transformers import BertTokenizer, GPT2Tokenizer
 import torchtext
 
 import torch
@@ -183,6 +183,10 @@ def brewed_dataLoader(which_data, data_dir, tokenization='char'):  # which_ds co
     elif tokenization == 'subword':
         # sub-word level tokenization
         tokenize = BertTokenizer.from_pretrained("bert-base-uncased").tokenize
+    elif tokenization == 'gpt2-trained':
+        tokenizer = GPT2Tokenizer('gpt2tokenizer/vocab.json', 'gpt2tokenizer/merges.txt')
+        tokenizer.pad_token = tokenizer.eos_token
+        tokenize = tokenizer.tokenize
     else:
         raise Exception("Wrong parameter for 'tokenization'-argument please use one of these: 'char', 'word', 'subword'")
 

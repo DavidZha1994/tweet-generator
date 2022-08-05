@@ -94,7 +94,6 @@ class LstmCell(nn.Module):
         return (H, C)
 
 
-# TODO add GRU
 class LSTM(nn.Module):
     """A RNN Model implemented from scratch."""
 
@@ -177,6 +176,53 @@ class StackedLstm(nn.Module):
     def begin_rand_state(self, batch_size, device):
         return torch.rand((batch_size, self.num_hiddens), device=device), torch.rand((batch_size, self.num_hiddens),
                                                                                      device=device)
+
+class StackedLstm3(nn.Module):
+    """A RNN Model implemented from scratch."""
+
+    def __init__(self, vocab_size, num_hiddens, device):
+        super(StackedLstm3, self).__init__()
+
+        input_size = output_size = vocab_size
+        self.vocab_size, self.num_hiddens = vocab_size, num_hiddens
+        self.device = device
+
+        self.cell1 = LstmCell(input_size, num_hiddens, device=device)
+        self.cell2 = LstmCell(num_hiddens, num_hiddens, device=device)
+        self.cell3 = LstmCell(num_hiddens, num_hiddens, device=device)
+        self.h2out = nn.Linear(num_hiddens, output_size, device=device)
+
+    def forward(self, X, states=None):
+        X = F.one_hot(X.T, self.vocab_size).type(torch.float32)
+        # Shape of `X`: (`sequence_size`,`batch_size`, `vocab_size`)
+
+        if states is None:
+            state1 = self.begin_state(X.shape[1], self.device)
+            state2 = self.begin_state(X.shape[1], self.device)
+            state3 = self.begin_state(X.shape[1], self.device)
+        else:
+            state1, state2, state3 = states
+
+        H_1, C_1 = state1
+        H_2, C_2 = state2
+        H_3, C_3 = state3
+        outputs = []
+        # Shape of `X_step`: (`batch_size`, `vocab_size`)
+        for X_step in X:
+            (H_1, C_1) = self.cell1(X_step, (H_1, C_1))
+            (H_2, C_2) = self.cell2(H_1, (H_2, C_2))
+            (H_3, C_3) = self.cell3(H_2, (H_3, C_3))
+            Y = self.h2out(H_3)
+            outputs.append(Y)
+        return torch.cat(outputs, dim=0), ((H_1, C_1), (H_2, C_2), (H_3, C_3))
+
+    def begin_state(self, batch_size, device):
+        return torch.zeros((batch_size, self.num_hiddens), device=device), \
+               torch.zeros((batch_size, self.num_hiddens),device=device),
+
+    def begin_rand_state(self, batch_size, device):
+        return torch.rand((batch_size, self.num_hiddens), device=device), \
+               torch.rand((batch_size, self.num_hiddens),device=device),
 
 
 class GRU(nn.Module):
