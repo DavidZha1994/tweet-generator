@@ -75,7 +75,8 @@ training_args = TrainingArguments(
     save_total_limit=2,
     prediction_loss_only=True,
     evaluation_strategy="epoch",
-    logging_strategy="epoch"
+    logging_strategy="epoch",
+    #report_to
 )
 
 trainer = Trainer(
