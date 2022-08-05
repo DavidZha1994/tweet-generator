@@ -2,6 +2,8 @@ import math
 import time
 
 import torch
+import regex
+import re
 from torch import nn
 import logging
 from utils import Accumulator, brewed_dataLoader, get_device
@@ -11,9 +13,10 @@ import sys
 import pathlib
 import torchtext
 from random import choice
-from models import StackedLstm, RNNModelScratch, TweetGenerator, LSTM, GRU
+from models import StackedLstm, RNNModelScratch, TweetGenerator, LSTM, GRU, StackedLstm3
 
 is_logger_adjusted = False
+TOKENIZER_TYPE = 'char'
 
 def predict(prefix, num_preds, net, vocab, device):
     """Generate new characters following the `prefix`."""
@@ -35,7 +38,8 @@ def predict(prefix, num_preds, net, vocab, device):
 
 @torch.no_grad()
 def evaluate(net, val_iter, loss, device, vocab):
-    metric = Accumulator(2)
+    metric_emb = Accumulator(2)
+    metric_words = Accumulator(2)
 
     for batch in val_iter:
         seq = batch.content[0]
@@ -48,9 +52,15 @@ def evaluate(net, val_iter, loss, device, vocab):
         y_hat, _ = net(X)
         l = loss(y_hat.reshape(-1, len(vocab[0])), y.long()).mean()
 
-        metric.add(l * y.numel(), y.numel())
+        # TODO normalized ppl by sentence length
 
-    return math.exp(metric[0] / metric[1])
+        metric_emb.add(l * y.numel(), y.numel())
+
+        word_counts = [count_words(X[i], TOKENIZER_TYPE, vocab) for i in range(X.shape[0])]
+        words_in_batch = sum(word_counts)
+        metric_words.add(l * words_in_batch, words_in_batch)
+
+    return math.exp(metric_emb[0] / metric_emb[1]), math.exp(metric_words[0] / metric_words[1])
 
 
 def grad_clipping(net, theta):
@@ -63,10 +73,32 @@ def grad_clipping(net, theta):
             param.grad[:] *= theta / norm
 
 
+def count_words(encoding, tokenization, vocab):
+    # get the type of separating element
+    vocab_itos = vocab[0]
+    vocab_stoi = vocab[1]
+    if tokenization == 'char':
+        # count the number of spaces and add 1 for the number of words
+        return [i.item() for i in encoding].count(vocab_stoi[' ']) + 1
+    if tokenization == 'word':
+        # count the number of words directly (leaving out the <BOS> token)
+        return len(encoding) - 1
+    if tokenization == 'gpt2-trained':
+        # at the beginning of each new word is a 'Ġ'-character, so we can count these
+        decoding = [vocab_itos[i.item()] for i in encoding]
+        return ''.join(decoding).count("\u0120") - 1
+    if tokenization == 'subword':
+        # subwords are concatenated if they begin with ##, so we can subtract these from the sentence length
+        decoding = [vocab_itos[i.item()] for i in encoding]
+        decoding = ''.join(decoding)
+        return len(encoding) - len(re.findall("(##)", decoding)) - 1
+
+
 def train_epoch(net, train_iter, loss, updater, device, vocab):
     """Train a net within one epoch"""
     start_time = time.time()
-    metric = Accumulator(2)  # Sum of training loss, no. of tokens
+    metric_embedding = Accumulator(2)  # accumulator for loss normalized by the sequence length on embedding level
+    metric_words = Accumulator(2)  # accumulator for loss normalized by the sequence length on word level
 
     for batch in train_iter:
         seq = batch.content[0]
@@ -83,12 +115,22 @@ def train_epoch(net, train_iter, loss, updater, device, vocab):
         grad_clipping(net, 1)
         updater.step()
 
-        # this way of computing the perplexity works only because the cross-entropy loss is used!
-        metric.add(l * y.numel(), y.numel())
-    return math.exp(metric[0] / metric[1]), time.time() - start_time
+        # used to calculate perplexity: normalization based on the number of tokens
+        metric_embedding.add(l * y.numel(), y.numel())
+
+        # second way to calculate perplexity: normalization based on the number of words (dependent on tokenizer)
+        # TODO this way of counting words is quite inefficient
+        word_counts = [count_words(X[i], TOKENIZER_TYPE, vocab) for i in range(X.shape[0])]
+        words_in_batch = sum(word_counts)
+        metric_words.add(l * words_in_batch, words_in_batch)
+
+    # this way of computing the perplexity works only because the cross-entropy loss is used!
+    ppl_emb = math.exp(metric_embedding[0] / metric_embedding[1])
+    ppl_word = math.exp(metric_words[0] / metric_words[1])
+    return ppl_emb, ppl_word, time.time() - start_time
 
 
-def train(net, train_iter, val_iter, vocab, lr, num_epochs, device, logger=None, experiment_name='experiment'):
+def train(net, train_iter, val_iter, vocab, lr, num_epochs, device, logger=None, experiment_name='experiment', metric='word'):
     """Train a model"""
     loss = nn.CrossEntropyLoss()
     train_results = []
@@ -100,10 +142,13 @@ def train(net, train_iter, val_iter, vocab, lr, num_epochs, device, logger=None,
     predict_seq = lambda prefix: predict(prefix, 100, net, vocab, device)
     # Train and predict
     for epoch in range(num_epochs):
-        train_ppl, elapsed_time = train_epoch(net, train_iter, loss, optimizer, device, vocab)
+        train_ppl_emb, train_ppl_words, elapsed_time = train_epoch(net, train_iter, loss, optimizer, device, vocab)
+        train_ppl = train_ppl_words if metric == 'word' else train_ppl_emb
+
         train_results.append(train_ppl)
 
-        val_ppl = evaluate(net, val_iter, loss, device, vocab)
+        val_ppl_emb, val_ppl_words = evaluate(net, val_iter, loss, device, vocab)
+        val_ppl = val_ppl_words if metric == 'word' else val_ppl_emb
         val_results.append(val_ppl)
 
         if logger is not None:
@@ -115,6 +160,9 @@ def train(net, train_iter, val_iter, vocab, lr, num_epochs, device, logger=None,
             if logger is not None:
                 logger.info(predict_seq(['<BOS>']))
                 logger.info(predict_seq(['<BOS>', vocab_itos[21]]))
+                logger.info(predict_seq(['<BOS>', vocab_itos[22]]))
+                logger.info(predict_seq(['<BOS>', choice(vocab_itos)]))
+                logger.info(predict_seq(['<BOS>', choice(vocab_itos)]))
                 logger.info(predict_seq(['<BOS>', choice(vocab_itos)]))
                 logger.info(predict_seq(['<BOS>', choice(vocab_itos)]))
 
@@ -150,7 +198,7 @@ def create_logger(project_dir: str, file_name: str):
 
     (pathlib.Path(project_dir) / 'log').mkdir(exist_ok=True)
     print("log file generated: " + file_name)
-    file = logging.FileHandler(project_dir + "/log/" + file_name + ".log")
+    file = logging.FileHandler(project_dir + "/log/" + file_name + ".log", encoding='utf-8')
     file.setLevel(logging.INFO)
     logger = logging.getLogger(file_name)
     logger.setLevel(logging.INFO)
@@ -162,7 +210,22 @@ def create_logger(project_dir: str, file_name: str):
 
 
 def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str = 'subword', epochs: int = 500,
-                   num_hiddens: int = 64):
+                   num_hiddens: int = 64, metric='word'):
+    """
+
+
+    :param experiment_name:
+    :param model:
+    :param tokenization:
+    :param epochs:
+    :param num_hiddens:
+    :param metric: If set to word the perplexity is normalized with the word count, otherwise with the token count.
+    :return:
+    """
+    # necessary to get the tokenization when doing the evaluation
+    global TOKENIZER_TYPE
+    TOKENIZER_TYPE = tokenization
+
     project_dir = pathlib.Path(os.path.abspath(__file__)).parent
     pathlib.Path.mkdir(project_dir / 'plots', exist_ok=True)
     csv_dir = project_dir / 'dataset'
@@ -177,7 +240,8 @@ def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str 
         'lstm': LSTM,
         'stacked_lstm': StackedLstm,
         'rnn_torch': TweetGenerator,
-        'gru': GRU
+        'gru': GRU,
+        'stacked_lstm3': StackedLstm3
     }
 
     batch_size = 64
@@ -199,7 +263,7 @@ def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str 
     net = architecture(vocab_size, num_hiddens, get_device())
 
     lr = 0.001
-    train(net, train_iter, val_iter, vocab, lr, epochs, get_device(), logger, experiment_name)
+    train(net, train_iter, val_iter, vocab, lr, epochs, get_device(), logger, experiment_name, metric)
 
     torch.save(net.state_dict(), f"{project_dir}/checkpoints/{experiment_name}_ep{epochs}.ckpt")
 
@@ -207,16 +271,20 @@ def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str 
 
 
 if __name__ == '__main__':
+    # run_experiment('lstm_stacked3-subword', 'stacked_lstm3', epochs=100, num_hiddens=64, tokenization='word')
     run_experiment('gru-subword', 'gru', epochs=100, num_hiddens=128)
-    run_experiment('rnn_torch-subword', 'rnn_torch', epochs=10, num_hiddens=128)
-    run_experiment('rnn_scr-subword', 'rnn_scratch', epochs=10, num_hiddens=128)
-    run_experiment('lstm-subword', 'lstm', epochs=100, num_hiddens=128)
+    run_experiment('rnn_scr-subword', 'rnn_scratch', epochs=100, num_hiddens=128)
+    run_experiment('lstm-subword2', 'lstm', epochs=100, num_hiddens=128)
     run_experiment('lstm_stacked-subword', 'stacked_lstm', epochs=100, num_hiddens=128)
-    run_experiment('rnn_torch-char', 'rnn_torch', epochs=100, num_hiddens=128, tokenization='char')
+    run_experiment('gru-char', 'gru', epochs=100, num_hiddens=128, tokenization='char')
     run_experiment('rnn_scr-char', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='char')
     run_experiment('lstm-char', 'lstm', epochs=100, num_hiddens=128, tokenization='char')
     run_experiment('lstm_stacked-char', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='char')
-    run_experiment('rnn_torch-word', 'rnn_torch', epochs=100, num_hiddens=128, tokenization='word')
+    run_experiment('gru-word', 'gru', epochs=100, num_hiddens=128, tokenization='word')
     run_experiment('rnn_scr-word', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='word')
     run_experiment('lstm-word', 'lstm', epochs=100, num_hiddens=128, tokenization='word')
     run_experiment('lstm_stacked-word', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='word')
+    run_experiment('gru-gpt-word', 'gru', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
+    run_experiment('rnn_scr-gpt-word', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
+    run_experiment('lstm-gpt-word', 'lstm', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
+    run_experiment('lstm_stacked-gpt-word', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
