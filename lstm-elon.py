@@ -52,8 +52,6 @@ def evaluate(net, val_iter, loss, device, vocab):
         y_hat, _ = net(X)
         l = loss(y_hat.reshape(-1, len(vocab[0])), y.long()).mean()
 
-        # TODO normalized ppl by sentence length
-
         metric_emb.add(l * y.numel(), y.numel())
 
         word_counts = [count_words(X[i], TOKENIZER_TYPE, vocab) for i in range(X.shape[0])]
@@ -83,7 +81,7 @@ def count_words(encoding, tokenization, vocab):
     if tokenization == 'word':
         # count the number of words directly (leaving out the <BOS> token)
         return len(encoding) - 1
-    if tokenization == 'gpt2-trained':
+    if tokenization == 'gpt2-trained' or tokenization == 'gpt2':
         # at the beginning of each new word is a 'Ġ'-character, so we can count these
         decoding = [vocab_itos[i.item()] for i in encoding]
         return ''.join(decoding).count("\u0120") - 1
@@ -271,20 +269,23 @@ def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str 
 
 
 if __name__ == '__main__':
-    # run_experiment('lstm_stacked3-subword', 'stacked_lstm3', epochs=100, num_hiddens=64, tokenization='word')
-    run_experiment('gru-subword', 'gru', epochs=100, num_hiddens=128)
-    run_experiment('rnn_scr-subword', 'rnn_scratch', epochs=100, num_hiddens=128)
-    run_experiment('lstm-subword2', 'lstm', epochs=100, num_hiddens=128)
-    run_experiment('lstm_stacked-subword', 'stacked_lstm', epochs=100, num_hiddens=128)
-    run_experiment('gru-char', 'gru', epochs=100, num_hiddens=128, tokenization='char')
-    run_experiment('rnn_scr-char', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='char')
-    run_experiment('lstm-char', 'lstm', epochs=100, num_hiddens=128, tokenization='char')
-    run_experiment('lstm_stacked-char', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='char')
-    run_experiment('gru-word', 'gru', epochs=100, num_hiddens=128, tokenization='word')
-    run_experiment('rnn_scr-word', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='word')
-    run_experiment('lstm-word', 'lstm', epochs=100, num_hiddens=128, tokenization='word')
-    run_experiment('lstm_stacked-word', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='word')
-    run_experiment('gru-gpt-word', 'gru', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
-    run_experiment('rnn_scr-gpt-word', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
-    run_experiment('lstm-gpt-word', 'lstm', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
-    run_experiment('lstm_stacked-gpt-word', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
+    # run_experiment('gru-subword', 'gru', epochs=100, num_hiddens=128)
+    # run_experiment('rnn_scr-subword', 'rnn_scratch', epochs=100, num_hiddens=128)
+    # run_experiment('lstm-subword2', 'lstm', epochs=100, num_hiddens=128)
+    # run_experiment('lstm_stacked-subword', 'stacked_lstm', epochs=100, num_hiddens=128)
+    # run_experiment('gru-char', 'gru', epochs=100, num_hiddens=128, tokenization='char')
+    # run_experiment('rnn_scr-char', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='char')
+    # run_experiment('lstm-char', 'lstm', epochs=100, num_hiddens=128, tokenization='char')
+    # run_experiment('lstm_stacked-char', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='char')
+    # run_experiment('gru-word', 'gru', epochs=100, num_hiddens=128, tokenization='word')
+    # run_experiment('rnn_scr-word', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='word')
+    # run_experiment('lstm-word', 'lstm', epochs=100, num_hiddens=128, tokenization='word')
+    # run_experiment('lstm_stacked-word', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='word')
+    # run_experiment('gru-gpt-word', 'gru', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
+    # run_experiment('rnn_scr-gpt-word', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
+    # run_experiment('lstm-gpt-word', 'lstm', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
+    # run_experiment('lstm_stacked-gpt-word', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
+    run_experiment('gru-gpttoken', 'gru', epochs=100, num_hiddens=128, tokenization='gpt2')
+    run_experiment('rnn_scr-gpttoken', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='gpt2')
+    run_experiment('lstm-gpttoken', 'lstm', epochs=100, num_hiddens=128, tokenization='gpt2')
+    run_experiment('lstm_stacked-gpttoken', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='gpt2')
