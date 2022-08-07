@@ -2,9 +2,11 @@ from transformers import GPT2Tokenizer, pipeline, GPT2LMHeadModel, GPT2Config
 from pathlib import Path
 import pandas as pd
 
-selection = "gpt2_net_scratch"
-input_prompts = ["Our goal", "Tesla", "This", "The", "After", "Next", "Today", "I", "Yes"]
-returned_seqs = 2
+selection = "gpt2_tokenizer_scratch"
+input_prompts = ["This", "I", "Tesla", "Entertainment", "Just", "We", "A", "Haha", "There", "Good", "Thanks", "Bitcoin",
+                 "Ascent", "Yeah", "Major", "Tomorrow", "Landing", "Indeed", "Maybe", "Possible", "Burst", "Autopilot",
+                 "China", "Also", "London", "Roughly"]
+returned_seqs = 1
 
 options = {
     "gpt2_fine_tuned": {
@@ -32,7 +34,6 @@ generate = pipeline(
     tokenizer=tokenizer,
     device=0
 )
-
 
 generation_outputs = generate(input_prompts, max_length=30, num_return_sequences=returned_seqs)
 
