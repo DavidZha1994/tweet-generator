@@ -12,5 +12,5 @@ generate = pipeline(
     device=0
 )
 
-tx = generate("Tesla is", max_length=30, num_return_sequences=5)
+tx = generate("", max_length=30, num_return_sequences=10000)
 print(tx)

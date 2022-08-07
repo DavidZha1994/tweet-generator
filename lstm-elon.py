@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import os
 import sys
 import pathlib
-import torchtext
+import torchtext # 0.6.0
 from random import choice
 from models import StackedLstm, RNNModelScratch, TweetGenerator, LSTM, GRU, StackedLstm3
 
@@ -264,7 +264,8 @@ def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str 
 
     lr = 0.001
     train(net, train_iter, val_iter, vocab, lr, epochs, get_device(), logger, experiment_name, metric)
-
+    if not os.path.exists(f"{project_dir}/checkpoints/"):
+        os.makedirs(f"{project_dir}/checkpoints/")
     torch.save(net.state_dict(), f"{project_dir}/checkpoints/{experiment_name}_ep{epochs}.ckpt")
 
     logger.info(f"------------------")

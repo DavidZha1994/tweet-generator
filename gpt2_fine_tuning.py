@@ -5,11 +5,11 @@ import math
 from pathlib import Path
 
 DEVICE = 'cuda:0'
-TRAIN_NN_FROM_SCRATCH = True
-TRAIN_TOKENIZER_FROM_SCRATCH = True
+TRAIN_NN_FROM_SCRATCH = False
+TRAIN_TOKENIZER_FROM_SCRATCH = False
 
-if TRAIN_NN_FROM_SCRATCH == False and TRAIN_TOKENIZER_FROM_SCRATCH == True:
-    save_name = 'token_trained'
+if TRAIN_NN_FROM_SCRATCH == False and TRAIN_TOKENIZER_FROM_SCRATCH == False:
+    save_name = 'fine_tuned'
 if TRAIN_NN_FROM_SCRATCH == True and TRAIN_TOKENIZER_FROM_SCRATCH == False:
     save_name = 'nn_trained'
 if TRAIN_NN_FROM_SCRATCH == True and TRAIN_TOKENIZER_FROM_SCRATCH == True:
