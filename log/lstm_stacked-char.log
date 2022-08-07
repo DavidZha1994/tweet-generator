@@ -1,0 +1,177 @@
+Starting run lstm_stacked-char with model='stacked_lstm' tokenization='char' epochs=100 num_hiddens=128 device=cuda:0
+epoch 0 - val-ppl: 24.6, train-ppl: 27.3, elapsed_time=75.90s
+epoch 1 - val-ppl: 21.4, train-ppl: 23.9, elapsed_time=75.70s
+epoch 2 - val-ppl: 16.0, train-ppl: 17.3, elapsed_time=80.13s
+epoch 3 - val-ppl: 13.8, train-ppl: 14.2, elapsed_time=83.90s
+epoch 4 - val-ppl: 12.8, train-ppl: 13.2, elapsed_time=78.66s
+epoch 5 - val-ppl: 12.0, train-ppl: 12.4, elapsed_time=78.44s
+epoch 6 - val-ppl: 11.5, train-ppl: 11.7, elapsed_time=79.10s
+epoch 7 - val-ppl: 10.8, train-ppl: 11.1, elapsed_time=78.18s
+epoch 8 - val-ppl: 10.5, train-ppl: 10.6, elapsed_time=78.54s
+epoch 9 - val-ppl: 9.9, train-ppl: 10.1, elapsed_time=79.17s
+<BOS> Y e s <EOS>
+<BOS> f o u r e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e
+<BOS> w e s   a   s o r e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h
+<BOS> =   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e
+<BOS> i x a t   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e  
+<BOS> [ o o n   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e  
+<BOS> i x a t   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e   t h e  
+epoch 10 - val-ppl: 9.6, train-ppl: 9.7, elapsed_time=78.78s
+epoch 11 - val-ppl: 9.2, train-ppl: 9.3, elapsed_time=79.01s
+epoch 12 - val-ppl: 8.9, train-ppl: 9.0, elapsed_time=79.32s
+epoch 13 - val-ppl: 8.7, train-ppl: 8.7, elapsed_time=79.49s
+epoch 14 - val-ppl: 8.3, train-ppl: 8.4, elapsed_time=79.22s
+epoch 15 - val-ppl: 8.1, train-ppl: 8.1, elapsed_time=78.95s
+epoch 16 - val-ppl: 7.9, train-ppl: 7.9, elapsed_time=79.54s
+epoch 17 - val-ppl: 7.7, train-ppl: 7.7, elapsed_time=78.66s
+epoch 18 - val-ppl: 7.6, train-ppl: 7.5, elapsed_time=79.20s
+epoch 19 - val-ppl: 7.5, train-ppl: 7.4, elapsed_time=78.62s
+<BOS> Y e s <EOS>
+<BOS> f o r   t h e   t h e   a   l i k e   t h e   t h e   a   l i k e   a   l i t h   t h e   t h e   a   l i k e   a   l i t h   t h e   a   l i k e   a   l i t h   t h e   a   l i k e   a   l i t h   t h
+<BOS> w e   m a y s   a   s t a r s h i n g   t h e   t h e   a   l i k e   a   l i t h   t h e   t h e   a   l i k e   a   l i t h   t h e   a   l i k e   a   l i t h   t h e   a   l i k e   a   l i t h   t
+<BOS>   h a t   t h e   t h e   s e a r   i s   a   s e a l l y   t h e   a   l i k e   a   l i t h   t h e   t h e   a   l i k e   a   l i t h   t h e   a   l i k e   a   l i t h   t h e   a   l i k e   a  
+<BOS> p r o b a b l y   t h e   a   l i k e   a   l i t h   t h e   t h e   a   l i k e   a   l i t h   t h e   a   l i k e   a   l i t h   t h e   a   l i k e   a   l i t h   t h e   a   l i k e   a   l i t
+<BOS> J u s t   s o m e <EOS>
+<BOS> f o r   t h e   t h e   a   l i k e   t h e   t h e   a   l i k e   a   l i t h   t h e   t h e   a   l i k e   a   l i t h   t h e   a   l i k e   a   l i t h   t h e   a   l i k e   a   l i t h   t h
+epoch 20 - val-ppl: 7.2, train-ppl: 7.2, elapsed_time=78.51s
+epoch 21 - val-ppl: 7.2, train-ppl: 7.0, elapsed_time=79.12s
+epoch 22 - val-ppl: 6.9, train-ppl: 6.9, elapsed_time=78.39s
+epoch 23 - val-ppl: 6.8, train-ppl: 6.8, elapsed_time=78.37s
+epoch 24 - val-ppl: 6.8, train-ppl: 6.7, elapsed_time=78.49s
+epoch 25 - val-ppl: 6.7, train-ppl: 6.6, elapsed_time=78.77s
+epoch 26 - val-ppl: 6.5, train-ppl: 6.4, elapsed_time=78.20s
+epoch 27 - val-ppl: 6.3, train-ppl: 6.3, elapsed_time=78.65s
+epoch 28 - val-ppl: 6.3, train-ppl: 6.2, elapsed_time=78.43s
+epoch 29 - val-ppl: 6.3, train-ppl: 6.1, elapsed_time=78.68s
+<BOS> Y e s <EOS>
+<BOS> f i g e   t o   m a k e   t h e   m a y b e   a   l i t t l e   t h e   s t a r t   t h e   m a y b e   a   l i t t l e   c o m p l e s s   t h e   m a y b e   a   l i t t l e   c o m p l e s s   t h e
+<BOS> w e   w i l l   s o   a   m a n y   t h e   m a y s   a   l i t t l e   t h e   s u p p o r t   t o   m a k e   a   l i t t l e   t h e   s t a r t   t h e   m a y b e   a   l i t t l e   c o m p l e s
+<BOS> 3 k <EOS>
+<BOS> c o u n t   t o   m a k e   t h e   m a y b e   a   l i t t l e   t h e   s t a r t   t h e   m a y b e   a   l i t t l e   c o m p l e s s   t h e   m a y b e   a   l i t t l e   c o m p l e s s   t h
+<BOS> u n l e d   t o   m a k e   a   l i t t l e   t h e   s t a r t   t h e   m a y b e   a   l i t t l e   c o m p l e s s   t h e   m a y b e   a   l i t t l e   c o m p l e s s   t h e   m a y b e   a  
+<BOS> z n s   t h e   m a y b e   a   l i t t l e   t h e   s u p p o r t   t o   m a k e   a   l i t t l e   c o m p l e s s   t h e   m a y b e   a   l i t t l e   c o m p l e s s   t h e   m a y b e   a  
+epoch 30 - val-ppl: 6.2, train-ppl: 6.1, elapsed_time=79.54s
+epoch 31 - val-ppl: 6.1, train-ppl: 6.0, elapsed_time=79.04s
+epoch 32 - val-ppl: 6.0, train-ppl: 5.9, elapsed_time=79.11s
+epoch 33 - val-ppl: 5.9, train-ppl: 5.8, elapsed_time=78.45s
+epoch 34 - val-ppl: 5.9, train-ppl: 5.8, elapsed_time=78.04s
+epoch 35 - val-ppl: 5.8, train-ppl: 5.7, elapsed_time=78.11s
+epoch 36 - val-ppl: 5.7, train-ppl: 5.6, elapsed_time=78.04s
+epoch 37 - val-ppl: 5.7, train-ppl: 5.6, elapsed_time=78.06s
+epoch 38 - val-ppl: 5.6, train-ppl: 5.5, elapsed_time=77.99s
+epoch 39 - val-ppl: 5.6, train-ppl: 5.5, elapsed_time=77.96s
+<BOS> Y e s <EOS>
+<BOS> f i g e   s o m e   t h e   s e e m s   a   l o t   t h e   s e e n   i s   a   l i t t l e   t h e   s e c t i n g   t h e   s e n t i n g   t h e   s e n t i n g   t h e   s e n t i n g   t h e   s e
+<BOS> w e   w i l l   s o   t h e   m o r e   t h e   s e e m s   a   l o t   t h e   s e e n   i s   a   l i t t l e   t h e   s e c t i n g   t h e   s e n t i n g   t h e   s e n t i n g   t h e   s e n t
+<BOS> +   s h o u l d   b e   a   l i t t l e   t h e   s e e m s   a r e   t h e   s e e n   i s   a   l i t t l e   i s   a   l i t t l e   i s   a   l o t   t h e   s e n t i n g   t h e   s e n t i n g  
+<BOS> T h a t   w o u l d   b e   a   l i t t l e   t h e   s e e m s   a   l o t   t h e   s e n t i n g   t h e   s e n t i n g   t h e   s e n t i n g   t h e   s e n t i n g   t h e   s e n t i n g   t h
+<BOS> ( S h o u l d   b e   a   l i t t l e   t h e   s e e m s   a   l o t   t h e   s e n t i n g   t h e   s e n t i n g   t h e   s e n t i n g   t h e   s e n t i n g   t h e   s e n t i n g   t h e   s
+<BOS> } a r t h <EOS>
+epoch 40 - val-ppl: 5.5, train-ppl: 5.4, elapsed_time=77.79s
+epoch 41 - val-ppl: 5.5, train-ppl: 5.4, elapsed_time=77.77s
+epoch 42 - val-ppl: 5.5, train-ppl: 5.3, elapsed_time=77.78s
+epoch 43 - val-ppl: 5.4, train-ppl: 5.3, elapsed_time=77.86s
+epoch 44 - val-ppl: 5.4, train-ppl: 5.2, elapsed_time=77.84s
+epoch 45 - val-ppl: 5.4, train-ppl: 5.2, elapsed_time=77.78s
+epoch 46 - val-ppl: 5.3, train-ppl: 5.2, elapsed_time=77.74s
+epoch 47 - val-ppl: 5.3, train-ppl: 5.1, elapsed_time=77.87s
+epoch 48 - val-ppl: 5.3, train-ppl: 5.1, elapsed_time=77.77s
+epoch 49 - val-ppl: 5.2, train-ppl: 5.1, elapsed_time=77.83s
+<BOS> Y e s <EOS>
+<BOS> f o r   s u r e <EOS>
+<BOS> w e   w i l l   d o   t h e   m o s t   a   l o t   o f   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e  
+<BOS> e x a c t l y <EOS>
+<BOS> v i a   r e a l <EOS>
+<BOS> B u t   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e   t h e   s e e   t
+<BOS> 8   T e s l a   s o o n <EOS>
+epoch 50 - val-ppl: 5.2, train-ppl: 5.0, elapsed_time=77.90s
+epoch 51 - val-ppl: 5.1, train-ppl: 5.0, elapsed_time=77.90s
+epoch 52 - val-ppl: 5.2, train-ppl: 5.0, elapsed_time=78.01s
+epoch 53 - val-ppl: 5.1, train-ppl: 4.9, elapsed_time=77.83s
+epoch 54 - val-ppl: 5.0, train-ppl: 4.9, elapsed_time=77.82s
+epoch 55 - val-ppl: 5.0, train-ppl: 4.9, elapsed_time=77.83s
+epoch 56 - val-ppl: 5.0, train-ppl: 4.9, elapsed_time=77.87s
+epoch 57 - val-ppl: 5.0, train-ppl: 4.8, elapsed_time=77.86s
+epoch 58 - val-ppl: 5.0, train-ppl: 4.8, elapsed_time=77.83s
+epoch 59 - val-ppl: 4.9, train-ppl: 4.8, elapsed_time=77.81s
+<BOS> Y e s <EOS>
+<BOS> f y i <EOS>
+<BOS> w e   w i l l   d o   t h e   s t a r t   t h e   s h o u l d   b e   a   l o t   o f   t h e   s e n s e   i s   a   s h o u l d   b e   a   l o t   o f   t h e   s e n s e   i n   t h e   s e n s e  
+<BOS> - b i t   t o   b e   a   l i t t l e   t h e   s t a r t   t h e   s t a r t   t h e   s t a r t   t h e   s t a r t   t h e   s t a r t   t h e   s t a r t   t h e   s t a r t   t h e   s t a r t   t
+<BOS> ~ Q 4 <EOS>
+<BOS> C o o l <EOS>
+<BOS> A l l   a   s h o u l d   b e   a   l o t   o f   t h e   s e n s e   i n   t h e   s e n s e   i n   t h e   s e n s e   i n   t h e   s e n s e   i n   t h e   s e n s e   i n   t h e   s e n s e   i
+epoch 60 - val-ppl: 4.9, train-ppl: 4.8, elapsed_time=77.83s
+epoch 61 - val-ppl: 4.9, train-ppl: 4.8, elapsed_time=77.82s
+epoch 62 - val-ppl: 4.9, train-ppl: 4.7, elapsed_time=77.78s
+epoch 63 - val-ppl: 4.9, train-ppl: 4.7, elapsed_time=77.83s
+epoch 64 - val-ppl: 4.9, train-ppl: 4.7, elapsed_time=77.86s
+epoch 65 - val-ppl: 4.8, train-ppl: 4.7, elapsed_time=77.81s
+epoch 66 - val-ppl: 4.8, train-ppl: 4.7, elapsed_time=77.75s
+epoch 67 - val-ppl: 4.8, train-ppl: 4.6, elapsed_time=77.79s
+epoch 68 - val-ppl: 4.8, train-ppl: 4.6, elapsed_time=77.75s
+epoch 69 - val-ppl: 4.8, train-ppl: 4.6, elapsed_time=77.72s
+<BOS> Y e s <EOS>
+<BOS> f y i <EOS>
+<BOS> w e   w i l l   d o <EOS>
+<BOS> ! f r e e s p a c e <EOS>
+<BOS> f y i <EOS>
+<BOS> |   k   t h i s   w i l l   b e   a   l i t t l e   t h a t   t h e   s t a r t   t h e   s t a r t   t h e   s t a r t   t h e   s t a r t   t h e   s t a r t   t h e   s t a r t   t h e   s t a r t  
+<BOS> 7   T h o <EOS>
+epoch 70 - val-ppl: 4.7, train-ppl: 4.6, elapsed_time=77.76s
+epoch 71 - val-ppl: 4.8, train-ppl: 4.6, elapsed_time=77.74s
+epoch 72 - val-ppl: 4.7, train-ppl: 4.6, elapsed_time=77.92s
+epoch 73 - val-ppl: 4.7, train-ppl: 4.5, elapsed_time=77.72s
+epoch 74 - val-ppl: 4.7, train-ppl: 4.5, elapsed_time=77.78s
+epoch 75 - val-ppl: 4.7, train-ppl: 4.5, elapsed_time=77.80s
+epoch 76 - val-ppl: 4.7, train-ppl: 4.5, elapsed_time=77.72s
+epoch 77 - val-ppl: 4.7, train-ppl: 4.5, elapsed_time=77.79s
+epoch 78 - val-ppl: 4.7, train-ppl: 4.5, elapsed_time=77.79s
+epoch 79 - val-ppl: 4.6, train-ppl: 4.5, elapsed_time=77.72s
+<BOS> Y e s <EOS>
+<BOS> f y i <EOS>
+<BOS> w e   w i l l   d o   t h e   s t a r t   t h e   s u p e r   t h e   s u p e r   t h e   s u p e r   t h e   s u p e r   t h e   s u p e r   t h e   s u p e r   t h e   s u p e r   t h e   s u p e r  
+<BOS> D o n e <EOS>
+<BOS> ! f r e e s p a c e <EOS>
+<BOS> B u t   t h e   o n e   o f   t h e   s u p e r   t o   t h e   s u p e r   t h e   s u p e r   t h e   s u p e r   t h e   s u p e r   t h e   s u p e r   t h e   s u p e r   t h e   s u p e r   t h e
+<BOS> 1 s   t h e   c o m p l e t e   t o   t h e   s u m m o n   t o   b e   a   l i t t l e   c o m p a n y   t o   b e   a   l o t   o f   t h e   s u p e r   t h e   s u p e r   t h e   s u p e r   t h e
+epoch 80 - val-ppl: 4.6, train-ppl: 4.4, elapsed_time=77.47s
+epoch 81 - val-ppl: 4.7, train-ppl: 4.4, elapsed_time=77.55s
+epoch 82 - val-ppl: 4.6, train-ppl: 4.4, elapsed_time=77.64s
+epoch 83 - val-ppl: 4.6, train-ppl: 4.4, elapsed_time=77.62s
+epoch 84 - val-ppl: 4.6, train-ppl: 4.4, elapsed_time=77.60s
+epoch 85 - val-ppl: 4.6, train-ppl: 4.4, elapsed_time=77.48s
+epoch 86 - val-ppl: 4.6, train-ppl: 4.4, elapsed_time=77.62s
+epoch 87 - val-ppl: 4.5, train-ppl: 4.4, elapsed_time=77.60s
+epoch 88 - val-ppl: 4.6, train-ppl: 4.4, elapsed_time=77.55s
+epoch 89 - val-ppl: 4.5, train-ppl: 4.3, elapsed_time=77.55s
+<BOS> Y e s <EOS>
+<BOS> f y i <EOS>
+<BOS> w e   r i g h t   t o   b e   a   l i t t l e   m o r e   t h e   m o o n <EOS>
+<BOS> y e s <EOS>
+<BOS> Y e s <EOS>
+<BOS> P r e t t y   m u c h <EOS>
+<BOS> ! f r e e s p a c e <EOS>
+epoch 90 - val-ppl: 4.5, train-ppl: 4.3, elapsed_time=77.65s
+epoch 91 - val-ppl: 4.6, train-ppl: 4.3, elapsed_time=77.53s
+epoch 92 - val-ppl: 4.5, train-ppl: 4.3, elapsed_time=77.53s
+epoch 93 - val-ppl: 4.5, train-ppl: 4.3, elapsed_time=77.58s
+epoch 94 - val-ppl: 4.5, train-ppl: 4.3, elapsed_time=77.50s
+epoch 95 - val-ppl: 4.5, train-ppl: 4.3, elapsed_time=77.59s
+epoch 96 - val-ppl: 4.5, train-ppl: 4.3, elapsed_time=77.57s
+epoch 97 - val-ppl: 4.5, train-ppl: 4.3, elapsed_time=77.52s
+epoch 98 - val-ppl: 4.4, train-ppl: 4.3, elapsed_time=77.60s
+epoch 99 - val-ppl: 4.4, train-ppl: 4.3, elapsed_time=77.47s
+<BOS> Y e s <EOS>
+<BOS> f y i <EOS>
+<BOS> w e   d o <EOS>
+<BOS> N o <EOS>
+<BOS> 7   T h t <EOS>
+<BOS> _ m p t   y e t <EOS>
+<BOS> } a l l <EOS>
+<BOS> Y e s <EOS>
+train results (ppl):
+[27.255247602016276, 23.946783432794767, 17.30156195580828, 14.212485504437648, 13.21112014416837, 12.4195493925531, 11.742095705898942, 11.094911540327988, 10.579646728630264, 10.106464120185805, 9.71958202089796, 9.289570524451593, 8.991977258938698, 8.68623130565628, 8.411224127951087, 8.146413620019024, 7.937096592216322, 7.724771237475025, 7.539849998942734, 7.358900528537678, 7.218557975107608, 7.028523145720435, 6.929249169293237, 6.802428407161767, 6.6667935732522, 6.552918162707333, 6.439863554967227, 6.336956931072121, 6.239269219929976, 6.146396010896068, 6.0706747158158265, 5.988488457304884, 5.909249350513253, 5.834254464706474, 5.764575858443527, 5.706496578034676, 5.637154829675477, 5.578543353008413, 5.5305103451656565, 5.473571943774422, 5.417564144408726, 5.3785980905382695, 5.3361974414703, 5.2928678257439685, 5.243244244019513, 5.210235547403749, 5.177886751964374, 5.133976195036422, 5.108182052618505, 5.066712737611653, 5.040669897092746, 5.012184564040309, 4.9793153753568475, 4.942809831871428, 4.926392055280198, 4.891514829779308, 4.86909850862916, 4.844495930113708, 4.829746546420236, 4.803378972818955, 4.779080677075513, 4.755564062793019, 4.731247198945323, 4.713307733124976, 4.693607713970032, 4.672507488214909, 4.655963792758402, 4.630589036177108, 4.627233612949679, 4.605165588641963, 4.596035345713218, 4.569708577939599, 4.5578520634135495, 4.539482268110736, 4.524269515605216, 4.509690909334508, 4.496764300577133, 4.485948803096377, 4.465289253572551, 4.463799654736974, 4.449565513333046, 4.433296642164132, 4.412748530262951, 4.40071355313397, 4.388645788246596, 4.381168446839835, 4.374548968374509, 4.362413795398372, 4.350654636672835, 4.346096004263875, 4.333058850464749, 4.316048763635567, 4.317744192441948, 4.293670581740264, 4.2897118204168505, 4.280048604022614, 4.269886655703404, 4.259653273153171, 4.2517534083854995, 4.250326728381401]
+val results (ppl):
+[24.631204971772842, 21.352650494469714, 16.005997266873216, 13.781655684647925, 12.819111726728162, 12.016602636175906, 11.491006030427148, 10.848242872271063, 10.451055681042076, 9.917512526714718, 9.612293625521266, 9.21257187701602, 8.907821454820091, 8.6630281553801, 8.323023426501095, 8.117147802833436, 7.904844711073833, 7.681796042961079, 7.601702315271795, 7.5261120615647545, 7.244492676684553, 7.2367899897197905, 6.936514538047349, 6.836595544809347, 6.761933477328223, 6.661032917367505, 6.494087861048827, 6.342663043127745, 6.309660192785693, 6.261840260055244, 6.167577768377954, 6.110436657692084, 5.9911566807176015, 5.903532188364467, 5.927871198242825, 5.779950050942705, 5.728722669271972, 5.663419740618126, 5.60734104693692, 5.5936359679228325, 5.511122246346436, 5.542449325267956, 5.475251433204478, 5.418464922745716, 5.377942062709286, 5.372705586336852, 5.296114607666866, 5.254776775452725, 5.25826828614746, 5.236622818160131, 5.226841526678109, 5.1292581216412305, 5.156237420316787, 5.098616568947185, 5.032430898011727, 5.036029011641859, 5.027117969212859, 5.034960991925996, 5.007681226622226, 4.91920320122312, 4.941391922047454, 4.895231422538956, 4.915370564343841, 4.867299432078866, 4.855660819643757, 4.826662843514502, 4.790107413882542, 4.833457080625619, 4.775003394893005, 4.7874277970893395, 4.727547257571498, 4.767045925872488, 4.720955624296343, 4.714519361191314, 4.6864137089082005, 4.659786456743893, 4.666528246988459, 4.663675403421715, 4.669247227244691, 4.600328346978925, 4.619982024377231, 4.6599192711453625, 4.622672937590336, 4.58826795345626, 4.56937439031684, 4.565740704359566, 4.604728972014665, 4.5304069235340885, 4.55260372419151, 4.519575519023941, 4.518670766612587, 4.637293145723214, 4.468190732238752, 4.480410423175579, 4.48586387101303, 4.452949317685113, 4.486696035286609, 4.455940177211358, 4.422954717905774, 4.415731141233642]
+------------------

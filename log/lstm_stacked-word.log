@@ -1,0 +1,177 @@
+Starting run lstm_stacked-word with model='stacked_lstm' tokenization='word' epochs=100 num_hiddens=128 device=cuda:0
+epoch 0 - val-ppl: 1988.3, train-ppl: 3108.4, elapsed_time=11.43s
+epoch 1 - val-ppl: 1739.4, train-ppl: 1739.4, elapsed_time=11.43s
+epoch 2 - val-ppl: 1645.8, train-ppl: 1588.8, elapsed_time=11.42s
+epoch 3 - val-ppl: 1587.3, train-ppl: 1490.2, elapsed_time=11.50s
+epoch 4 - val-ppl: 1360.8, train-ppl: 1358.9, elapsed_time=11.45s
+epoch 5 - val-ppl: 1202.7, train-ppl: 1196.0, elapsed_time=11.44s
+epoch 6 - val-ppl: 1106.8, train-ppl: 1056.5, elapsed_time=11.41s
+epoch 7 - val-ppl: 981.5, train-ppl: 937.8, elapsed_time=11.43s
+epoch 8 - val-ppl: 853.2, train-ppl: 842.8, elapsed_time=11.39s
+epoch 9 - val-ppl: 740.3, train-ppl: 735.2, elapsed_time=11.41s
+<BOS> Yes <EOS>
+<BOS> at <EOS>
+<BOS> and <EOS>
+<BOS> matriarchal is <EOS>
+<BOS> parsing is <EOS>
+<BOS> Sound is <EOS>
+<BOS> Wait, <EOS>
+epoch 10 - val-ppl: 640.0, train-ppl: 634.5, elapsed_time=11.41s
+epoch 11 - val-ppl: 563.4, train-ppl: 543.3, elapsed_time=11.41s
+epoch 12 - val-ppl: 479.3, train-ppl: 472.6, elapsed_time=11.44s
+epoch 13 - val-ppl: 428.5, train-ppl: 405.7, elapsed_time=11.45s
+epoch 14 - val-ppl: 390.4, train-ppl: 359.0, elapsed_time=11.46s
+epoch 15 - val-ppl: 334.3, train-ppl: 317.1, elapsed_time=11.46s
+epoch 16 - val-ppl: 294.1, train-ppl: 276.5, elapsed_time=11.49s
+epoch 17 - val-ppl: 267.1, train-ppl: 249.9, elapsed_time=11.47s
+epoch 18 - val-ppl: 247.7, train-ppl: 222.3, elapsed_time=11.45s
+epoch 19 - val-ppl: 209.7, train-ppl: 199.4, elapsed_time=11.47s
+<BOS> Yes <EOS>
+<BOS> at Tesla team <EOS>
+<BOS> and I have a great idea <EOS>
+<BOS> actually? <EOS>
+<BOS> positivity &gt; Marketing <EOS>
+<BOS> Officer. <EOS>
+<BOS> ~$28,900 course <EOS>
+epoch 20 - val-ppl: 192.1, train-ppl: 176.5, elapsed_time=11.48s
+epoch 21 - val-ppl: 178.2, train-ppl: 158.8, elapsed_time=11.50s
+epoch 22 - val-ppl: 173.4, train-ppl: 144.3, elapsed_time=11.50s
+epoch 23 - val-ppl: 152.7, train-ppl: 133.9, elapsed_time=11.51s
+epoch 24 - val-ppl: 129.4, train-ppl: 121.8, elapsed_time=11.49s
+epoch 25 - val-ppl: 118.7, train-ppl: 109.5, elapsed_time=11.48s
+epoch 26 - val-ppl: 107.0, train-ppl: 96.6, elapsed_time=11.51s
+epoch 27 - val-ppl: 96.2, train-ppl: 87.5, elapsed_time=11.51s
+epoch 28 - val-ppl: 93.4, train-ppl: 80.0, elapsed_time=11.50s
+epoch 29 - val-ppl: 81.2, train-ppl: 72.9, elapsed_time=11.51s
+<BOS> Yes <EOS>
+<BOS> at least true of my favorite T-shirts! <EOS>
+<BOS> and I am forever <EOS>
+<BOS> too: <EOS>
+<BOS> Bandwidth, <EOS>
+<BOS> Science <EOS>
+<BOS> square Christmas of good point <EOS>
+epoch 30 - val-ppl: 74.5, train-ppl: 66.3, elapsed_time=11.51s
+epoch 31 - val-ppl: 71.0, train-ppl: 60.8, elapsed_time=11.49s
+epoch 32 - val-ppl: 63.5, train-ppl: 56.0, elapsed_time=11.47s
+epoch 33 - val-ppl: 58.6, train-ppl: 51.0, elapsed_time=11.50s
+epoch 34 - val-ppl: 53.9, train-ppl: 47.1, elapsed_time=11.55s
+epoch 35 - val-ppl: 49.2, train-ppl: 42.9, elapsed_time=11.50s
+epoch 36 - val-ppl: 43.7, train-ppl: 39.7, elapsed_time=11.50s
+epoch 37 - val-ppl: 41.1, train-ppl: 37.0, elapsed_time=11.50s
+epoch 38 - val-ppl: 39.1, train-ppl: 34.5, elapsed_time=11.48s
+epoch 39 - val-ppl: 44.6, train-ppl: 32.5, elapsed_time=11.50s
+<BOS> Yes <EOS>
+<BOS> at weeks <EOS>
+<BOS> and the British legal system in <EOS>
+<BOS> mind, but I have nice <EOS>
+<BOS> fired at the fog <EOS>
+<BOS> galaxy on this week <EOS>
+<BOS> receive) good like right <EOS>
+epoch 40 - val-ppl: 35.1, train-ppl: 30.3, elapsed_time=11.50s
+epoch 41 - val-ppl: 32.8, train-ppl: 28.2, elapsed_time=11.47s
+epoch 42 - val-ppl: 29.4, train-ppl: 26.0, elapsed_time=11.49s
+epoch 43 - val-ppl: 26.5, train-ppl: 24.2, elapsed_time=11.51s
+epoch 44 - val-ppl: 25.4, train-ppl: 22.3, elapsed_time=11.51s
+epoch 45 - val-ppl: 24.3, train-ppl: 21.3, elapsed_time=11.50s
+epoch 46 - val-ppl: 23.1, train-ppl: 20.1, elapsed_time=11.47s
+epoch 47 - val-ppl: 22.4, train-ppl: 18.8, elapsed_time=11.50s
+epoch 48 - val-ppl: 19.9, train-ppl: 17.7, elapsed_time=11.51s
+epoch 49 - val-ppl: 19.2, train-ppl: 16.8, elapsed_time=11.49s
+<BOS> Yes <EOS>
+<BOS> at SN2 <EOS>
+<BOS> and the trick is opening &amp; closing the spacesuit helmet so hard <EOS>
+<BOS> right, will do <EOS>
+<BOS> Australians is high -&gt; -&gt; Bullshit points on <EOS>
+<BOS> interlocking on a Cybertruck team just really most most most most things as back from its the way to report.com. <EOS>
+<BOS> prototype, oh <EOS>
+epoch 50 - val-ppl: 20.6, train-ppl: 15.9, elapsed_time=11.48s
+epoch 51 - val-ppl: 17.0, train-ppl: 15.1, elapsed_time=11.48s
+epoch 52 - val-ppl: 15.6, train-ppl: 14.1, elapsed_time=11.48s
+epoch 53 - val-ppl: 14.7, train-ppl: 13.6, elapsed_time=11.47s
+epoch 54 - val-ppl: 14.2, train-ppl: 12.8, elapsed_time=11.47s
+epoch 55 - val-ppl: 13.6, train-ppl: 12.1, elapsed_time=11.48s
+epoch 56 - val-ppl: 12.7, train-ppl: 11.7, elapsed_time=11.49s
+epoch 57 - val-ppl: 14.3, train-ppl: 11.1, elapsed_time=11.47s
+epoch 58 - val-ppl: 11.8, train-ppl: 10.8, elapsed_time=11.50s
+epoch 59 - val-ppl: 11.1, train-ppl: 10.3, elapsed_time=11.47s
+<BOS> Yes <EOS>
+<BOS> at SN2 <EOS>
+<BOS> and the movie obviously ever that is questionable <EOS>
+<BOS> geographically for know even hard <EOS>
+<BOS> Dependent on proving high safety <EOS>
+<BOS> similar. The horn that are <EOS>
+<BOS> liters of pure water costs $1 <EOS>
+epoch 60 - val-ppl: 11.1, train-ppl: 9.9, elapsed_time=11.48s
+epoch 61 - val-ppl: 10.2, train-ppl: 9.5, elapsed_time=11.50s
+epoch 62 - val-ppl: 10.3, train-ppl: 9.0, elapsed_time=11.46s
+epoch 63 - val-ppl: 9.9, train-ppl: 8.7, elapsed_time=11.50s
+epoch 64 - val-ppl: 9.2, train-ppl: 8.4, elapsed_time=11.46s
+epoch 65 - val-ppl: 8.8, train-ppl: 8.1, elapsed_time=11.52s
+epoch 66 - val-ppl: 8.5, train-ppl: 7.8, elapsed_time=11.49s
+epoch 67 - val-ppl: 8.5, train-ppl: 7.7, elapsed_time=11.46s
+epoch 68 - val-ppl: 8.0, train-ppl: 7.3, elapsed_time=11.49s
+epoch 69 - val-ppl: 7.5, train-ppl: 7.1, elapsed_time=11.51s
+<BOS> Yes <EOS>
+<BOS> at least some of them <EOS>
+<BOS> and the movie will ever do for Kathy clock <EOS>
+<BOS> shaving , on Smart Summon coming in July. It is an priority. team, like he are high through other shield but as much off residual entry where then affects % exponentially at Earth. <EOS>
+<BOS> yachts <EOS>
+<BOS> prioritize SpaceX space pump has interior of work <EOS>
+<BOS> already, maybe arms to launch Starship Cape features on Starship FSD will have pure primary fuel ramp. I have ~250 exponentially warts during the sun. <EOS>
+epoch 70 - val-ppl: 7.2, train-ppl: 6.8, elapsed_time=11.47s
+epoch 71 - val-ppl: 8.8, train-ppl: 6.7, elapsed_time=11.49s
+epoch 72 - val-ppl: 7.0, train-ppl: 6.5, elapsed_time=11.46s
+epoch 73 - val-ppl: 6.6, train-ppl: 6.3, elapsed_time=11.45s
+epoch 74 - val-ppl: 6.7, train-ppl: 6.1, elapsed_time=11.46s
+epoch 75 - val-ppl: 6.2, train-ppl: 6.0, elapsed_time=11.47s
+epoch 76 - val-ppl: 6.1, train-ppl: 5.8, elapsed_time=11.44s
+epoch 77 - val-ppl: 6.0, train-ppl: 5.7, elapsed_time=11.47s
+epoch 78 - val-ppl: 5.9, train-ppl: 5.5, elapsed_time=11.50s
+epoch 79 - val-ppl: 5.7, train-ppl: 5.4, elapsed_time=11.47s
+<BOS> Yes <EOS>
+<BOS> at least some of them <EOS>
+<BOS> and the movie love is what was instrumental for space but dont buy programs <EOS>
+<BOS> will, but the tanks are also render their vehicle vs their drivetrain. <EOS>
+<BOS> aero baby you really heard for your yoke to advance issue &amp; literally companies survived. It would take at social risk &amp; making life multiplanetary. <EOS>
+<BOS> Below the Y is named while after the duty because far by scene <EOS>
+<BOS> Nano applies to everything &amp; therefore means nothing. Definitely indicates bs. Sorry. <EOS>
+epoch 80 - val-ppl: 5.5, train-ppl: 5.2, elapsed_time=11.45s
+epoch 81 - val-ppl: 5.4, train-ppl: 5.1, elapsed_time=11.47s
+epoch 82 - val-ppl: 5.5, train-ppl: 5.0, elapsed_time=11.48s
+epoch 83 - val-ppl: 5.1, train-ppl: 4.9, elapsed_time=11.45s
+epoch 84 - val-ppl: 4.9, train-ppl: 4.7, elapsed_time=11.47s
+epoch 85 - val-ppl: 5.5, train-ppl: 4.6, elapsed_time=11.47s
+epoch 86 - val-ppl: 5.3, train-ppl: 4.5, elapsed_time=11.45s
+epoch 87 - val-ppl: 4.6, train-ppl: 4.5, elapsed_time=11.48s
+epoch 88 - val-ppl: 4.8, train-ppl: 4.4, elapsed_time=11.44s
+epoch 89 - val-ppl: 4.5, train-ppl: 4.3, elapsed_time=11.49s
+<BOS> Yes <EOS>
+<BOS> at least some of them <EOS>
+<BOS> and the movie love is about now? that that outside production version is not when NASA pack for several country improvement capital Improve stack &amp; within months. <EOS>
+<BOS> aft. <EOS>
+<BOS> dogematic, was grow by people who only the product autonomy is a big deal. <EOS>
+<BOS> (pearl welcome <EOS>
+<BOS> views. Its not <EOS>
+epoch 90 - val-ppl: 4.4, train-ppl: 4.2, elapsed_time=11.47s
+epoch 91 - val-ppl: 4.3, train-ppl: 4.2, elapsed_time=11.45s
+epoch 92 - val-ppl: 4.1, train-ppl: 4.1, elapsed_time=11.47s
+epoch 93 - val-ppl: 4.1, train-ppl: 4.1, elapsed_time=11.45s
+epoch 94 - val-ppl: 4.1, train-ppl: 4.0, elapsed_time=11.47s
+epoch 95 - val-ppl: 4.0, train-ppl: 3.9, elapsed_time=11.48s
+epoch 96 - val-ppl: 4.1, train-ppl: 3.8, elapsed_time=11.43s
+epoch 97 - val-ppl: 3.8, train-ppl: 3.8, elapsed_time=11.43s
+epoch 98 - val-ppl: 3.7, train-ppl: 3.7, elapsed_time=11.47s
+epoch 99 - val-ppl: 3.6, train-ppl: 3.6, elapsed_time=11.51s
+<BOS> Yes <EOS>
+<BOS> at least some of them <EOS>
+<BOS> and the best thing if exists in the real friend <EOS>
+<BOS> liquid oxygen <EOS>
+<BOS> Passed cryo proof <EOS>
+<BOS> logs) <EOS>
+<BOS> substantially a roof resolution than expected. There will be turn on water. I see your scam! <EOS>
+<BOS> Yes <EOS>
+train results (ppl):
+[3108.362526225991, 1739.3777560341046, 1588.7662158974372, 1490.2291981088524, 1358.8515776245954, 1195.997840068401, 1056.512893895958, 937.7856975991651, 842.7500448942399, 735.1740714415272, 634.5377457286947, 543.2898441387913, 472.6361920146431, 405.65158367099394, 358.9946334389049, 317.0898865980992, 276.4570136265798, 249.90017715786337, 222.2770400460482, 199.35313465923383, 176.48261457534653, 158.82204648733898, 144.32943786046954, 133.86866537054712, 121.79366154088957, 109.48444812796187, 96.58621570122878, 87.50009756187424, 80.04180880103057, 72.87102261606586, 66.29341514150869, 60.83663914135137, 56.040722042006294, 51.00080698063394, 47.13819219344183, 42.87120573548193, 39.68135553993313, 37.0292754803905, 34.52696549873158, 32.51908728182836, 30.297622487029734, 28.196112929606485, 25.991318777078806, 24.158353720141957, 22.26167301751599, 21.30564210537792, 20.07136157881899, 18.81274920681726, 17.680630312414678, 16.82390228543763, 15.868648377542241, 15.138129146877182, 14.14132563034942, 13.593296831428521, 12.836949664361633, 12.098546468274128, 11.684535781877594, 11.0540985532723, 10.808867601284334, 10.349081656786629, 9.89584877962272, 9.525398294236506, 9.00824979631846, 8.748853901559917, 8.366266205670188, 8.088134646592321, 7.843210510835164, 7.679055523359315, 7.287575911319645, 7.080854183870898, 6.759129276635478, 6.678407693261544, 6.531592005137219, 6.259002515119536, 6.100710243197568, 5.956313853808788, 5.813848065037171, 5.716553211869392, 5.490636186163873, 5.358104964012946, 5.202117218472483, 5.130775524198548, 4.95444692901514, 4.917391928237487, 4.734366780708274, 4.64096693731476, 4.536134591939764, 4.5088907060461905, 4.389437258451283, 4.309614950903301, 4.186979390934588, 4.163182671550373, 4.077770898358765, 4.050972944517539, 3.962021759337285, 3.8846643592868766, 3.80065871451847, 3.7753752735111488, 3.743904941266511, 3.6259078725998357]
+val results (ppl):
+[1988.3369537735264, 1739.429964108087, 1645.7877464698408, 1587.3406860321472, 1360.8473740517761, 1202.6846006882452, 1106.758794468011, 981.5466296701085, 853.2428439504329, 740.2500470905627, 639.9625736834118, 563.4438465810744, 479.2944143148938, 428.49696202618594, 390.3952378348211, 334.26081639482055, 294.13613197139256, 267.09831544019886, 247.68184651972336, 209.65332779230383, 192.08299939858153, 178.21489290849536, 173.40626096567536, 152.6661198118302, 129.38562152562082, 118.7418270348411, 107.01453855290369, 96.22107445064216, 93.42702822388206, 81.19891975468431, 74.5081387806135, 70.98838038751089, 63.54073151377869, 58.61866201744549, 53.92938034405312, 49.15091287956968, 43.652644093894686, 41.129821037558955, 39.11249449324795, 44.5790080014337, 35.088986949932035, 32.84640134587937, 29.44999912789928, 26.528729948131236, 25.416519355292937, 24.31474551659676, 23.135088372604105, 22.390296795558225, 19.8549661046935, 19.219281233430507, 20.645229599960047, 17.047355308591086, 15.588865527176369, 14.685973882544916, 14.194817924654826, 13.5818799929202, 12.729325354134927, 14.282834866602874, 11.7588925261117, 11.062933502544764, 11.138737777292333, 10.193150600381646, 10.28795585803832, 9.923323862373257, 9.223832882911687, 8.760324178243039, 8.464321454792518, 8.511380621215848, 7.9575972729253355, 7.528672382482032, 7.244713841911394, 8.8239501119489, 6.959827017714529, 6.609052270785838, 6.690479298372437, 6.210008572754095, 6.07567902115667, 5.997159412085303, 5.8834511234466, 5.730496361297115, 5.490441192815877, 5.363524778750796, 5.490365128769647, 5.060491777561792, 4.892415551187767, 5.4828415455252655, 5.295184610875758, 4.63089587834322, 4.813216147138337, 4.540988893143873, 4.422491784266574, 4.309566784407921, 4.10366744924662, 4.104930084949974, 4.13907764562415, 4.000302799415971, 4.114324343994214, 3.81353328774442, 3.7098350164785785, 3.623883544080546]
+------------------

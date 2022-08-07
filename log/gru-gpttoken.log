@@ -1,0 +1,178 @@
+Starting run gru-gpttoken with model='gru' tokenization='gpt2' epochs=100 num_hiddens=128 device=cuda:0
+Starting run gru-gpttoken with model='gru' tokenization='gpt2' epochs=100 num_hiddens=128 device=cuda:0
+epoch 0 - val-ppl: 1462.9, train-ppl: 2213.8, elapsed_time=17.97s
+epoch 1 - val-ppl: 1297.6, train-ppl: 1392.9, elapsed_time=17.36s
+epoch 2 - val-ppl: 1180.8, train-ppl: 1216.5, elapsed_time=17.36s
+epoch 3 - val-ppl: 1102.9, train-ppl: 1105.1, elapsed_time=17.36s
+epoch 4 - val-ppl: 933.6, train-ppl: 992.0, elapsed_time=17.36s
+epoch 5 - val-ppl: 758.4, train-ppl: 813.6, elapsed_time=17.49s
+epoch 6 - val-ppl: 536.7, train-ppl: 592.7, elapsed_time=17.38s
+epoch 7 - val-ppl: 413.6, train-ppl: 433.8, elapsed_time=17.42s
+epoch 8 - val-ppl: 337.0, train-ppl: 338.6, elapsed_time=17.39s
+epoch 9 - val-ppl: 271.2, train-ppl: 274.0, elapsed_time=17.81s
+<BOS> Yes <EOS>
+<BOS> Ġbut Ġyou re Ġthe Ġbest <EOS>
+<BOS> ĠTesla Ġis Ġa Ġgreat <EOS>
+<BOS> Ġdirect <EOS>
+<BOS> Ġnaive <EOS>
+<BOS> Ġsurvived <EOS>
+<BOS> Ġconnector <EOS>
+epoch 10 - val-ppl: 229.5, train-ppl: 226.6, elapsed_time=17.63s
+epoch 11 - val-ppl: 195.2, train-ppl: 189.6, elapsed_time=17.55s
+epoch 12 - val-ppl: 169.4, train-ppl: 158.7, elapsed_time=17.57s
+epoch 13 - val-ppl: 143.2, train-ppl: 136.1, elapsed_time=17.50s
+epoch 14 - val-ppl: 126.7, train-ppl: 117.0, elapsed_time=17.37s
+epoch 15 - val-ppl: 111.1, train-ppl: 101.1, elapsed_time=17.39s
+epoch 16 - val-ppl: 99.4, train-ppl: 87.7, elapsed_time=17.40s
+epoch 17 - val-ppl: 85.7, train-ppl: 77.4, elapsed_time=17.37s
+epoch 18 - val-ppl: 75.7, train-ppl: 67.8, elapsed_time=17.37s
+epoch 19 - val-ppl: 68.3, train-ppl: 59.9, elapsed_time=17.38s
+<BOS> Yes <EOS>
+<BOS> Ġbut ĠI Ġwill Ġhave Ġa Ġlittle <EOS>
+<BOS> ĠTesla ĠModel ĠS ĠPl aid Ġat <EOS>
+<BOS> Ġconcentrated . <EOS>
+<BOS> ier Ġthan Ġit <EOS>
+<BOS> ressed s rs ly <EOS>
+<BOS> Ġinstance Ġof Ġthe ĠBlade !! <EOS>
+epoch 20 - val-ppl: 60.7, train-ppl: 52.9, elapsed_time=17.42s
+epoch 21 - val-ppl: 54.3, train-ppl: 47.4, elapsed_time=17.40s
+epoch 22 - val-ppl: 49.0, train-ppl: 42.3, elapsed_time=17.40s
+epoch 23 - val-ppl: 44.1, train-ppl: 38.1, elapsed_time=17.41s
+epoch 24 - val-ppl: 39.6, train-ppl: 34.4, elapsed_time=17.45s
+epoch 25 - val-ppl: 36.6, train-ppl: 31.3, elapsed_time=17.40s
+epoch 26 - val-ppl: 33.2, train-ppl: 28.3, elapsed_time=17.40s
+epoch 27 - val-ppl: 30.1, train-ppl: 26.0, elapsed_time=17.36s
+epoch 28 - val-ppl: 27.8, train-ppl: 23.7, elapsed_time=17.39s
+epoch 29 - val-ppl: 25.6, train-ppl: 21.8, elapsed_time=17.41s
+<BOS> Yes <EOS>
+<BOS> Ġbut Ġnot Ġsure <EOS>
+<BOS> ĠTesla Ġsupporters <EOS>
+<BOS> ĠOrder Ġonline Ġin Ġmins <EOS>
+<BOS> From Ġthe ĠConc orde <EOS>
+<BOS> ĠRef ill otine Ġdeath Ġof Ġthe Ġbest Ġscenes Ġin Ġplace Ġof Ġspace <EOS>
+<BOS> ĠCard oming Ġdisaster Ġfor Ġsure <EOS>
+epoch 30 - val-ppl: 23.5, train-ppl: 20.2, elapsed_time=17.39s
+epoch 31 - val-ppl: 22.0, train-ppl: 18.7, elapsed_time=17.36s
+epoch 32 - val-ppl: 20.3, train-ppl: 17.3, elapsed_time=17.45s
+epoch 33 - val-ppl: 19.0, train-ppl: 16.3, elapsed_time=17.39s
+epoch 34 - val-ppl: 17.9, train-ppl: 15.1, elapsed_time=17.41s
+epoch 35 - val-ppl: 16.4, train-ppl: 14.2, elapsed_time=17.39s
+epoch 36 - val-ppl: 15.5, train-ppl: 13.3, elapsed_time=17.50s
+epoch 37 - val-ppl: 14.5, train-ppl: 12.5, elapsed_time=17.38s
+epoch 38 - val-ppl: 13.8, train-ppl: 11.8, elapsed_time=17.37s
+epoch 39 - val-ppl: 13.0, train-ppl: 11.2, elapsed_time=17.39s
+<BOS> Yes <EOS>
+<BOS> Ġbut Ġnot Ġsure <EOS>
+<BOS> ĠTesla ĠModel ĠS Ġon ĠN r burg ring Ġnext Ġweek <EOS>
+<BOS> ĠSo C <EOS>
+<BOS> From <EOS>
+<BOS> cloud !! <EOS>
+<BOS> ĠMarch , Ġso Ġbuyer Ġof Ġour Ġnew Ġcrane ! <EOS>
+epoch 40 - val-ppl: 12.2, train-ppl: 10.5, elapsed_time=17.41s
+epoch 41 - val-ppl: 11.8, train-ppl: 10.0, elapsed_time=17.39s
+epoch 42 - val-ppl: 11.1, train-ppl: 9.6, elapsed_time=17.40s
+epoch 43 - val-ppl: 10.6, train-ppl: 9.1, elapsed_time=17.40s
+epoch 44 - val-ppl: 10.1, train-ppl: 8.8, elapsed_time=17.36s
+epoch 45 - val-ppl: 9.6, train-ppl: 8.3, elapsed_time=17.38s
+epoch 46 - val-ppl: 9.2, train-ppl: 8.0, elapsed_time=17.37s
+epoch 47 - val-ppl: 8.8, train-ppl: 7.7, elapsed_time=17.39s
+epoch 48 - val-ppl: 8.3, train-ppl: 7.4, elapsed_time=17.40s
+epoch 49 - val-ppl: 8.0, train-ppl: 7.1, elapsed_time=17.42s
+<BOS> Yes <EOS>
+<BOS> Ġbut Ġnot Ġsure Ġsounds Ġlike Ġa Ġchild <EOS>
+<BOS> ĠTesla ĠModel ĠS Ġon ĠN r burg ring Ġnext Ġweek <EOS>
+<BOS> iliated Ġshareholders Ġthat ĠIm Ġnot Ġto Ġbe Ġmade Ġof Ġthe Ġworld Ġthings Ġin Ġthe Ġcar ! <EOS>
+<BOS> Sub scription Ġrolls Ġout Ġin Ġabout Ġa Ġmonth <EOS>
+<BOS> tin arian <EOS>
+<BOS> Ġvelocity Ġm Ġfor Ġthe Ġengine Ġat Ġ: 30 pm ĠCalifornia Ġtime Ġat <EOS>
+epoch 50 - val-ppl: 7.7, train-ppl: 6.8, elapsed_time=17.40s
+epoch 51 - val-ppl: 7.4, train-ppl: 6.6, elapsed_time=17.39s
+epoch 52 - val-ppl: 7.1, train-ppl: 6.3, elapsed_time=17.40s
+epoch 53 - val-ppl: 6.9, train-ppl: 6.1, elapsed_time=17.40s
+epoch 54 - val-ppl: 6.7, train-ppl: 5.9, elapsed_time=17.41s
+epoch 55 - val-ppl: 6.4, train-ppl: 5.8, elapsed_time=17.39s
+epoch 56 - val-ppl: 6.3, train-ppl: 5.6, elapsed_time=17.44s
+epoch 57 - val-ppl: 6.0, train-ppl: 5.4, elapsed_time=17.43s
+epoch 58 - val-ppl: 5.9, train-ppl: 5.2, elapsed_time=17.48s
+epoch 59 - val-ppl: 5.7, train-ppl: 5.1, elapsed_time=17.42s
+<BOS> Yes <EOS>
+<BOS> Ġbut ĠI Ġthink Ġwe Ġwill <EOS>
+<BOS> ĠTesla Ġcustomers Ġare Ġgoing Ġbankrupt Ġfor Ġlack Ġof Ġpatients <EOS>
+<BOS> Indeed <EOS>
+<BOS> ĠMe ant Ġto Ġgo Ġping <EOS>
+<BOS> ĠMach Ġ, Ġ- R apt or Ġis Ġdesigned Ġfor Ġsure . <EOS>
+<BOS> Ġmerely Ġfor Ġperspective Ġin Ġthe Ġof Ġthe Ġend ! <EOS>
+epoch 60 - val-ppl: 5.5, train-ppl: 5.0, elapsed_time=17.45s
+epoch 61 - val-ppl: 5.3, train-ppl: 4.8, elapsed_time=17.42s
+epoch 62 - val-ppl: 5.2, train-ppl: 4.7, elapsed_time=17.36s
+epoch 63 - val-ppl: 5.1, train-ppl: 4.6, elapsed_time=17.38s
+epoch 64 - val-ppl: 5.0, train-ppl: 4.5, elapsed_time=17.42s
+epoch 65 - val-ppl: 4.8, train-ppl: 4.4, elapsed_time=17.41s
+epoch 66 - val-ppl: 4.7, train-ppl: 4.3, elapsed_time=17.42s
+epoch 67 - val-ppl: 4.6, train-ppl: 4.2, elapsed_time=17.39s
+epoch 68 - val-ppl: 4.5, train-ppl: 4.1, elapsed_time=17.42s
+epoch 69 - val-ppl: 4.3, train-ppl: 4.0, elapsed_time=17.37s
+<BOS> Yes <EOS>
+<BOS> Ġbut Ġit Ġstill Ġhas Ġbeen Ġdone <EOS>
+<BOS> ĠTesla Ġcustomers Ġare Ġtoo Ġbad Ġfor ĠAmerica , Ġbut Ġtours Ġwill Ġask Ġthe Ġmost Ġof Ġby Ġ. <EOS>
+<BOS> ĠPanic <EOS>
+<BOS> Ġroaring Ġs Ġhappen <EOS>
+<BOS> Ġcrash Ġabsorption Ġrails Ġcan Ġbe Ġseen Ġfrom Ġany Ġgiven Ġcompany Ġor Ġnot . <EOS>
+<BOS> Place Ġyour Ġbets <EOS>
+epoch 70 - val-ppl: 4.3, train-ppl: 3.9, elapsed_time=17.40s
+epoch 71 - val-ppl: 4.2, train-ppl: 3.9, elapsed_time=17.42s
+epoch 72 - val-ppl: 4.1, train-ppl: 3.8, elapsed_time=17.39s
+epoch 73 - val-ppl: 4.0, train-ppl: 3.7, elapsed_time=17.39s
+epoch 74 - val-ppl: 3.9, train-ppl: 3.6, elapsed_time=17.42s
+epoch 75 - val-ppl: 3.9, train-ppl: 3.6, elapsed_time=17.42s
+epoch 76 - val-ppl: 3.8, train-ppl: 3.5, elapsed_time=17.41s
+epoch 77 - val-ppl: 3.7, train-ppl: 3.5, elapsed_time=17.41s
+epoch 78 - val-ppl: 3.6, train-ppl: 3.4, elapsed_time=17.37s
+epoch 79 - val-ppl: 3.6, train-ppl: 3.3, elapsed_time=17.39s
+<BOS> Yes <EOS>
+<BOS> Ġbut Ġit Ġdoesnt Ġappear Ġthat ) Ġfor Ġa Ġbig Ġdeal , Ġas Ġits Ġliterally Ġneed Ġfor Ġzero Ġhuman <EOS>
+<BOS> ĠTesla Ġcustomers Ġare Ġso Ġhonored Ġto Ġhelp , ĠI Ġwill Ġstop Ġor Ġpayroll Ġwould ve Ġbounced Ġdays Ġlater . <EOS>
+<BOS> Ġpatients , Ġplease Ġinvest Ġwith ĠTesla , ĠSpaceX Ġ& amp ; ĠFalcon Ġlanded Ġon Ġin Ġthis Ġmorning <EOS>
+<BOS> efficiency Ġbattery Ġrecycling . ĠHigh Ġour Ġstock / C ++ , Ġwere Ġno Ġprior Ġexperience . <EOS>
+<BOS> body Ġneeds Ġto Ġpass Ġa Ġflame Ġin Ġthe Ġcar ĠI ve Ġtested Ġby Ġ$ 3 k Ġupgraded , Ġbut Ġit Ġonly Ġprobably Ġ~ 3 Ġdesign Ġa ero Ġcontrol Ġon ĠEarth , Ġbut Ġits Ġmostly Ġthe Ġway Ġto Ġuse Ġthis Ġcost Ġreusable Ġwith Ġeach Ġhave <EOS>
+<BOS> ĠCorrections Ġcoming Ġsoon . <EOS>
+epoch 80 - val-ppl: 3.5, train-ppl: 3.3, elapsed_time=17.38s
+epoch 81 - val-ppl: 3.5, train-ppl: 3.3, elapsed_time=17.40s
+epoch 82 - val-ppl: 3.4, train-ppl: 3.2, elapsed_time=17.40s
+epoch 83 - val-ppl: 3.3, train-ppl: 3.2, elapsed_time=17.42s
+epoch 84 - val-ppl: 3.3, train-ppl: 3.1, elapsed_time=17.42s
+epoch 85 - val-ppl: 3.3, train-ppl: 3.1, elapsed_time=17.40s
+epoch 86 - val-ppl: 3.2, train-ppl: 3.0, elapsed_time=17.39s
+epoch 87 - val-ppl: 3.2, train-ppl: 3.0, elapsed_time=17.40s
+epoch 88 - val-ppl: 3.1, train-ppl: 3.0, elapsed_time=17.40s
+epoch 89 - val-ppl: 3.1, train-ppl: 2.9, elapsed_time=17.43s
+<BOS> Yes <EOS>
+<BOS> Ġbut Ġit Ġdoesnt Ġappear Ġto Ġbe Ġ( s igh ). ĠTesla Ġused Ġto Ġmake Ġsense . <EOS>
+<BOS> ĠTesla ĠFull ĠSelf - Dri ving Ġwill Ġcome Ġfrom Ġall ĠUS <EOS>
+<BOS> eping Ġis Ġcertainly Ġthe Ġintention ! <EOS>
+<BOS> Ġnations Ġwould Ġsay Ġcare Ġin Ġthe Ġhell <EOS>
+<BOS> Ġcomplimentary Ġboring Ġfire Ġflight , Ġwhich Ġis Ġphysically Ġpossible ing Ġto Ġimprove Ġthe Ġspeed Ġover Ġtime Ġin Ġthe Ġshape Ġof Ġa Ġthree Ġtimes Ġthe Ġwater Ġof Ġreality Ġdeaths . <EOS>
+<BOS> ĠChe ery Ġfatal ism Ġis Ġreal Ġof Ġwhat ĠI Ġwant Ġdo Ġor <EOS>
+epoch 90 - val-ppl: 3.0, train-ppl: 2.9, elapsed_time=17.43s
+epoch 91 - val-ppl: 3.0, train-ppl: 2.9, elapsed_time=17.37s
+epoch 92 - val-ppl: 2.9, train-ppl: 2.8, elapsed_time=17.45s
+epoch 93 - val-ppl: 2.9, train-ppl: 2.8, elapsed_time=17.41s
+epoch 94 - val-ppl: 2.9, train-ppl: 2.8, elapsed_time=17.42s
+epoch 95 - val-ppl: 2.9, train-ppl: 2.7, elapsed_time=17.40s
+epoch 96 - val-ppl: 2.8, train-ppl: 2.7, elapsed_time=17.39s
+epoch 97 - val-ppl: 2.8, train-ppl: 2.7, elapsed_time=17.43s
+epoch 98 - val-ppl: 2.7, train-ppl: 2.6, elapsed_time=17.41s
+epoch 99 - val-ppl: 2.7, train-ppl: 2.6, elapsed_time=17.41s
+<BOS> Yes <EOS>
+<BOS> Ġbut Ġit Ġdoesnt Ġhave Ġthe Ġprimary Ġchallenge Ġfor Ġheat Ġshielding Ġof Ġpressure Ġhalf Ġa ĠMach Ġengine . ĠIf Ġall Ġof Ġhard Ġrapid Ġiteration . Ġ~ 78 % Ġof Ġpropell ant Ġis Ġ~ 40 % Ġof ĠMerlin . ĠTwo Ġouter Ġengines Ġshut Ġoff Ġbefore Ġthe Ġcenter Ġsection Ġis Ġtoo Ġhigh Ġim o , Ġeven Ġfor Ġfully Ġreusable ĠMars , Ġjust Ġa Ġdistant Ġn d . <EOS>
+<BOS> ĠTesla ĠFull ĠSelf - Dri ving <EOS>
+<BOS> Ġhacked . ĠWere Ġnot Ġyour Ġno Ġto Ġdo Ġthat . ĠMaybe Ġtoo Ġpoint . <EOS>
+<BOS> ĠCAD Ġlooks Ġso Ġcool <EOS>
+<BOS> ĠAlert Ġis , Ġgood Ġas Ġthe ? <EOS>
+<BOS> Ġgems <EOS>
+<BOS> Yes <EOS>
+train results (ppl):
+[2213.836697588881, 1392.9275603567082, 1216.4590316974984, 1105.0538897974047, 991.9894266547307, 813.5851795138157, 592.7146449966151, 433.84491175529166, 338.63989473548247, 274.047471618926, 226.56044920943225, 189.63781623609682, 158.73194458776533, 136.08210298615623, 116.9721464135955, 101.07557990278097, 87.65714921631934, 77.39007216071388, 67.75762025992624, 59.88596718454069, 52.86542950382788, 47.36905728090488, 42.27222717686318, 38.11156755297835, 34.43513955159168, 31.255648524843657, 28.311584025516556, 26.005761907300105, 23.73115324313216, 21.826462276778805, 20.152948201617928, 18.734420493289672, 17.2543505985686, 16.274496961788625, 15.144878392891794, 14.150691574637614, 13.311304025172905, 12.529098783273813, 11.848025217766748, 11.171274170880208, 10.530244905239764, 10.03848006148663, 9.554064506972498, 9.130849096792776, 8.755075845043601, 8.32916044544997, 7.981977218522716, 7.6626759443135155, 7.357681146255194, 7.053087314131845, 6.809822684691262, 6.562210078587196, 6.318332959702067, 6.126404284816327, 5.9218031477691095, 5.771634693947191, 5.552977750611275, 5.389159928517647, 5.2317052379810365, 5.1059775727494925, 4.966068896915878, 4.8314579049632345, 4.741285281478603, 4.601184596151901, 4.487067548056293, 4.3866262762994, 4.2760575236168785, 4.196302397248944, 4.096560581706779, 4.027630925597581, 3.9452920872519535, 3.861573432796694, 3.8108363674375947, 3.7206195587001667, 3.648650734544175, 3.585602078728002, 3.5298398247596188, 3.4626264660497545, 3.4021021517471324, 3.341518259175814, 3.320889306286812, 3.268115993879673, 3.2165220740928464, 3.168474158077787, 3.1189590165000527, 3.098069083879155, 3.0485224951317464, 2.9979437107044027, 2.956590703014143, 2.9134715534736118, 2.8913391269484507, 2.865162821457391, 2.8166328204784223, 2.784742359972746, 2.7590815699615767, 2.7254341257072863, 2.7047256008947476, 2.671804347360011, 2.6463912312119846, 2.6169298268471444]
+val results (ppl):
+[1462.8552398515717, 1297.6306768721126, 1180.8096832064327, 1102.9380413538217, 933.6347689421161, 758.4192498452455, 536.6910316082652, 413.63327633758234, 337.0214719073412, 271.1712892008518, 229.47313500704757, 195.1532489158005, 169.37490823738187, 143.15633257718028, 126.71044822501955, 111.06471109692184, 99.40784355096572, 85.73095753721655, 75.67892097999487, 68.2501426598679, 60.66441457237911, 54.28823176818854, 48.96279990840747, 44.07851294437765, 39.621174716526106, 36.64651063344637, 33.19130030567468, 30.068775675561277, 27.830470006457606, 25.55980323743289, 23.518626961063447, 21.954228503089798, 20.261797042044158, 18.96761706252518, 17.882425439424132, 16.40669478998962, 15.4645906627335, 14.547766404439155, 13.79723142823362, 12.987227242703248, 12.247884918007491, 11.774903246660585, 11.099792267641664, 10.574780578854398, 10.092504131287116, 9.561434019755065, 9.214546337697959, 8.773426190746076, 8.307793538365285, 8.039894881581438, 7.653488321684458, 7.426778416191625, 7.092387217006397, 6.921196289756669, 6.707624818647985, 6.423295263861815, 6.260666904260799, 5.977577327596307, 5.859790634322788, 5.674946857667658, 5.485974896756709, 5.324591554932372, 5.181503049626622, 5.070931676889319, 4.951629402579201, 4.803569971660815, 4.658977812974992, 4.553874504963411, 4.546273837836221, 4.340463324853187, 4.269053452704115, 4.190632153942504, 4.057533648774835, 4.004138006042079, 3.914676620402019, 3.8540538539167937, 3.7685186803682664, 3.6978131907036, 3.6248350953445954, 3.609543373776704, 3.4939258421252615, 3.463855712907258, 3.4208838296749846, 3.3497090098684685, 3.3125180145783304, 3.2887280159671706, 3.205246612339531, 3.162657749439401, 3.087675976720514, 3.0764056216827873, 3.040474992856859, 2.9953993268447117, 2.9454124928867107, 2.910596151895625, 2.862874532718331, 2.8932743297475185, 2.8354731064128935, 2.7726376359540454, 2.7450458373040965, 2.7316040763005622]
+------------------

@@ -1,0 +1,177 @@
+Starting run lstm_stacked-gpt-word with model='stacked_lstm' tokenization='gpt2-trained' epochs=100 num_hiddens=128 device=cuda:0
+epoch 0 - val-ppl: 1210.4, train-ppl: 1645.6, elapsed_time=19.66s
+epoch 1 - val-ppl: 1108.6, train-ppl: 1127.7, elapsed_time=19.73s
+epoch 2 - val-ppl: 1089.3, train-ppl: 1072.0, elapsed_time=19.81s
+epoch 3 - val-ppl: 1002.2, train-ppl: 1021.3, elapsed_time=19.81s
+epoch 4 - val-ppl: 802.2, train-ppl: 863.6, elapsed_time=19.73s
+epoch 5 - val-ppl: 712.1, train-ppl: 725.3, elapsed_time=19.72s
+epoch 6 - val-ppl: 647.3, train-ppl: 629.3, elapsed_time=19.69s
+epoch 7 - val-ppl: 563.0, train-ppl: 552.9, elapsed_time=19.73s
+epoch 8 - val-ppl: 491.5, train-ppl: 496.0, elapsed_time=19.68s
+epoch 9 - val-ppl: 439.6, train-ppl: 437.8, elapsed_time=19.81s
+<BOS> Yes <EOS>
+<BOS> Ġbut <EOS>
+<BOS> ĠTesla Ġis Ġa Ġgreat <EOS>
+<BOS> Ġapocaly Ġpoint <EOS>
+<BOS> ĠFalcon Ġis Ġa Ġgreat <EOS>
+<BOS> ĠPitang Ġis Ġa Ġthe Ġlot <EOS>
+<BOS> ĠSaturn Ġa Ġgreat <EOS>
+epoch 10 - val-ppl: 397.5, train-ppl: 394.6, elapsed_time=19.79s
+epoch 11 - val-ppl: 368.3, train-ppl: 360.8, elapsed_time=19.68s
+epoch 12 - val-ppl: 343.0, train-ppl: 331.3, elapsed_time=19.70s
+epoch 13 - val-ppl: 315.8, train-ppl: 301.4, elapsed_time=19.64s
+epoch 14 - val-ppl: 293.5, train-ppl: 277.0, elapsed_time=19.66s
+epoch 15 - val-ppl: 276.8, train-ppl: 261.1, elapsed_time=19.64s
+epoch 16 - val-ppl: 250.1, train-ppl: 244.3, elapsed_time=19.65s
+epoch 17 - val-ppl: 243.0, train-ppl: 225.4, elapsed_time=19.69s
+epoch 18 - val-ppl: 227.1, train-ppl: 214.0, elapsed_time=19.66s
+epoch 19 - val-ppl: 207.4, train-ppl: 201.0, elapsed_time=19.65s
+<BOS> Yes <EOS>
+<BOS> Ġbut Ġyou Ġwill Ġbe Ġa Ġlot Ġof Ġthe Ġcar Ġis Ġa Ġfew Ġmonths <EOS>
+<BOS> ĠTesla Ġis Ġa Ġgreat Ġof Ġthe ĠTesla , Ġbut ĠI Ġwill Ġbe Ġa Ġlot Ġof Ġthe Ġcar . <EOS>
+<BOS> Ġmore Ġto Ġthe ĠTesla Ġteam <EOS>
+<BOS> Ġenforce ĠTesla ĠHeavy <EOS>
+<BOS> serve Ġthe Ġwelcome ! <EOS>
+<BOS> Fri idering <EOS>
+epoch 20 - val-ppl: 197.3, train-ppl: 186.9, elapsed_time=19.72s
+epoch 21 - val-ppl: 187.5, train-ppl: 176.6, elapsed_time=19.69s
+epoch 22 - val-ppl: 173.8, train-ppl: 165.3, elapsed_time=19.70s
+epoch 23 - val-ppl: 170.5, train-ppl: 157.4, elapsed_time=19.64s
+epoch 24 - val-ppl: 159.4, train-ppl: 146.5, elapsed_time=19.70s
+epoch 25 - val-ppl: 149.1, train-ppl: 138.2, elapsed_time=19.73s
+epoch 26 - val-ppl: 143.3, train-ppl: 131.3, elapsed_time=19.71s
+epoch 27 - val-ppl: 136.0, train-ppl: 124.2, elapsed_time=19.75s
+epoch 28 - val-ppl: 126.9, train-ppl: 119.0, elapsed_time=19.65s
+epoch 29 - val-ppl: 119.3, train-ppl: 110.3, elapsed_time=19.71s
+<BOS> Yes <EOS>
+<BOS> Ġbut Ġyou Ġcan Ġdo Ġit ? <EOS>
+<BOS> ĠTesla Ġis Ġthe Ġbest Ġin Ġthe Ġlaunch Ġsystem , Ġbut Ġnot Ġa Ġlot Ġof Ġthe Ġfuture . <EOS>
+<BOS> Ġreverse Ġdo Ġdo <EOS>
+<BOS> ĠCapitol 3 <EOS>
+<BOS> iness Ġfor <EOS>
+<BOS> ĠCl ad kes Ġheh <EOS>
+epoch 30 - val-ppl: 116.5, train-ppl: 103.6, elapsed_time=19.81s
+epoch 31 - val-ppl: 113.5, train-ppl: 98.7, elapsed_time=19.74s
+epoch 32 - val-ppl: 105.1, train-ppl: 94.3, elapsed_time=19.76s
+epoch 33 - val-ppl: 103.6, train-ppl: 90.3, elapsed_time=19.72s
+epoch 34 - val-ppl: 97.0, train-ppl: 85.9, elapsed_time=19.76s
+epoch 35 - val-ppl: 91.9, train-ppl: 82.3, elapsed_time=19.73s
+epoch 36 - val-ppl: 90.3, train-ppl: 77.5, elapsed_time=19.76s
+epoch 37 - val-ppl: 83.7, train-ppl: 75.0, elapsed_time=19.77s
+epoch 38 - val-ppl: 85.4, train-ppl: 70.6, elapsed_time=19.77s
+epoch 39 - val-ppl: 80.5, train-ppl: 67.8, elapsed_time=19.77s
+<BOS> Yes <EOS>
+<BOS> Ġbut Ġyou Ġcan Ġdo Ġit ? <EOS>
+<BOS> ĠTesla Ġis Ġthe Ġbest <EOS>
+<BOS> Ġreminder <EOS>
+<BOS> ĠAltitude Ġis <EOS>
+<BOS> Ġlucky <EOS>
+<BOS> Ġbigger <EOS>
+epoch 40 - val-ppl: 72.4, train-ppl: 64.6, elapsed_time=19.75s
+epoch 41 - val-ppl: 70.7, train-ppl: 61.8, elapsed_time=19.74s
+epoch 42 - val-ppl: 67.3, train-ppl: 58.9, elapsed_time=19.76s
+epoch 43 - val-ppl: 68.0, train-ppl: 56.5, elapsed_time=19.70s
+epoch 44 - val-ppl: 66.7, train-ppl: 54.3, elapsed_time=19.69s
+epoch 45 - val-ppl: 59.4, train-ppl: 51.6, elapsed_time=19.77s
+epoch 46 - val-ppl: 56.7, train-ppl: 49.8, elapsed_time=19.71s
+epoch 47 - val-ppl: 55.8, train-ppl: 48.2, elapsed_time=19.70s
+epoch 48 - val-ppl: 53.3, train-ppl: 46.7, elapsed_time=19.65s
+epoch 49 - val-ppl: 52.7, train-ppl: 44.0, elapsed_time=19.68s
+<BOS> Yes <EOS>
+<BOS> Ġbut ĠI Ġthink Ġit <EOS>
+<BOS> ĠTesla Ġis Ġthe Ġbest <EOS>
+<BOS> ++, ĠTesla Ġreview Ġ& amp ; ĠBe ans <EOS>
+<BOS> opark <EOS>
+<BOS> ĠIm Ġlike Ġthe ĠTesla Ġteam s Ġlike Ġit ? <EOS>
+<BOS> Ġflam ed Ġto <EOS>
+epoch 50 - val-ppl: 50.3, train-ppl: 42.4, elapsed_time=19.77s
+epoch 51 - val-ppl: 47.1, train-ppl: 41.3, elapsed_time=19.77s
+epoch 52 - val-ppl: 46.2, train-ppl: 39.7, elapsed_time=19.75s
+epoch 53 - val-ppl: 47.4, train-ppl: 38.2, elapsed_time=19.73s
+epoch 54 - val-ppl: 44.7, train-ppl: 36.7, elapsed_time=19.74s
+epoch 55 - val-ppl: 41.1, train-ppl: 35.5, elapsed_time=19.71s
+epoch 56 - val-ppl: 39.1, train-ppl: 34.3, elapsed_time=19.81s
+epoch 57 - val-ppl: 39.1, train-ppl: 33.0, elapsed_time=19.78s
+epoch 58 - val-ppl: 36.8, train-ppl: 32.1, elapsed_time=19.77s
+epoch 59 - val-ppl: 37.1, train-ppl: 30.9, elapsed_time=19.69s
+<BOS> Yes <EOS>
+<BOS> Ġbut nt <EOS>
+<BOS> ĠTesla Ġis Ġsomething Ġlike Ġthis <EOS>
+<BOS> Ġgarage <EOS>
+<BOS> Ġcancer <EOS>
+<BOS> Ġgenerators Ġdo Ġlike Ġthis Ġgame <EOS>
+<BOS> Ġreality Ġis Ġa Ġgreat Ġjob ! <EOS>
+epoch 60 - val-ppl: 34.3, train-ppl: 30.1, elapsed_time=19.75s
+epoch 61 - val-ppl: 36.4, train-ppl: 29.3, elapsed_time=19.73s
+epoch 62 - val-ppl: 33.2, train-ppl: 28.0, elapsed_time=19.76s
+epoch 63 - val-ppl: 32.2, train-ppl: 27.0, elapsed_time=19.74s
+epoch 64 - val-ppl: 30.0, train-ppl: 25.9, elapsed_time=19.72s
+epoch 65 - val-ppl: 29.8, train-ppl: 25.3, elapsed_time=19.72s
+epoch 66 - val-ppl: 28.4, train-ppl: 25.1, elapsed_time=19.75s
+epoch 67 - val-ppl: 27.9, train-ppl: 23.6, elapsed_time=19.73s
+epoch 68 - val-ppl: 26.3, train-ppl: 23.0, elapsed_time=19.72s
+epoch 69 - val-ppl: 25.6, train-ppl: 22.6, elapsed_time=19.71s
+<BOS> Yes <EOS>
+<BOS> Ġbut nt <EOS>
+<BOS> ĠTesla Ġis Ġnot Ġa Ġoffice <EOS>
+<BOS> ĠShould Ġare Ġthe Ġtunnel Ġin ĠLA , ĠI Ġthink ĠI Ġthink Ġso Ġone , Ġbut ĠI Ġthink Ġit Ġwill Ġbe Ġbetter <EOS>
+<BOS> ld on n ip <EOS>
+<BOS> ached Ġproduction Ġcars Ġwith Ġflight Ġof Ġto ĠRaptor . ĠData Ġwill Ġbe Ġcalled Ġ/ 7 Ġup , ĠFalcon Ġengineering , Ġas Ġthe Ġrocket , Ġwhich Ġis Ġvery Ġmuch Ġbetter . <EOS>
+<BOS> Ġind b ens <EOS>
+epoch 70 - val-ppl: 26.3, train-ppl: 21.7, elapsed_time=19.72s
+epoch 71 - val-ppl: 24.8, train-ppl: 21.2, elapsed_time=19.74s
+epoch 72 - val-ppl: 24.8, train-ppl: 20.6, elapsed_time=19.72s
+epoch 73 - val-ppl: 22.6, train-ppl: 19.8, elapsed_time=19.81s
+epoch 74 - val-ppl: 22.4, train-ppl: 19.3, elapsed_time=19.77s
+epoch 75 - val-ppl: 21.6, train-ppl: 19.3, elapsed_time=19.76s
+epoch 76 - val-ppl: 22.8, train-ppl: 18.6, elapsed_time=19.68s
+epoch 77 - val-ppl: 20.2, train-ppl: 18.0, elapsed_time=19.75s
+epoch 78 - val-ppl: 20.4, train-ppl: 17.4, elapsed_time=19.72s
+epoch 79 - val-ppl: 19.7, train-ppl: 17.2, elapsed_time=19.75s
+<BOS> Yes <EOS>
+<BOS> Ġbut ĠI Ġare Ġmost Ġfun , ĠI Ġthink Ġso <EOS>
+<BOS> ĠTesla Ġis Ġthe Ġbest Ġgames Ġever <EOS>
+<BOS> frica Ġis Ġgood <EOS>
+<BOS> Ġfavorite , Ġbut ĠI Ġam ! <EOS>
+<BOS> Exciting Ġmod es ! <EOS>
+<BOS> Ġdear ove ĠModel ĠS Ġyou Ġhave Ġa Ġcar Ġin Ġthe Ġfuture Ġcar Ġon Ġtheir Ġcars . ĠIts Ġa Ġgreat Ġwork , Ġbut Ġnot Ġclose Ġfor Ġa Ġfew Ġmonths . <EOS>
+epoch 80 - val-ppl: 20.0, train-ppl: 16.9, elapsed_time=19.72s
+epoch 81 - val-ppl: 18.4, train-ppl: 16.2, elapsed_time=19.73s
+epoch 82 - val-ppl: 18.7, train-ppl: 15.7, elapsed_time=19.75s
+epoch 83 - val-ppl: 18.0, train-ppl: 15.3, elapsed_time=19.72s
+epoch 84 - val-ppl: 16.9, train-ppl: 14.9, elapsed_time=19.73s
+epoch 85 - val-ppl: 17.0, train-ppl: 15.0, elapsed_time=19.76s
+epoch 86 - val-ppl: 15.6, train-ppl: 14.1, elapsed_time=19.80s
+epoch 87 - val-ppl: 16.7, train-ppl: 13.8, elapsed_time=19.77s
+epoch 88 - val-ppl: 15.2, train-ppl: 13.5, elapsed_time=19.82s
+epoch 89 - val-ppl: 14.9, train-ppl: 13.3, elapsed_time=19.73s
+<BOS> Yes <EOS>
+<BOS> Ġbut ĠI Ġare Ġmost Ġfun . <EOS>
+<BOS> ĠTesla Ġis Ġthe Ġbest Ġgames Ġever <EOS>
+<BOS> ĠDoesnt Ġlook Ġwelcome <EOS>
+<BOS> ĠHH G ĠH ance Ġof ĠAugust , Ġso Ġa Ġlot Ġof Ġsmart . <EOS>
+<BOS> Ġsource Ġof Ġthe Ġbest Ġever ĠDoge <EOS>
+<BOS> Ġdual ĠHeavy Ġis Ġonly Ġus Ġmore Ġquite Ġfun ! <EOS>
+epoch 90 - val-ppl: 14.6, train-ppl: 13.1, elapsed_time=19.70s
+epoch 91 - val-ppl: 14.3, train-ppl: 12.6, elapsed_time=19.74s
+epoch 92 - val-ppl: 14.9, train-ppl: 12.5, elapsed_time=19.73s
+epoch 93 - val-ppl: 15.7, train-ppl: 12.2, elapsed_time=19.68s
+epoch 94 - val-ppl: 13.1, train-ppl: 12.0, elapsed_time=19.71s
+epoch 95 - val-ppl: 13.3, train-ppl: 11.6, elapsed_time=19.70s
+epoch 96 - val-ppl: 12.9, train-ppl: 11.6, elapsed_time=19.71s
+epoch 97 - val-ppl: 12.8, train-ppl: 11.4, elapsed_time=19.65s
+epoch 98 - val-ppl: 12.0, train-ppl: 11.0, elapsed_time=19.76s
+epoch 99 - val-ppl: 13.1, train-ppl: 10.7, elapsed_time=19.69s
+<BOS> Yes <EOS>
+<BOS> Ġbut ĠI Ġare Ġmost Ġfun . <EOS>
+<BOS> ĠTesla Ġis Ġbest Ġthis ĠR le ard . ĠW arth al ĠD F M . <EOS>
+<BOS> Ġdifficult <EOS>
+<BOS> Ġoffer Ġto Ġmake Ġreal <EOS>
+<BOS> Ġneut ine ĠStarship Ġship , Ġwhile Ġwas Ġgreat Ġon Ġthis , Ġbut Ġits Ġa Ġlittle Ġin ĠIndia , Ġbut Ġstill Ġthat 's Ġa Ġstep Ġfeature Ġto Ġsee . <EOS>
+<BOS> Ġheadline <EOS>
+<BOS> Yes <EOS>
+train results (ppl):
+[1645.5787559646744, 1127.6904047338103, 1072.0224103405574, 1021.3047451373448, 863.6348674717143, 725.3102159978164, 629.3473382549504, 552.863333399735, 496.01277976167006, 437.83034037651083, 394.57910120674967, 360.8058963263679, 331.30066240854853, 301.38279354288426, 277.01057707655855, 261.07058991958365, 244.3334743943166, 225.42542549645344, 214.02278654217082, 201.0432392277915, 186.9336635711992, 176.61401171711825, 165.26655116086982, 157.38411056673857, 146.49828888381654, 138.17664592318857, 131.25091376911277, 124.15319032160899, 119.01249458630545, 110.34537480732229, 103.6001796455826, 98.66244314495441, 94.26497778250375, 90.31772165878837, 85.93437117024632, 82.27761284060804, 77.47600440821819, 74.9991480911628, 70.5952852314366, 67.84763740253587, 64.64712787686254, 61.76972761093087, 58.913782820242865, 56.5038216643065, 54.26258081409658, 51.57855052498598, 49.77395319339424, 48.17145334883822, 46.713615301857196, 43.95170424491361, 42.43245473300721, 41.268195835781675, 39.69293025933877, 38.206644136700724, 36.65927405916982, 35.46540815515796, 34.325472269848824, 33.0426531291857, 32.056920658948656, 30.889853632290823, 30.149241381150674, 29.27945241250283, 27.987842155802486, 26.991961303334868, 25.946894585910144, 25.29779648240926, 25.08260485359922, 23.64784262842542, 23.012470132333757, 22.600457162212216, 21.743582139572965, 21.185480852961145, 20.57291308578799, 19.794637693616032, 19.330379663929246, 19.25284857120958, 18.581516276491232, 18.01194881320111, 17.384322899013796, 17.172062955972525, 16.914122490231875, 16.178444992781102, 15.695749764279828, 15.336749858984827, 14.93766578353144, 15.021979671572655, 14.093749129595915, 13.823787848043839, 13.524495142060525, 13.269838451748067, 13.119069971637549, 12.559728229404746, 12.474801449498218, 12.220158158570161, 12.046602416000393, 11.638387625686578, 11.616139992985643, 11.375771724491438, 11.009195630688865, 10.731728967170099]
+val results (ppl):
+[1210.4061580566727, 1108.6004865611026, 1089.3173489609349, 1002.1904294192442, 802.2331566419117, 712.1050181742024, 647.257617435568, 563.0238661779084, 491.5198284927967, 439.57956489448867, 397.4917108199092, 368.3188129121296, 342.95877277871335, 315.8494202695831, 293.5372008295636, 276.76769990071483, 250.142751318171, 242.97417971605162, 227.0853372367569, 207.3902357312687, 197.25708239382686, 187.5152935105005, 173.783721808488, 170.45637354145887, 159.3885970762241, 149.12177184735677, 143.33666300588305, 135.9564481034856, 126.91683905325391, 119.280072768774, 116.47987391296637, 113.46400088838075, 105.08154052892799, 103.58325265866056, 97.04094606756951, 91.87387926424611, 90.2807611732513, 83.67031126005598, 85.44118034929353, 80.53485528375191, 72.36633269085374, 70.70465205544069, 67.27251248520275, 67.99765007203102, 66.7247496514937, 59.40426293834318, 56.66247387315521, 55.76644109953131, 53.30415479893785, 52.69278937856899, 50.338411065370174, 47.075484643322405, 46.17085555911239, 47.442545957316256, 44.733336342866, 41.11824964119852, 39.114309872167766, 39.071891196567215, 36.765448039744015, 37.067969767397265, 34.33129495854897, 36.37816332927043, 33.223156659025136, 32.15692027864618, 29.961557448195173, 29.808123321289123, 28.393718376141216, 27.913211743558453, 26.29309115847409, 25.555453287042315, 26.2824661487514, 24.75931248264624, 24.78405445214151, 22.641578937569978, 22.43081632581447, 21.58344202965621, 22.842736671489604, 20.17024494136073, 20.437904183353815, 19.671531867626584, 20.001621090989758, 18.379643199230348, 18.674824121519833, 17.950468616321913, 16.87984863434477, 17.013514784624647, 15.649940250069468, 16.675246494924345, 15.229065275584164, 14.863970049067966, 14.570923998452594, 14.320743765321545, 14.91947776336794, 15.687493610170817, 13.062113909268984, 13.332376684659867, 12.866580760151487, 12.8154213913627, 12.008364558283633, 13.132792401485016]
+------------------
