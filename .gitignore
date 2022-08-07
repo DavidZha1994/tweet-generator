@@ -131,4 +131,4 @@ dmypy.json
 
 # project related:
 plots/*
-checkpoints/*
+#checkpoints/*
