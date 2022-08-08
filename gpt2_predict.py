@@ -2,7 +2,7 @@ from transformers import GPT2Tokenizer, pipeline, GPT2LMHeadModel, GPT2Config
 from pathlib import Path
 import pandas as pd
 
-selection = "gpt2_tokenizer_scratch"
+selection = "gpt2_one_ep"
 input_prompts = ["This", "I", "Tesla", "Entertainment", "Just", "We", "A", "Haha", "There", "Good", "Thanks", "Bitcoin",
                  "Ascent", "Yeah", "Major", "Tomorrow", "Landing", "Indeed", "Maybe", "Possible", "Burst", "Autopilot",
                  "China", "Also", "London", "Roughly"]
@@ -20,6 +20,10 @@ options = {
     "gpt2_tokenizer_scratch": {
         "tokenizer": GPT2Tokenizer('gpt2tokenizer/vocab.json', 'gpt2tokenizer/merges.txt'),
         "dir_name": "token_trained"
+    },
+    "gpt2_one_ep": {
+        "tokenizer": GPT2Tokenizer.from_pretrained("gpt2"),
+        "dir_name": "fine_tuned_one_ep"
     }
 }
 

@@ -5,8 +5,8 @@ import math
 from pathlib import Path
 
 DEVICE = 'cuda:0'
-TRAIN_NN_FROM_SCRATCH = True
-TRAIN_TOKENIZER_FROM_SCRATCH = True
+TRAIN_NN_FROM_SCRATCH = False
+TRAIN_TOKENIZER_FROM_SCRATCH = False
 
 # disallow the possibility to train the tokenizer without retraining the model
 assert TRAIN_NN_FROM_SCRATCH or not TRAIN_TOKENIZER_FROM_SCRATCH, "Set TRAIN_NN to true if TRAIN_TOKENIZER=true"
@@ -67,9 +67,9 @@ data_collator = DataCollatorForLanguageModeling(
 )
 
 training_args = TrainingArguments(
-    output_dir="./metrics/token_trained",
+    output_dir="./metrics/fine_tuned_one_ep",
     overwrite_output_dir=True,
-    num_train_epochs=20,
+    num_train_epochs=1,
     per_device_train_batch_size=32,
     save_steps=5_000,
     save_total_limit=2,
@@ -97,7 +97,7 @@ generate = pipeline(
     device=0
 )
 
-trainer.save_model("./models/token_trained")
+trainer.save_model("./models/fine_tuned_one_ep")
 
 tx = generate("Tesla is", max_length=30, num_return_sequences=5)
 print(tx)
