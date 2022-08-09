@@ -1,11 +1,10 @@
 from transformers import GPT2Tokenizer, pipeline, GPT2LMHeadModel, GPT2Config
 from pathlib import Path
 import pandas as pd
+from utils import get_prompts
 
-selection = "gpt2_one_ep"
-input_prompts = ["This", "I", "Tesla", "Entertainment", "Just", "We", "A", "Haha", "There", "Good", "Thanks", "Bitcoin",
-                 "Ascent", "Yeah", "Major", "Tomorrow", "Landing", "Indeed", "Maybe", "Possible", "Burst", "Autopilot",
-                 "China", "Also", "London", "Roughly"]
+selection = "gpt2_tokenizer_scratch"
+input_prompts = get_prompts()
 returned_seqs = 1
 
 options = {

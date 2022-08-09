@@ -164,6 +164,7 @@ def load_data_gatsby(batch_size, num_steps,
         batch_size, num_steps, use_random_iter, start_token, max_tokens, relative_size)
     return data_iter, data_iter.vocab
 
+
 def get_tokenization_fn(tokenization='char'):
     if tokenization == 'char':
         # character level tokenization
@@ -183,9 +184,11 @@ def get_tokenization_fn(tokenization='char'):
         tokenizer.pad_token = tokenizer.eos_token
         tokenize = tokenizer.tokenize
     else:
-        raise Exception("Wrong parameter for 'tokenization'-argument please use one of these: 'char', 'word', 'subword'")
+        raise Exception(
+            "Wrong parameter for 'tokenization'-argument please use one of these: 'char', 'word', 'subword'")
 
     return tokenize
+
 
 def brewed_dataLoader(which_data, data_dir, tokenization='char'):  # which_ds could be 'training', 'validation'
 
@@ -268,6 +271,23 @@ class Accumulator:
 
     def __getitem__(self, idx):
         return self.data[idx]
+
+
+def get_prompts():
+    prompts = set()
+    with open("./dataset/combined_Musk_tweets_cleaned.txt") as file:
+        for line in file:
+            beginning = line.split(' ')[0]
+
+            beginning = beginning.replace('\n', '')
+            beginning = beginning.replace('\\', '')
+            beginning = beginning.replace('.', '')
+            beginning = beginning.replace('!', '')
+            beginning = beginning.replace('\"', '')
+            if len(beginning) > 1:
+                prompts.add(beginning)
+
+    return sorted(list(prompts))
 
 
 def get_device():
