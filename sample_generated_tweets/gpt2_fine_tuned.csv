@@ -1,27 +1,301 @@
 ,prompt,output
-0,This,"This is crazy! SpaceX engineering is always super fast, but not this fast! Need to make sure they *not* have crazy tech in their production"
-1,I,I dont think its even % correct to aim high &amp; low thrust rockets at the same target. All rocket propellant used in Atlas V has
-2,Tesla,"Tesla is so much more than just a chip in BMW chassis. From making the holy grail of high energy density battery technology, to building the battery"
-3,Entertainment,"Entertainment, especially when it comes to video, is becoming a username/password/2FA nightmare. There is so little choice when it comes to"
-4,Just,"Just get the email the day before your flight. It's a simple download, but super satisfying to read. If you have extra cash, this is"
-5,We,"We should be doing something here already, but a sudden global recession *is* needed to lower oil prices and ensure sustainable energy future. This has happened"
-6,A,A high bay is fine for polar orbits. Should also offer much greater legroom with a ~20 ft height gain. Bays are usually reserved for
-7,Haha,Haha true John Clarke! One of my favorite authors. Highly recommend. Isaac Asimov was also awesome. Highly recommend. Heinlein was also awesome
-8,There,There are probably some good third party mod shops out there but I think you will find them less helpful &amp; less helpful. Merchants of Doubt
-9,Good,"Good game! Not saying flamethrowers are perfect, but they certainly have the potential to be great. Also, yes, we will provide"
-10,Thanks,Thanks! Will definitely be a fun project for Tesla software &amp; hardware. Will include easy import/export of music &amp; play functions.
-11,Bitcoin,Bitcoin is a unit of exchange between miners &amp; hashing power of majority of Earths population (primarily iron &amp; coal). Every transaction
-12,Ascent,"Ascent phase easy, circle too slow, rocket roll out slightly slow &amp; center stage caught out fast by the control tower. At this point"
-13,Yeah,"Yeah, will be Raptor vertical test stand. Hopefully allows simplification of Raptor design, as pump shaft wear &amp; drainage is better in"
-14,Major,Major feature requests! Were working on that now. Major feature request with huge fanfare. Thanks for your support over the years. We really appreciate it
-15,Tomorrow,Tomorrow's SpaceX presentation is at pm Texas time. Spacecraft presentation is at pm Florida time. Presentation not. Limiting factor is attendance. If
-16,Landing,"Landing leg frame on booster, catching air with legs. Landing leg frame on Super Heavy Booster. Boostback deployable for sure. Physics is hard"
-17,Indeed,"Indeed, this is an important point. In general with new technology, any criticism of existing companies must be objectively grounded. My point being that patents *"
-18,Maybe,"Maybe there are already satellites in orbit! Will check. Maybe helpful with helo. We can launch one day, maybe two. Maybe some helpful with"
-19,Possible,"Possible, but very challenging to get rights to trademark applications in China. Also, import duties are extremely high &amp; are much higher than the"
-20,Burst,"Burst disk has moved around a bit. Data center will move to the rear, so data can go to the front. Latter has moved around a"
-21,Autopilot,"Autopilot active crash prevention keeps getting better, as we examine every crash for improvement &amp; then upload smarter software. Ironically, I hope are"
-22,China,"China can do ~20 flights/hr with no overflight, but overflight for smaller ships would be excessive (~10 T/W). Probably do"
-23,Also,"Also, its not all about numbers! Many things are incredibly important in manufacturing &amp; supply chain, but manufacturing itself is not. Much more about"
-24,London,"London has so many great hospitals, but there isn't enough room in the building for four or five patients. I think we can make a building with"
-25,Roughly,"Roughly a year. Rollout will accelerate rapidly. Probably releases on to. Really proud of RHD. Lot of hard work by engineering,"
+0,$250/kWh,$250/kWh at.25 or $5kWh at.25. Wh/kWh is definitely achievable. We expect these numbers to
+1,$300M,$300M for LJ and ~$500M for RV1. Total cost was about % of original $300M Loki design. Original goal
+2,$35k,"$35k price, with $2k stipend plus shipping &amp; overnight restocking, will get you $3k refund or full refund"
+3,$5,"$5k Bitcoin &amp; ETH (per person) max spent is $2k, so max of % spent is $550k. Conf"
+4,$US,$US price in (UK only) region &amp; shipping worldwide by Nov. Return policy explained clearly: buyers pay same taxes &amp; return
+5,&amp;,"&amp; sounds too (also, of course) &amp; some of the things Ive said &amp; said on record are untrue."
+6,&lt;ahem&gt;,&lt;ahem&gt; dark humor (LOI&gt; dark humor ok) lol. Wonder what that does inside a Tweet.
+7,(Ahem),"(Ahem) come true haha. The road system is *actually* a neural net, a branching tree of interconnected neural nets roughly analogous to Google"
+8,(Credit,"(Credit ) ) also invented the rolling stock, Sloth, etc. Nobody actually owned that. We just added rollers to stocks to increase usefulness"
+9,(Formerly),(Formerly) independent. No financial contribution from me. Funding from any major funding sources. No conflicts of interest. No crypto holdings. Nothing to
+10,(Lack,(Lack of) Faith in God and His Son Jesus appears to be the only confirmed and/or hypothesised candidate. Odds of a %
+11,(Sigh),"(Sigh) I will eat a happy meal on tv if accepts Dogecoin. Doesn't sound right. Also, I dont want to take"
+12,(Zero,"(Zero is the ultimate superpower) &amp; scaling it out over time imo, so it wont be until roughly &amp; initially (Earth"
+13,(muffled,(muffled titter) or (sigh) that were close enough for consumption. Those are just listener questions. Other people can ask us
+14,*In,"*Innovation begets innovation; therefore liberty dies! """""" - Arthur C Clarke, p. xxiv. Clarke believed in the supersonic"
+15,*cooling,*cooling metal (cryo or not) diff is almost % more corrosion-proof than asphalt (basically asphalt) &amp; much stronger
+16,-bit,-bit floating point? That number certainly deserves closer examination. Is there more? Hard to say. Has anyone seen binary floating point? Hard to say
+17,/2,"/2/15 update, now at ~229 sec or ~2/10 of what was presented. Hopefully, more on this tomorrow. The real"
+18,/4,/4 of this article was based on incorrect Electrek article. No one at SpaceX/Tesla ever connected the funds to me or my companies. None
+19,A123,"A123 is kinda badass in this vid. Arms, legs wt biplane &amp; leg deployable. Raptor at least. Main"
+20,ABS,ABS calibration algorithm almost done. Will report soon. Requires software updates to distinguish between real &amp; unreal occlusion counts. Disturbingly
+21,AC,"AC. Concrete beam cant print, as cut out in the beam making it hard to see through, but thats kinda what Im talking about anyway."
+22,AF,"AF8 thrust is about half that of Atlas, so avg Isp would be ~225 sec. Starship has half that thrust. Delta IV Heavy has"
+23,AI,"AI would do the exact opposite. Say you want a car made out of air-con, methane (part of CH4), lithium-ion &"
+24,AMA,AMA from CIO of General Atomics (aka RIP) is just amazing. Very tough call. Was fired in disgust after GM &amp; Chrysler
+25,AMD,AMD is doing great work with the Giga Texas factory. Excell has a strong local engineering background. Tesla &amp; Giga will both remain
+26,AP,"AP2 software updates are sent out automatically &amp; sync to all cars in our fleet. Auto route inference, destination chargers &amp; time"
+27,ATF,ATF reports hover just above the surface of Mars &amp; land on the moon several times a day. Just barely above % water. Anything below
+28,AWD,AWD with Tesla Supercharger V3 crew helping to clear a path through flooded LA Freeway. Team is awesome!! Pic of Supercharger
+29,Aargh,"Aargh! Thats not fair! Ok, well try to get a closer QA with. Lots of great suggestions, but we need to"
+30,Abandoned,Abandoned car found abandoned in parking lot. Driver has a citation for illegally parked in violation. Next attempt tomorrow. Hopefully not tripped. Tesla
+31,Ability,"Ability is good both for humans &amp; for the biosphere. That said, I do think there are some positives and negatives with both cars &"
+32,Abort,Abort was caused by oxygen in header tank. No injuries. Close examination of vehicle &amp; engine. Engine shows no signs of leaking. Proceed
+33,Aborted,"Aborted on ignition timing due to high speed burst, but, still, a success on reentry would be very impressive &amp; permit restart to"
+34,About,About to do first flight of crew Dragon spaceship for the Boring Company in California. This is our toughest launch ever. Difficulty is proving many laws &
+35,Above,"Above was Earth from a mile away. At that altitude, atmospheric density is similar to Mars. At that altitude, propellant consumption is same as atmosphere"
+36,Absolutely,Absolutely. SpaceX uses metric tons of thrust with a capacity of almost half that of the largest ship on the moon. You can crush rock &amp;
+37,"Absolutely,","Absolutely, were already recycling them. Its pretty obvious why. Adding steel hoops makes a big difference. Rails are designed to flip over when tipped over."
+38,Abysmal,Abysmal autocorrect is now much more human-like &amp; has much greater precision. The advent of AI will only accelerate AI.
+39,Accelerating,Accelerating Starship development to achieve full Isp with booster &amp; down to ~350km/h with (as planned) unimproved
+40,Accept,Accepting the Tesla FSD terms and conditions makes a significant &amp; permanent difference to the long-term future of electric cars &amp; solar
+41,"Acceptable,","Acceptable, if you enable movie preview in settings, movie will play no matter what mode you have in your car. Full self-driving will not"
+42,According,According that's a reasonable question. My take home point is that it is unequivocally wrong to slow down the pace of innovation in aerospace. There is no
+43,Accounts,"Accounts cannot read every note, therefore most of what's in their personal notes is what they use, which is why they created the database. There"
+44,Accurate,"Accurate description of Falcon success by : Falcon landed on droneship OCISLY on target. With flaps back and body flaps on, fair"
+45,Achieving,"Achieving full self-driving safety for all is the harder part. The hardware is there, but the software is not. The biggest risk is"
+46,Acid,"Acid test for new interface is pressing both scroll wheel buttons to reboot. If it doesnt work, issues are probably deeper in origin than a simple root"
+47,Acquisition,"Acquisition of photon frequency metric converts to photon photon acceleration, so at photon speed only (1/1) is enough to make photon slower."
+48,Across,Across the road and across the street from where I camped in the car. The fence is gone. Symbiosis evolving...(best way to think
+49,Action,"Action was initiated by the ICU unit of Medtronic, following an accidental leak. The leak is under control &amp; is under control of"
+50,Activate,"Activate Autopilot on touchscreen &amp; Tesla will activate traffic, stop &amp; find you on highway, in parking &amp; seamlessly"
+51,Activating,"Activating engine two for the first time, starting propellant burn two weeks ahead. All systems green this time. Guaranteed to be awesome. Ready"
+52,Active,"Active, autonomous cars require great software. Advanced factories have great software. The auto industry has great software. Everyone knows that. If we create great software"
+53,Activists,"Activists should be pushing for more moderates to advise President, not fewer. What does this actually look like? Does it look like moderate (protest"
+54,Actual,"Actual question, not rhetorical question. I would just say that we should have super effective (necessary) medical equipment (eg new ventilators)"
+55,Actually,"Actually, I dont think we can get there. We probably wont go there until we get a high-speed battery that is reliable enough to carry people"
+56,"Actually,","Actually, legs are fixed, primary is hydraulic pump &amp; abdomen is forward movable piston. Two outer engines operating at high thrust with separate air"
+57,Ad,"Advertising revenue streams can be trickery, as those channels advertise just as the salespeople advertise, but you dont actually know if the channels are spending"
+58,Adagio,Adagio for Strings is great. One of the best plays Ive ever had. Highly recommend. Aldebaran. An excellent book.
+59,Add,Addending Life to Mars to humanity would be a major step change. The people have spoken. This is the only realistic way forward. Please let your
+60,AddLabel,"AddLabel ToWrap(Label+""&gt;1$"") {0,0,0,0,Ethereum_PayPal};"
+61,Adding,Adding a cooling air nozzle to SN15 (next gen Raptor) at cryo temp. Cooling air nozzle allows air to flow from the turb
+62,Additive,Additive manufacturing of parts is whats really needed for high volume production (return on equity). This is where the real challenge lies. Every new factory must
+63,Addressing,"Addressing epilepsy is likely one of the more near-term applications. However, there is mounting evidence that AI will make our lives much easier. The"
+64,Adjusting,"Adjusting upper stage actuator design, so lower stage retains thrust &amp; more control authority. Probably ready to fire in a few months. More"
+65,"Advanced,","Advanced, easy to use web browser with advanced rendering software, advanced summon &amp; car preferences all in one place - Tesla app store &amp;"
+66,Advancing,"Advancing humanitys understanding of the Universe is fundamental to creating a better, more perfect &amp; more sustainable future. Progress must accelerate towards solving problems"
+67,Advertising,"Advertising salespeople dressed as truth tellers promote fear, uncertainty &amp; doubt by presenting false information. Ironically, it *ends* relationships with"
+68,Africa,"Africa is very far ahead. Only time I've spent in Africa was as an adult. True, Africa has some challenges, but hopefully we can"
+69,After,"After many torturous cycles, Princess Zelda finally makes it out alive! Exciting times again...!""""""It's a long road to getting there,"
+70,Age,"Age of Napoleon: The First Boring Company! Napoleon, The Great, Napoleon &amp; the French Revolution, London &amp; New York:"
+71,Agreed,"Agreed, should be preserved in memory of. Never trust strangers funders of any kind, especially those with big short-term cash flows. Giving"
+72,"Agreed,","Agreed, this is obv wrong, but Consumer Reports clearly shows Autopilot engaged AF twice in the past &amp; Autopilot engaged"
+73,Ah,"Ahaha yes!! Well said. Also, Tesla factories operate at ~250 jobs per square mile &amp; supply chain is mostly in California &amp"
+74,Ahem,Ahem Yeah. Great show. Best lines are when Jen is playing Space Oddity and the car says Space Oddity+ while driving straight into the
+75,"Ahem,","Ahem, good catch. Starship will allow us to inhabit other worlds &amp; inhabit other worlds too. That should be fully appreciated. We have"
+76,Aim,"Aiming to launch next week EVA-12 with an uncrewed nozzle. First flight of uncrewed version (with internal combustion engine),"
+77,Aiming,"Aiming for to months, but that may be contingent on regulatory approval. Were fixing this now. We have more launches scheduled for in to months."
+78,Air,"Air is the best air suspension system ever invented. It is so hard to develop! Great engineers will fight hard to get it created, but we will"
+79,Alexander,"Alexander Balfeld is a simulation in human form, provided he behaves in a way that is opposite of what some pseudojournalists are saying!"
+80,Aliens,"Aliens invented the wheel, Nikola Tesla the brain! How did they know? They used to have pins! Whats their deal!? What the heck is"
+81,All,"All the answers to questions you never asked about holes in the ground you never even saw, like you never knew there existed a gravity well. Just a"
+82,Allows,Allows use of solar power at home or as a backup when your roof is damaged. Solar plus battery backup is super effective at curbs &amp;
+83,Almost,Almost all coverage back then said F9+ would be a flat $50k budget mission. Falcon had at least five preburners. F9
+84,"Aloha,","Aloha, welcome back from space! In the name of all that is holy, please come back now and launch another satellite! This time with no"
+85,Along,"Along from Starship Cape to McGregor, along the way. Needed for landing burn. About to head to McGregor, then head to the Space Station to"
+86,Already,Already done Boca Chica/South Padre/Cave of Saguen am I here? Very proud of my work on these projects!
+87,Also,"Also, I stole the idea from Spaceballs, aka Space Mountain. Guess I still have the telekinesis haha. """"""""""""""Spaceballs"
+88,"Also,","Also, we expect this to be one of the biggest box office rd weekend of any movie studio in history. Right after that, we expect other"
+89,Alter,Alter falter! Die Zukunft! Jahr muss ich jnschen Erist als dich lffel benut
+90,Altho,"Altho Mars is a great place to start! Plan is to add hotels &amp; recreation facilities throughout the area, as well as open-"
+91,Although,"Although having less than a small crew makes a big difference imo. With a bigger ship, costs actually go up exponentially vs cargo capacity. With a"
+92,Aluminum,"Aluminum shell is more conductive than iron, as it doesnt reactivity with the sun, but lithium is much more conductive than nickel. Also"
+93,Always,"Always love your Mom! I always loved being with her. Best to hang out together, just not on the beach. Dont know how anyone else"
+94,Am,"Am not. Were not trademarking any others yet. Also, did not use their trademark. Sounds awesome. Ur welcome. Will seek judicial review of"
+95,Amazing,"Amazing story of a rocket landing on a deserted island by a journo. There, on a nearby beach, is a sign saying Look Where the"
+96,"Amazingly,","Amazingly, this is not rocket science! Since the sun is not a thermonuclear explosion, its not actually a H2O problem! Also"
+97,American,"American and Chinese regulatory approval is the hardest, most rigorous part of my engineering background. The sheer magnitude of my time at Tesla exceeds anything anyone Ive"
+98,"American,","American, born in Canada, came to America by way of the Three Gatsby and South Padre auto parts supply factory, where I worked as"
+99,Amos's,"Amos's piece is excellent. He also includes a very good critique of Tesla by, albeit in a slightly more negative tone. Ironically, I hope"
+100,Amount,"Amount of money spent is hard to appreciate, but volume of program increases every few years. Zero change in revenue over the next several years. Must prioritize"
+101,An,"An old adage. A wise one. Well live by it, die by it. Words cannot express how lucky I am. Love isn't easy"
+102,Anarcho-syndicalism,"Anarcho-syndicalism FTW!! Pure joy &amp; fuzzy math, along with Loic Remy and the Monty Python sk"
+103,Ancient,"Ancient times, when tiles had to be cut off (literally), were relatively easy. Nowadays, most are not. Tile can be damaged by rain"
+104,And,And yes! And yesterdays Elise &amp; Kim's svelte figure is still on. So much blood shed between Elise and Kim that
+105,"And,","And, most of all, I love dogs &amp; sharks. When I was a kid, my friends and I would just take the kids to"
+106,Andrej,"Andrej is awesome. This is an opportune moment to bring it to fruition! Hopefully, early this year. Will be intense. Lot of"
+107,Anne's,Anne's book is incredible. Highly recommended. Highly recommend. One of the greatest bs. Her insight into the nature of the brain was compelling.
+108,Announcement,Announcement of new Tesla Supercharger program coming up soon. Details soon. Cost per megawatt hour will go up by %. Will
+109,Announcements,"Announcements coming soon! Should be pretty intense. For max fun, weld the data together to form a single output. Maybe worth doing in"
+110,Announcing,"Announcing the Tesla FSD computer designed to solve real-world AI issues today. It has amazing potential. Version """"3.0"" of computer"
+111,Annoying,"Annoying that the only person on the moon besides Neil Armstrong who has not died, only one more person on Earth to die. Who took the"
+112,Annual,Annual tire rotation &amp; calcs probably done in about hours. Aiming for mins. Potentially more. System should be very quiet long
+113,Anonymous,"Anonymous, hes a troll/bot, but def has a controlling influence on social media. When someone criticizes me for being sensitive to criticism, I"
+114,Another,"Another person I've talked to online who knows me well has an opinion about Tesla/SolarCity, but thinks EVs will be mostly self-powered by"
+115,Answer,Answer to : US Marshalls imposes maximum fine on car dealers after discovering misleading sales records. Can't imagine why any better organization. - Governor Cuomo.
+116,Answers:,"Answers: yes (master), no (master), not (master). Preferable for Mars, since there is a clear majority of Earth population"
+117,Anti-matter,"Anti-matter def wins on energy density, but anti-matter loses on mass. This is important to distinguish between materials, which have no effect on"
+118,Antibody,"Antibody is vulnerable to collision from aero loads, but we dont think it needs a hammer, as its much stronger than steel. We probably"
+119,Anxiety,"Anxiety &amp; stress are becoming symbiotic, as people become more susceptible to both. This is the potential conflation of existential threat with existential"
+120,Any,Any other factor besides customer satisfaction that matters? Its important that Tesla maintain same great customer service. I'm sure there are many that would support a no
+121,Anyone,Anyone who purchased full self-driving will get FSD computer upgrade for free. This is the only non-Autopilot computer in the world that
+122,Anything,Anything in moderation. Try something new. What's your take on the matter? Anything below a two week freeze point is considered a triumph. Anything above
+123,"Anyway,","Anyway, Im not a big fan of Gateswatch, but thats fine by me. There isnt really a compelling public interest in doing this. If"
+124,Anywhere,"Anywhere insurance prices are high, choosing Tesla is like being offered insurance in a big city. But being offered coverage in a deserted corner of the world"
+125,Apart,"Apart the cow legs, there are only one air tank under each passenger and four on each occupant. Air tank pressure rises due to occupant weight &amp"
+126,Apollo,Apollo program ended with a whimper. Well hopefully end of year too! Thanks for visiting our new moon &amp; Mars Base Alpha! Might
+127,Apologies,"Apologies for any confusion this may cause, as we dont have all the latest software release out there. Tesla is working on software internally in several languages"
+128,"Apologies,","Apologies, were not going to do an air show for this flight. But, if possible, on this flight. The attitude control avionics ("
+129,App,Appears to be a wiring/connector issue. Investigating. Restoring white interior. Maybe some wiring harness repairs. Waiting. Data roaming.
+130,"Apparently,","Apparently, theres a giant wheel of cheese in the middle of nowhere. Just go open source. I beg your pardon, but would you be so"
+131,Appears,"Appears to be a wiring/connector issue, but no major damage. Might improve slightly with software update. Software feature probably pushed to All recently"
+132,Apple,"Apple is starting a program to match donor donations to CureVac, incl medical devices. To donate, just type in s when in the search results"
+133,Applies,"Applies to a small number of Bay Area residents, but worth checking out. Many challenges with WiFi coverage though. Most important, no service is rendered"
+134,Apply,"Apply, but only after a thorough review of what they are doing right and what is effectively a cross-country road trip. Results look promising so far"
+135,Applying,Applying a molecular pattern to DNA repair (using an RNA printer with a primer mix of DNA &amp; RNA) is the only way to make
+136,Appreciate,"Appreciate thoughtful article. Shes a compelling journalist. Also, unusually blasé about Apple Pay. Doesnt resonate well with tech investors."
+137,Appreciated,Appreciated. Support of Tesla customers much appreciated!! Appreciated u too. Respect for regulators &amp; Tesla China is super appreciated. Will
+138,Approach,"Approach is fairly simple, just needs to be adjusted for voxel width. We will roll out this update cautiously. Note, this will only"
+139,Approx,"Approx flight/km, which is hopefully within a month or so for smaller ships. Really needs to be reusable with reusable booster &amp; ocean"
+140,Approximately,"Approximately correct. Also, Autopilot behavior should stay the same even after you take the test. The point of testing &amp; proving safety"
+141,"Approximately,","Approximately, secs, avg latency should be too much for most people to handle. If thats not serious enough, we will increase the upload speed"
+142,April,"April, after Model S carbon fiber roof is installed &amp; the wait is over for the next gen sedan, we will unveil the next gen sedan"
+143,Archangel-12,Archangel-12 is amazing. He was the real deal. I loved those videos too! Godspeed to his work. Surrealism in this
+144,Are,Are you following us on Twitter? Get more news tips in your feed via the app? Stay up to date with the latest news via the Tesla News
+145,Area,"Area of Area : -60mph winds will be light enough to affect ground systems Area is measured vertically, horizontally &amp; at edges to account for"
+146,Arent,Arent there good ones already? Glad you like them! Great Starship examples too. Ventromedary atmospheres &amp; dense atmospheric volumes make
+147,"Arguments,","Arguments, not fact-based arguments, are the source of great stress. Never once has an expert speaker said something contrary to his or her own"
+148,Armored,"Armored Personnel Carrier (APC) upgrade coming soon. Will be able to hold more hold up aircraft, especially if flying in rapid succession. Improvements"
+149,Around,"Around all, but I didnt actually design the parts. Had to be done by hand. Wasn't exactly a high tech Easter egg, but it"
+150,Arrived,Arrived in Kiev with Armadillo &amp; SpaceX. Aiming to fly by end of. Ship has landed in water. Welcome back!
+151,Ars,"Ars Technica article in March about Tesla batteries as an alternative to oil/gas. Not the best use case, but definitely better for the future"
+152,Article,Article of appreciation for the great work of COP22 is still available at :45pm on Thursday! Go COP22! This is not over. The
+153,As,As soon as we can make them fly. Maybe one day. There are already satellites in orbit that can survey the night sky. Theyre pretty amazing
+154,Ascent,Ascent phase much better in this demo. Scrambling down force &amp; reaction times to get to mT level. Tried to land
+155,Ashlee,"Ashlee Vance's book on Catherine the Great was excellent. Highly recommend. Highly recommend! Excellent insight &amp; insight into Catherine the Great, the"
+156,Ashok,"Ashok Giga on the SpaceX suborbital test pad in California on Thursday night, surrounded by officers of SpaceX and Air Force. They are the"
+157,Asimov,Asimovs Foundation books are underrated. Tesla Roadster is amazing. Must have both epic sci-fi &amp; fantastic fun. Classic SF Audi
+158,Asimov's,Asimov's Foundation books are incredible (and some of his other books are incredible too). Highly recommend reading his books. Some of my favorites are Conc
+159,Asimovs,"Asimovs Foundation points out that """"life is short"" if you only care about the moment"", whereas Tesla does $100k in annual sales &"
+160,Ask,Ask another way. I wonder what that goat is doing? Its all fun &amp; games until he decides its time to meet the goat. He
+161,Aspirationally,"Aspirationally, decades from first orbital Starship to full production, with a total of more than million parts built. Aspirationally, decades. Starship"
+162,"Aspirationally,","Aspirationally, decades away. However, the technology is there, there &amp; currently in use. The design is evolving rapidly. Could be"
+163,Aspiring,"Aspiring to have one of the biggest Supercharger stations in North America by volume this year, but will soon have only one (true) Super"
+164,Assert,"Assert (!coconuts &amp; mammoths, ok, I will eat those too) &amp; link to scientific publications about mammoths"
+165,Assume,"Assume it has cameras, signal-processing (AK), video (Mobi-C) and fidget spinner (Mechanic) in common"
+166,Assuming,"Assuming this works, SpaceX will launch astronauts to! May th is also when Earth retires from space. If not Doge Day, June th is"
+167,Asteroid,"Asteroid/subspacecraft are basically underappreciated, but orbital rockets have a much higher capacity. The production rate of an expendable"
+168,Astronaughty,"Astronaughty! Starship is currently under construction in Texas &amp; preparing to ship to McGregor with additional Dragon spacecraft. If all goes well, both"
+169,Astronaut,Astronaut Launch Site at Cape Canaveral! This is the hardest launch ever. We will make it! So proud of the team! Support of country
+170,Astronauts,Astronauts to orbit over North America by end of year ()! Astronauts to orbit over Norway by end of year ()! Mars by end of
+171,Astronomer,Astronomer Royal Martin Rees (centre) and astronomer Martin Rees (right) congratulate on! Astronomer Royal Martin Rees (cent
+172,At,"At every demonstration, we are asked what hardware version of FSD we should use. The hardware team will then rate this as most reliable. Then we"
+173,Atatrk,Atatrk Antkabir has a beautiful view of the sky. It doesnt matter if u are at home in Norway or Stockholm. Its
+174,Atmospheric,"Atmospheric entry, bottom half of helium bubble (~6400 tons) &amp; burning iron, regen chamber &amp; fuel turbines at"
+175,Attach,Attach at least one helo to be mounted to the fairing or you will fall off. T^4 needs ~78000 lbs of thrust at
+176,Attempting,"Attempting recovery of fairing leg, but soft landing out of water due to slightly inflated airframe. Will be repaired at Starship repair shop. Hopefully"
+177,August,Augustalyn returns from Asia with dual A-12 and Mk1 tanks. Hopefully makes it back to base intact. More ground tests will follow.
+178,Austin,"Austin, GA Sat Oct at, Convention Center Miami, OH I will be there to see Starships and Stripes as they fly over Texas. Maybe"
+179,Austin++,Austin++ syntax sucks. Too much effort spent parsing &amp; parsing. Very few exceptions. Will learn from them. ++ syntax sucks. Too little
+180,Auto,AutoTruck acceleration was + miles! MT to top speed. Car was out of bounds. Recovery was done in hours. Amazing video by Dan Neil
+181,Auto-semiotic,"Auto-semiotic asphyxiation. Not my finest work, but I was the best at what I did. Tesla winning $100M in"
+182,Autolist,Autolist review by BBC Politics. Check out here: httpsv.co/9mOmzd5z. Full report. Anarch
+183,Automatically,"Automatically change volume when car is stopped coming to your Tesla soon! Just a simple voice command via voice command. If you dont like the music,"
+184,Autonomous,"Autonomous Tesla will help millions of people around the world through the year if we take measures to extend life. True, some might say, but sustainable"
+185,Autonomy,"Autonomy will ultimately enable people to travel anywhere on the Internet without using a key or mobile phone, so long as they dont have an Internet connection."
+186,Autopilot,Autopilot group discussions at Tesla start tomorrow night. Need extra time to review all safety parameters thoroughly. Proceed at your own discretion. If any cars
+187,Availability,Availability is provided to Tesla supporters as a thank you for supporting Tesla. Support is greatly appreciated!! Looking forward to adding more countries! -AUDIO Please
+188,Avenge,Avenge the dinosaurs!! Summon the robots!! Summon the fairies!! Summon the kids! Summon the aliens!! It's a fun adventure! Cuphead
+189,Average,"Average workweek for a full stack Falcon demo is ~50 hours. Costs less per month with a stack, but more for a demo. This will"
+190,Avg,Avg speed of NY Subway is actually mph. Penn &amp; Los Angeles already have inter-city car service. Waiting on Penn Station to get into
+191,Avionics,"Avionics engineer walks the talkback show wearing outfit from the hit reality show """"Ghost in the Shell""""."""""" - Jon Stewart """"Real Housewives"
+192,Avocado,Avocado Toast Machine with Sorbine is amazing (sigh). Check it out at :25 mark. Creative Commons. Comments so dark when we
+193,Awaiting,"Awaiting approval from Canadian authorities. If discovered to be a fake, will be removed from view and permanently blocked from Netflix service. Will enable Netflix"
+194,Award,Award accepted in appreciation for those who worked so hard to make Tesla successful. I want to extend my heart to those who sacrificed their time &amp
+195,Awe,"Awe tow co wrecked due to high speed lateral velocity, but we dont lose control. Will try again tomorrow. Good luck! Good grief, didn"
+196,Awesome,Awesome to meet you in South Padre! Excited to work with you. Your brain power &amp; engineering skills are super appreciated. Love working
+197,"Awesome,","Awesome, support super appreciated!! Very much appreciate faith in SpaceX!! Sending people to make this happen. Our astronautship will be the strongest in space."
+198,Axel,Axel is right in saying that there will be a big difference between competing in Formula SAE and Formula Competizion. Those are fundamentally separate.
+199,B-nut,"B-nut? Ok sure, we could make that b be from a nut. But, well, we cant actually manufacture it without making it b"
+200,BDE,BDE gets credit for Dragon docking with. Orbital refilling should've been a priority btw. Were fixing that right now. Scaling to docking
+201,BFR,"BFR - Waldorf's notes describe future Supercharger usage in more detail. Model will charge at least megawatt hour, day avg."
+202,BG2,BG2 is pretty good. Mass Effect : Edge of Forever is awesome. One of the best FPS's ever imo. Best boss battle ever.
+203,BGII,BGII was awesome. Best boss battle song ever. Best battle in whole game imo. Was also the battle with Gensokyo Maru
+204,BN1,"BN1 down to ~160 degrees F. Vertical wind shear was strong at times, but otherwise ok. Data looks good so far. Booster upper"
+205,BTC,BTC3 is a staggeringly hard and fast problem. Hard to address without creating exotic exchanges &amp; an insanely expensive chain of intermediaries. Very
+206,Babies,"Babies rock!! Great show. I'm putting my money where my mouth is: With STEM, the future is coming true. And you, too"
+207,Baby,"Baby Isobel is holding up the rocket &amp; talking figuratively a lot!! Haha babe, Im gonna make a strong case for humanity"
+208,Bach,"Bach is the key to turning humanity into a microverse in giant, but small, void between Mars and Earth. The trick is gathering enough data"
+209,Back,Back from space and Earth-Sun is green. Sun-Sun just passed over CO2 producing iron &amp; silicon. Essential spark plug for self
+210,Background,Background on launch of Falcon -R with :30 engine rolling out to all engines on booster. Countdown start now. More on this later. At some
+211,Backlog,Backlog of incorrect log(s) with. Looks like r is better than. Should hopefully be release by end of week. Requires tweaking many logging
+212,Backup,Backup valve didnt open. Guess we have to do another engine shutdown now. Odds of this time being pretty high. Waiting for Giga Berlin
+213,Bad,"Bad news today, because Tesla had their (big mistake) best day ever in Q2. Still super terrible to announce. Less bad news tomorrow."
+214,Bajirao,"Bajirao Mastani Mastani, Partition by Ganesan, Partition by Wang &amp; more. Difficulties are also"
+215,Barely,Barely a scratch. A fully operational Raptor is ~1000% more cost-effective than an expendable Falcon Heavy. Future tests will count
+216,Barrel,"Barrels, no extension, just a few small ones. Anything in excess of bar is considered barrel length. Long-term purpose of bar"
+217,Base,"Base Base Alpha is about % bigger, but still not quite the same size as Ship. It must work with a lot of different payloads to create"
+218,Based,"Based upon Tesla data, Autopilot miles appear to be twice as safe as manually driven miles &amp; we expect this to improve further with further"
+219,Basic,"Basic technical note: since the Tesla P100D is electric, lower production &amp; therefore lower cost than gasoline cars, I would recommend purchase."
+220,Basically,Basically making the roaring s happen automatically. Will be under /r/spacex. Have not been in contact with him. Has not done anything unusual
+221,"Basically,","Basically, yes, but were building a smaller ship to fit in the ocean before moving, as thats more prone to damage. Probably have slots for up"
+222,Batteries,"Batteries are a pain to service, but we fixed most of the leak with O2. No more need to replace pump. Great for creating"
+223,Battery,"Battery is extremely powerful, especially for deep cryogenic storage. Isp up to ~1000 times higher at cryogenic temp. This is the only known"
+224,Battle,Battle to the moon! Countdown to launch now at :30pm. Thanks for letting me know. We're just getting started. Exciting times ahead
+225,Be,"Behesomeness!! Ok sure, that would be great. Will do. Let's find out why. First off, its called Raptor,"
+226,Bear,"Bear Bear is like a real bear! () Would def hurt to say this, but bear is an electric pump-fed blower. Bear does pull"
+227,Beat,"Beat The Boring Company, Candy Flats, Marvin the Martian &amp; hundreds more. Thank you for buying our songbox. You rock!!"
+228,Beatrix,Beatrix Potter lyrics for those who care deeply about history. I hope they read them. Love them both. RIP.Peace &amp; Joy.
+229,Beautiful,Beautiful solar sail pattern just visible in the high altitude camera images. Makes a big difference to the esthetics. Pic of Venus by Hesperius
+230,Because,"Because theres no way to look at it, what is the best way to look at it? Im saying absolute zero reflection &amp; zero heat"
+231,Becoming,Becoming multiplanetary is essential to extending the probable lifespan of civilization beyond Earth to Mars. The search for truth is growing exponentially. Please consider joining
+232,Been,Been driving latest Cybertruck prototype around Giga Texas. Looks like it can go extremely fast. Hoping to go even faster on Sunday!
+233,"Beenz,","Beenz, Schrdinger, Hopper, Muller &amp; Wuhan are experts in the field. Govt has expertise in both areas"
+234,Before,"Before the GoT finale, I thought it was actually cliff diving vs cliff jumping, but that was later changed to cliff diving as prop allowed. Also"
+235,Being,"Being about building products &amp; services people actually like, so much respect. If that sounds incredibly long, well do it slowly. There are many"
+236,Belfast,Belfast is beautiful &amp; well-optimized for orbital rockets. Love Norway. Spent many years there studying. Bodes well for
+237,Belief,"Belief in climate change isn't necessary if the alarming rate of climate change continues, but there is hope. That's why we're moving fast to"
+238,Believe,Believe in the future! Looking forward to seeing you there for the vista. Destination is California. Daybreak at Mt. Rushmore. Love
+239,Ben,"Ben is right: there is no shortage of good tech talent in Silicon Valley. There is a shortage of bad. Moreover, there is an equally awful"
+240,Berlin,"Berlin Model S is still available for ordering in North America. Note, Model production needs w battery level. If you want a German performance version,"
+241,Berliner,Berliner Wurst im Dorf verlassen Brandenburg ein unbeabsichtigter Regel. Die Unbeabsichtigter
+242,Bernie,"Bernie has the best chance of reelecting President of Mexico. His policies cannot be implemented without American help. His policies must be followed, not abandoned"
+243,Bernies,Bernies tax haven't reduced home values? Mad Max article was false. Real question is what has happened to the trust funds? Mad Max misled readers
+244,Besides,"Besides the plethora of bogus &amp; propaganda shorts &amp; spin-offs, there's actually one major publication that stands by and doesle its"
+245,"Besides,","Besides, SpaceXs core business is spaceflight!! Fundamental goal of doing space is providing high efficiency, high reliability space freighters. This usually means no"
+246,Best,Best of luck tomorrow! Were about to ship Raptor Vacuum. No problem today. Pc is about a week away. Hopefully starts rolling out
+247,Best-selling,"Best-selling in car podcast! Best of luck next week! Free concert guaranteed. Post your music &amp; videos on iTunes, Stitcher &"
+248,Bet,Bette is a lobbyist for Sen Karen DeMint (R-CA). Cant vote for reince Priebus. Her record btw is havent
+249,Beta,"Beta can now do this automatically across all tracking units, so no human driver needed. Also improves autonomy. Beta can reverse preference between car being in front"
+250,Better,"Better, but maybe a little faster. Requires more computing power &amp; more complex software. Minimizing crash probability. Tree jumping &amp;"
+251,Bettern,"Bettern nothin, kebab yoke! Hes brookin no fire escape, so he stays out here in the fog until he sees"
+252,Between,"Between the trees and the forest floor, its like an old school racing game in reverse. Have you tried moving your car faster than a wave of pixels"
+253,Beyond,"Beyond Tesla and SpaceX for creating &amp; scaling our city &amp; spaceship to orbit, not for beholden to special interests. I will fight"
+254,Bicurious?,Bicurious? Ok sure. Were both born years after /20 haha. Were both on LSD for a while before being arrested for public intoxication.
+255,Biden,Biden is a UAW puppet in the US Senate while Dune is a democrat puppet in the US Senate. They run this lame &amp;
+256,Big,"Big problem for Starship cargo resupply is finding sources of carbon. If plants don't produce enough, they run out of bad apples. Something has"
+257,Bigger,"Bigger flaps are needed for stability (butt end of nosecone vs front), heat pump coming in same place where tbh main engine is coming"
+258,Biggest,"Biggest concern for Tesla SolarCity is achieving acceptable power output while minimizing blackouts. Due in late July, most battery packs will be empty at *"
+259,Bikini,"Bikini Bottom is about a ship to a ship to a spaceship, so yes, times longer. But, still a bit too broad. More about"
+260,Billy,"Billy Bob was awesome! Super boss battle song. Best boss battle song of any song in game. Makes an impactful song. Also, boss battle"
+261,Bioshock,"Bioshock is my favorite. Worth watching. Best lines: Jesus ftw, Buttofrock, Stardom, Half-Life &amp;"
+262,Bioweapon,"Bioweapon Defense Mode coming to all Teslas! Beta program will last for several weeks, allowing anyone to try it for themselves! If not positive"
+263,Birds,"Birds are incredibly difficult to detect. Will do our best to help. We will do flights with flaps if needed, but this is more about"
+264,Birth,"Birth of the Silver Lake. A son, perhaps? Yes, but deep within I spake these words: I would not be here without you."
+265,Bit,Bit so dark out there! Maybe we should open a candy store in Montreal or be as nice as possible. Its wrong to take things so seriously.
+266,Bitcoin,Bitcoin can be exchanged for crypto (decentralized crypto) via Bitcoin chain of command &amp; control. Decentralized crypto is far
+267,Biting,Biting off more than I can chew. Biggest sigh of defeat yet. This is not rocket science. This is not a war. Russia is
+268,Bitte,Bitte arbeiten Sie bei Tesla Giga Berlin! Nehringer auf der Giga Giga Berlin! Es bisschen
+269,Bizarre,Bizarre spike in unvaccinated babies in California &amp; disconnections in Texas. Check with your state. Should be illegal if found. Mad
+270,Black,Black and textured slate versions of the first two Model S cars. Those look brutal in person. Third prototype will be a little different. These are
+271,Black-Scholes,"Black-Scholes formula is wrong. Tesla production is about % higher than gas cars, so Tesla should be about % higher by next year. If"
+272,Blade,"Blade is an upgraded version of Falcon, with several upgrades. First tests fly in to months. Were about % ready to fly in to months. Most"
+273,Blame,Blame Minecraft for the jam container problem. Its either fixed or enhanced with Minecraft Mobile. Go style. Mobile also makes cars less safe. Mobile itself
+274,Blazing,"Blazing Saddles is great for an early to mid-century London or Parisian setting. However, the area and complexity of the region really made"
+275,Bless,Bless America! Bring it on!! Hope it goes well. Some people can't take it easy on social media. Lets fight for what's right
+276,Blimps,Blimps rock candy bb otherwise haha! Still cant believe I cut the Taycan!! One bite at a time. My secret weapon will be
+277,Block,Block was good even before launch. Good by end of year. High velocity winds pushing engine out. Good by SSTO. Engine SN taking us
+278,Blog,"Blog on Model S from explaining the production range loss of the all-wheel drive S. No seriously, we wont sell that. Range was actually miles"
+279,Blood,"Bloody hell, is this even real? Its getting really bad and I'm getting very high-fiving. Sorry for the difficulties. This is"
+280,Bloody,"Bloody hell, we got hacked! Trollhammer blows! Trollhammer blows!! Hell, we will not let go! So many layers on a single"
+281,Bloomberg,Bloomberg in response to a question about Tesla stock price: $245/share is a very high *class* price! Would definitely tax IPO options at
+282,Blow,"Blow my whistle on you Tesla hypocrites!! UAW, WSJ &amp; IMF cronies literally rn us. Biggest lie of"
+283,Blue,Blue is a spaceship that took the lives of its three water towers years ago. Am hopeful that one day they will be free. End game here is
+284,Body/tank,"Body/tank diameter is m or ~30 ft, but can go much higher with body thickness. Starship is m or ~20 ft in diameter."
+285,Bold,"Bold move, sir, bold move, bold move, BO will pay % if there is a high probability of EV death via accident or suicide."
+286,Bon,Bonbon production rate on the new ton engine might be above Falcon / Heavy. Were tracking to achieve bar or ~160 tons of thrust on Starship.
+287,Booster,"Booster design is simpler than shown here, as chamber pressure &amp; chamber pressure propellant are different, so rocket is forced to reuse propellant"
+288,BoredElonMusk,"BoredElonMusk is my secret troll account. He publicly expresses his true feelings if people see him posting material about me. Truth is,"
+289,Boring,"Boring Company tunnel under LA almost done! A long climb up, mostly due to strong local demand. Cutting edge technology, but still fun. Hop"
+290,"Boring,","Boring, Hyperloop and Smart Summon coming to Kazakhstan soon! Must congratulate on Kazakhstan's decision to grant VR access to all. We cannot ignore the"
+291,Bossart,"Bossart was also working on a Dilbert mask from the future, so this wasnt done before Raptor. But Id recommend it. Itll"
+292,Bot,Botot battle with Shiba Inu is pretty intense. Difficulty of close combat will vary due to environment. Difficulty of Horde and Half-Borne
+293,Both,"Both would need to be dramatically improved with &amp; through our neural nets. Until then, it is just a matter of refining the training set &"
+294,"Both,","Both, but legs &amp; center engine, so cant grok SN1. Still does tons to T/W of thrust at over bar level"
+295,Bottom,"Bottom design is a little off the wall, due to lower backrest part in tip of nose. Standing in wind is not an issue. Design decision"
+296,Bought,"Bought PICA-3 tires. Theyre easy to build &amp; have awesome braking ability. Btw, Raptor development underway in B"
+297,"Bought,","Bought, but SpaceX refuses to sell! I'd gladly sell, provided it doesn't bring down world sales by more than a factor *based on"
+298,Bound,"Bound to happen soon. Version, which is version, should be able to fly well after. Otherwise impossible to fly otherwise. Version, which has the"
+299,Boy,Boy is a rocket scientist from North Korea. He built the first orbital launch vehicle years ago &amp; has not stopped working at SpaceX. That rocket
