@@ -1,177 +1,177 @@
 Starting run lstm-subword2 with model='lstm' tokenization='subword' epochs=100 num_hiddens=128 device=cuda:0
-epoch 0 - val-ppl: 892.6, train-ppl: 1305.7, elapsed_time=8.01s
-epoch 1 - val-ppl: 824.0, train-ppl: 845.9, elapsed_time=8.00s
-epoch 2 - val-ppl: 817.4, train-ppl: 810.9, elapsed_time=7.93s
-epoch 3 - val-ppl: 722.5, train-ppl: 752.3, elapsed_time=7.92s
-epoch 4 - val-ppl: 647.1, train-ppl: 669.6, elapsed_time=7.93s
-epoch 5 - val-ppl: 556.0, train-ppl: 577.1, elapsed_time=7.93s
-epoch 6 - val-ppl: 477.1, train-ppl: 480.0, elapsed_time=8.06s
-epoch 7 - val-ppl: 438.4, train-ppl: 422.3, elapsed_time=8.09s
-epoch 8 - val-ppl: 415.4, train-ppl: 378.8, elapsed_time=8.06s
-epoch 9 - val-ppl: 407.5, train-ppl: 346.8, elapsed_time=7.99s
+epoch 0 - val-ppl: 914.6, train-ppl: 1374.9, elapsed_time=19.93s
+epoch 1 - val-ppl: 871.4, train-ppl: 871.5, elapsed_time=19.46s
+epoch 2 - val-ppl: 834.1, train-ppl: 825.3, elapsed_time=19.49s
+epoch 3 - val-ppl: 816.0, train-ppl: 808.6, elapsed_time=19.39s
+epoch 4 - val-ppl: 737.9, train-ppl: 766.8, elapsed_time=19.83s
+epoch 5 - val-ppl: 662.0, train-ppl: 665.1, elapsed_time=19.41s
+epoch 6 - val-ppl: 588.8, train-ppl: 603.9, elapsed_time=19.94s
+epoch 7 - val-ppl: 520.8, train-ppl: 527.1, elapsed_time=20.35s
+epoch 8 - val-ppl: 476.1, train-ppl: 458.0, elapsed_time=19.86s
+epoch 9 - val-ppl: 432.6, train-ppl: 412.9, elapsed_time=19.58s
 <BOS> yes <EOS>
 <BOS> tesla <EOS>
 <BOS> i <EOS>
-<BOS> cast <EOS>
-<BOS> yield <EOS>
-<BOS> picks <EOS>
-<BOS> ##apple <EOS>
-epoch 10 - val-ppl: 337.7, train-ppl: 329.0, elapsed_time=8.03s
-epoch 11 - val-ppl: 326.3, train-ppl: 295.0, elapsed_time=8.05s
-epoch 12 - val-ppl: 290.1, train-ppl: 274.7, elapsed_time=7.86s
-epoch 13 - val-ppl: 274.3, train-ppl: 257.2, elapsed_time=8.02s
-epoch 14 - val-ppl: 260.0, train-ppl: 243.1, elapsed_time=7.98s
-epoch 15 - val-ppl: 247.6, train-ppl: 226.7, elapsed_time=8.07s
-epoch 16 - val-ppl: 233.2, train-ppl: 212.7, elapsed_time=7.98s
-epoch 17 - val-ppl: 220.4, train-ppl: 199.4, elapsed_time=8.01s
-epoch 18 - val-ppl: 208.0, train-ppl: 188.0, elapsed_time=8.03s
-epoch 19 - val-ppl: 196.1, train-ppl: 177.6, elapsed_time=8.02s
+<BOS> ud <EOS>
+<BOS> tolkien <EOS>
+<BOS> later <EOS>
+<BOS> skate <EOS>
+epoch 10 - val-ppl: 400.2, train-ppl: 379.5, elapsed_time=19.66s
+epoch 11 - val-ppl: 377.5, train-ppl: 354.4, elapsed_time=19.29s
+epoch 12 - val-ppl: 351.2, train-ppl: 331.9, elapsed_time=19.70s
+epoch 13 - val-ppl: 334.5, train-ppl: 312.7, elapsed_time=19.70s
+epoch 14 - val-ppl: 312.6, train-ppl: 292.5, elapsed_time=19.61s
+epoch 15 - val-ppl: 294.9, train-ppl: 272.8, elapsed_time=20.24s
+epoch 16 - val-ppl: 279.9, train-ppl: 260.9, elapsed_time=19.85s
+epoch 17 - val-ppl: 261.4, train-ppl: 242.6, elapsed_time=20.00s
+epoch 18 - val-ppl: 249.4, train-ppl: 229.4, elapsed_time=19.68s
+epoch 19 - val-ppl: 237.0, train-ppl: 214.6, elapsed_time=19.47s
 <BOS> yes <EOS>
-<BOS> tesla is a lot of the tesla is a lot of the tesla , but we can be a lot of the car . <EOS>
-<BOS> i love a lot of the future <EOS>
-<BOS> lobbying , the tesla is a lot of the car . <EOS>
-<BOS> exceptionally course <EOS>
-<BOS> ##zh idea <EOS>
-<BOS> ##od ##s t <EOS>
-epoch 20 - val-ppl: 188.5, train-ppl: 166.5, elapsed_time=8.17s
-epoch 21 - val-ppl: 182.6, train-ppl: 157.1, elapsed_time=8.03s
-epoch 22 - val-ppl: 171.6, train-ppl: 151.0, elapsed_time=7.97s
-epoch 23 - val-ppl: 159.3, train-ppl: 141.9, elapsed_time=8.07s
-epoch 24 - val-ppl: 154.5, train-ppl: 133.2, elapsed_time=8.15s
-epoch 25 - val-ppl: 145.9, train-ppl: 127.0, elapsed_time=7.96s
-epoch 26 - val-ppl: 139.4, train-ppl: 119.3, elapsed_time=8.03s
-epoch 27 - val-ppl: 132.6, train-ppl: 114.5, elapsed_time=8.12s
-epoch 28 - val-ppl: 128.9, train-ppl: 108.9, elapsed_time=7.61s
-epoch 29 - val-ppl: 120.1, train-ppl: 105.0, elapsed_time=8.07s
+<BOS> tesla is the tesla of the few months <EOS>
+<BOS> i love a lot of the tesla <EOS>
+<BOS> slate <EOS>
+<BOS> programming , but <EOS>
+<BOS> skills is the tesla <EOS>
+<BOS> producing the little of the tesla is the tesla of the few months <EOS>
+epoch 20 - val-ppl: 223.0, train-ppl: 202.9, elapsed_time=19.84s
+epoch 21 - val-ppl: 212.6, train-ppl: 194.9, elapsed_time=19.91s
+epoch 22 - val-ppl: 201.6, train-ppl: 182.1, elapsed_time=19.53s
+epoch 23 - val-ppl: 192.1, train-ppl: 174.1, elapsed_time=19.70s
+epoch 24 - val-ppl: 181.6, train-ppl: 163.6, elapsed_time=19.53s
+epoch 25 - val-ppl: 177.4, train-ppl: 157.1, elapsed_time=19.62s
+epoch 26 - val-ppl: 165.5, train-ppl: 149.3, elapsed_time=19.39s
+epoch 27 - val-ppl: 159.8, train-ppl: 141.7, elapsed_time=19.42s
+epoch 28 - val-ppl: 151.6, train-ppl: 135.6, elapsed_time=19.44s
+epoch 29 - val-ppl: 148.6, train-ppl: 128.9, elapsed_time=19.41s
 <BOS> yes <EOS>
-<BOS> tesla is a lot of the future <EOS>
+<BOS> tesla is the tesla car in the few months <EOS>
 <BOS> i love the best <EOS>
-<BOS> refurbishment , this model s is a lot of the future <EOS>
-<BOS> cleanup <EOS>
-<BOS> norway <EOS>
-<BOS> ##mler ##s on the future <EOS>
-epoch 30 - val-ppl: 118.6, train-ppl: 99.1, elapsed_time=8.10s
-epoch 31 - val-ppl: 110.8, train-ppl: 95.2, elapsed_time=8.07s
-epoch 32 - val-ppl: 106.6, train-ppl: 90.9, elapsed_time=8.02s
-epoch 33 - val-ppl: 101.5, train-ppl: 86.5, elapsed_time=8.00s
-epoch 34 - val-ppl: 97.4, train-ppl: 83.0, elapsed_time=8.11s
-epoch 35 - val-ppl: 92.9, train-ppl: 79.0, elapsed_time=7.92s
-epoch 36 - val-ppl: 89.5, train-ppl: 75.8, elapsed_time=8.00s
-epoch 37 - val-ppl: 87.2, train-ppl: 73.3, elapsed_time=8.14s
-epoch 38 - val-ppl: 81.6, train-ppl: 69.4, elapsed_time=8.09s
-epoch 39 - val-ppl: 79.9, train-ppl: 65.6, elapsed_time=8.09s
+<BOS> bern <EOS>
+<BOS> invitations do <EOS>
+<BOS> dick <EOS>
+<BOS> beautiful <EOS>
+epoch 30 - val-ppl: 144.4, train-ppl: 123.3, elapsed_time=19.39s
+epoch 31 - val-ppl: 134.0, train-ppl: 119.7, elapsed_time=19.82s
+epoch 32 - val-ppl: 131.3, train-ppl: 112.4, elapsed_time=20.64s
+epoch 33 - val-ppl: 123.1, train-ppl: 106.9, elapsed_time=19.84s
+epoch 34 - val-ppl: 120.7, train-ppl: 102.0, elapsed_time=21.98s
+epoch 35 - val-ppl: 118.2, train-ppl: 98.1, elapsed_time=21.91s
+epoch 36 - val-ppl: 113.3, train-ppl: 94.2, elapsed_time=23.86s
+epoch 37 - val-ppl: 106.0, train-ppl: 90.2, elapsed_time=21.66s
+epoch 38 - val-ppl: 102.2, train-ppl: 85.7, elapsed_time=19.96s
+epoch 39 - val-ppl: 99.6, train-ppl: 83.1, elapsed_time=20.33s
 <BOS> yes <EOS>
-<BOS> tesla will be able to be in the tesla factory in la <EOS>
-<BOS> i love so <EOS>
-<BOS> ##ances is amazing <EOS>
-<BOS> spaceship is accelerating <EOS>
-<BOS> ##ton ##s ! ! <EOS>
-<BOS> bark ##ly <EOS>
-epoch 40 - val-ppl: 74.6, train-ppl: 63.0, elapsed_time=8.10s
-epoch 41 - val-ppl: 73.6, train-ppl: 61.1, elapsed_time=7.99s
-epoch 42 - val-ppl: 70.3, train-ppl: 58.6, elapsed_time=8.11s
-epoch 43 - val-ppl: 67.0, train-ppl: 56.1, elapsed_time=8.11s
-epoch 44 - val-ppl: 64.6, train-ppl: 53.3, elapsed_time=8.17s
-epoch 45 - val-ppl: 65.0, train-ppl: 51.5, elapsed_time=8.01s
-epoch 46 - val-ppl: 60.2, train-ppl: 49.6, elapsed_time=8.04s
-epoch 47 - val-ppl: 57.2, train-ppl: 47.3, elapsed_time=8.02s
-epoch 48 - val-ppl: 54.3, train-ppl: 45.8, elapsed_time=8.04s
-epoch 49 - val-ppl: 56.3, train-ppl: 43.6, elapsed_time=8.12s
+<BOS> tesla model s , but will be a lot of time . <EOS>
+<BOS> i love a little <EOS>
+<BOS> drank in to be a few months <EOS>
+<BOS> fantasy is <EOS>
+<BOS> collector <EOS>
+<BOS> vacation , i am not a great <EOS>
+epoch 40 - val-ppl: 93.6, train-ppl: 79.3, elapsed_time=19.95s
+epoch 41 - val-ppl: 93.1, train-ppl: 76.8, elapsed_time=19.75s
+epoch 42 - val-ppl: 86.7, train-ppl: 73.6, elapsed_time=19.70s
+epoch 43 - val-ppl: 84.7, train-ppl: 71.7, elapsed_time=19.89s
+epoch 44 - val-ppl: 81.2, train-ppl: 68.6, elapsed_time=19.79s
+epoch 45 - val-ppl: 81.5, train-ppl: 65.2, elapsed_time=19.76s
+epoch 46 - val-ppl: 75.4, train-ppl: 63.2, elapsed_time=19.58s
+epoch 47 - val-ppl: 74.2, train-ppl: 61.0, elapsed_time=19.55s
+epoch 48 - val-ppl: 70.3, train-ppl: 58.8, elapsed_time=19.85s
+epoch 49 - val-ppl: 71.0, train-ppl: 56.7, elapsed_time=19.64s
+<BOS> yes <EOS>
+<BOS> tesla solar ##glass roof <EOS>
+<BOS> i think so <EOS>
+<BOS> lack of of starter ! <EOS>
+<BOS> faults will have be a lot to be in a few months <EOS>
+<BOS> looming disaster for sure <EOS>
+<BOS> gradually sure <EOS>
+epoch 50 - val-ppl: 65.0, train-ppl: 54.4, elapsed_time=20.05s
+epoch 51 - val-ppl: 63.9, train-ppl: 52.7, elapsed_time=19.59s
+epoch 52 - val-ppl: 62.0, train-ppl: 50.9, elapsed_time=19.83s
+epoch 53 - val-ppl: 59.8, train-ppl: 49.9, elapsed_time=20.00s
+epoch 54 - val-ppl: 57.1, train-ppl: 48.2, elapsed_time=19.71s
+epoch 55 - val-ppl: 56.2, train-ppl: 45.6, elapsed_time=19.83s
+epoch 56 - val-ppl: 54.6, train-ppl: 44.5, elapsed_time=19.68s
+epoch 57 - val-ppl: 62.4, train-ppl: 43.4, elapsed_time=19.64s
+epoch 58 - val-ppl: 51.5, train-ppl: 42.4, elapsed_time=19.61s
+epoch 59 - val-ppl: 48.8, train-ppl: 40.9, elapsed_time=20.02s
+<BOS> yes <EOS>
+<BOS> tesla solar ##glass roof <EOS>
+<BOS> i love that <EOS>
+<BOS> net of good <EOS>
+<BOS> ##f star wars <EOS>
+<BOS> keith ##s ##w ! <EOS>
+<BOS> upon a years , it will not not a good one <EOS>
+epoch 60 - val-ppl: 49.6, train-ppl: 39.3, elapsed_time=19.61s
+epoch 61 - val-ppl: 46.3, train-ppl: 38.4, elapsed_time=19.62s
+epoch 62 - val-ppl: 45.9, train-ppl: 36.8, elapsed_time=19.55s
+epoch 63 - val-ppl: 45.7, train-ppl: 35.8, elapsed_time=19.86s
+epoch 64 - val-ppl: 46.1, train-ppl: 34.7, elapsed_time=19.59s
+epoch 65 - val-ppl: 42.2, train-ppl: 33.9, elapsed_time=19.76s
+epoch 66 - val-ppl: 40.4, train-ppl: 33.0, elapsed_time=19.95s
+epoch 67 - val-ppl: 40.6, train-ppl: 32.2, elapsed_time=19.45s
+epoch 68 - val-ppl: 38.4, train-ppl: 31.0, elapsed_time=19.59s
+epoch 69 - val-ppl: 40.3, train-ppl: 30.5, elapsed_time=19.46s
 <BOS> yes <EOS>
 <BOS> tesla solar ##glass roof <EOS>
 <BOS> i love that scene <EOS>
-<BOS> falcons have landed <EOS>
-<BOS> terra christmas ! <EOS>
-<BOS> privilege to <EOS>
-<BOS> ce ##pha ##lo ##pods have a great girl <EOS>
-epoch 50 - val-ppl: 51.1, train-ppl: 42.2, elapsed_time=8.11s
-epoch 51 - val-ppl: 48.3, train-ppl: 40.0, elapsed_time=8.09s
-epoch 52 - val-ppl: 49.0, train-ppl: 39.0, elapsed_time=8.02s
-epoch 53 - val-ppl: 46.5, train-ppl: 37.6, elapsed_time=8.03s
-epoch 54 - val-ppl: 43.3, train-ppl: 36.3, elapsed_time=8.02s
-epoch 55 - val-ppl: 44.4, train-ppl: 35.0, elapsed_time=8.05s
-epoch 56 - val-ppl: 42.4, train-ppl: 34.0, elapsed_time=8.04s
-epoch 57 - val-ppl: 40.3, train-ppl: 32.8, elapsed_time=8.15s
-epoch 58 - val-ppl: 37.9, train-ppl: 32.4, elapsed_time=8.18s
-epoch 59 - val-ppl: 37.4, train-ppl: 30.7, elapsed_time=8.10s
+<BOS> sequels mode will course ! <EOS>
+<BOS> formerly by cry ##o angle ( aka stick ) then , but not to work with the space ##x team <EOS>
+<BOS> black mirror <EOS>
+<BOS> ##graphy <EOS>
+epoch 70 - val-ppl: 37.1, train-ppl: 29.4, elapsed_time=19.52s
+epoch 71 - val-ppl: 37.0, train-ppl: 28.8, elapsed_time=19.41s
+epoch 72 - val-ppl: 35.0, train-ppl: 28.4, elapsed_time=19.41s
+epoch 73 - val-ppl: 33.2, train-ppl: 27.4, elapsed_time=19.41s
+epoch 74 - val-ppl: 32.9, train-ppl: 26.7, elapsed_time=19.31s
+epoch 75 - val-ppl: 32.1, train-ppl: 26.2, elapsed_time=19.36s
+epoch 76 - val-ppl: 31.4, train-ppl: 25.5, elapsed_time=19.30s
+epoch 77 - val-ppl: 31.3, train-ppl: 24.9, elapsed_time=19.32s
+epoch 78 - val-ppl: 30.4, train-ppl: 24.3, elapsed_time=19.31s
+epoch 79 - val-ppl: 29.7, train-ppl: 23.8, elapsed_time=19.34s
 <BOS> yes <EOS>
-<BOS> tesla is laps in killing me ##ed govt <EOS>
-<BOS> i love the suggestions ! <EOS>
-<BOS> reich true <EOS>
-<BOS> ##his alien <EOS>
-<BOS> reich true <EOS>
-<BOS> arrange ##ony <EOS>
-epoch 60 - val-ppl: 35.5, train-ppl: 29.9, elapsed_time=8.06s
-epoch 61 - val-ppl: 35.1, train-ppl: 29.0, elapsed_time=7.94s
-epoch 62 - val-ppl: 34.6, train-ppl: 28.0, elapsed_time=8.06s
-epoch 63 - val-ppl: 32.3, train-ppl: 27.0, elapsed_time=8.09s
-epoch 64 - val-ppl: 37.3, train-ppl: 26.0, elapsed_time=8.19s
-epoch 65 - val-ppl: 31.5, train-ppl: 25.4, elapsed_time=8.09s
-epoch 66 - val-ppl: 30.9, train-ppl: 24.5, elapsed_time=8.13s
-epoch 67 - val-ppl: 32.3, train-ppl: 23.7, elapsed_time=8.03s
-epoch 68 - val-ppl: 29.3, train-ppl: 23.6, elapsed_time=8.09s
-epoch 69 - val-ppl: 29.0, train-ppl: 22.9, elapsed_time=8.09s
+<BOS> tesla solar ##glass roof <EOS>
+<BOS> i think so <EOS>
+<BOS> sexy medical , only us down at the same and that matters not <EOS>
+<BOS> houston <EOS>
+<BOS> washington check for much important <EOS>
+<BOS> ##ited . . will be able to go in a few months . <EOS>
+epoch 80 - val-ppl: 28.4, train-ppl: 23.1, elapsed_time=19.35s
+epoch 81 - val-ppl: 28.2, train-ppl: 22.6, elapsed_time=19.55s
+epoch 82 - val-ppl: 28.5, train-ppl: 21.8, elapsed_time=19.35s
+epoch 83 - val-ppl: 25.9, train-ppl: 21.3, elapsed_time=19.31s
+epoch 84 - val-ppl: 25.4, train-ppl: 21.0, elapsed_time=19.29s
+epoch 85 - val-ppl: 27.8, train-ppl: 20.5, elapsed_time=19.29s
+epoch 86 - val-ppl: 25.7, train-ppl: 20.0, elapsed_time=19.31s
+epoch 87 - val-ppl: 24.4, train-ppl: 19.7, elapsed_time=19.25s
+epoch 88 - val-ppl: 24.4, train-ppl: 19.1, elapsed_time=19.30s
+epoch 89 - val-ppl: 24.8, train-ppl: 19.1, elapsed_time=19.29s
 <BOS> yes <EOS>
-<BOS> tesla model s plaid is not ##ient , but not cares for time % . would be gone needed . <EOS>
+<BOS> tesla solar ##glass roof <EOS>
+<BOS> i hope so <EOS>
+<BOS> first production model <EOS>
+<BOS> units - crane ! <EOS>
+<BOS> ##izer point of time <EOS>
+<BOS> quan ##v rocks ! <EOS>
+epoch 90 - val-ppl: 23.2, train-ppl: 18.4, elapsed_time=19.30s
+epoch 91 - val-ppl: 22.2, train-ppl: 18.1, elapsed_time=19.27s
+epoch 92 - val-ppl: 21.2, train-ppl: 17.9, elapsed_time=19.30s
+epoch 93 - val-ppl: 21.6, train-ppl: 17.5, elapsed_time=19.33s
+epoch 94 - val-ppl: 20.6, train-ppl: 17.2, elapsed_time=19.26s
+epoch 95 - val-ppl: 20.6, train-ppl: 16.7, elapsed_time=19.26s
+epoch 96 - val-ppl: 20.6, train-ppl: 16.2, elapsed_time=19.30s
+epoch 97 - val-ppl: 19.7, train-ppl: 16.1, elapsed_time=19.31s
+epoch 98 - val-ppl: 18.7, train-ppl: 15.9, elapsed_time=19.24s
+epoch 99 - val-ppl: 18.2, train-ppl: 15.5, elapsed_time=19.30s
+<BOS> yes <EOS>
+<BOS> tesla solar ##glass vs happy halloween ! ! <EOS>
 <BOS> i love your castle <EOS>
-<BOS> club <EOS>
-<BOS> plays ##some the shorts <EOS>
-<BOS> ##maker - shirt <EOS>
-<BOS> hubbard to the bt ##ing . this is a recommendation of that parents . <EOS>
-epoch 70 - val-ppl: 26.7, train-ppl: 22.3, elapsed_time=8.03s
-epoch 71 - val-ppl: 27.2, train-ppl: 21.7, elapsed_time=8.03s
-epoch 72 - val-ppl: 25.1, train-ppl: 21.2, elapsed_time=8.09s
-epoch 73 - val-ppl: 24.6, train-ppl: 20.4, elapsed_time=8.09s
-epoch 74 - val-ppl: 25.3, train-ppl: 20.0, elapsed_time=7.93s
-epoch 75 - val-ppl: 23.2, train-ppl: 19.4, elapsed_time=8.08s
-epoch 76 - val-ppl: 23.8, train-ppl: 18.8, elapsed_time=8.06s
-epoch 77 - val-ppl: 23.0, train-ppl: 18.3, elapsed_time=8.00s
-epoch 78 - val-ppl: 21.8, train-ppl: 18.2, elapsed_time=8.04s
-epoch 79 - val-ppl: 21.1, train-ppl: 17.6, elapsed_time=7.98s
-<BOS> yes <EOS>
-<BOS> tesla solar ##glass roof <EOS>
-<BOS> i love the suggestions ! <EOS>
-<BOS> contribute a lot so actions and just else <EOS>
-<BOS> empirical on all of the light launches object <EOS>
-<BOS> passenger <EOS>
-<BOS> wars you can play the future of civilization <EOS>
-epoch 80 - val-ppl: 21.1, train-ppl: 17.1, elapsed_time=8.12s
-epoch 81 - val-ppl: 20.4, train-ppl: 16.7, elapsed_time=8.09s
-epoch 82 - val-ppl: 20.4, train-ppl: 16.4, elapsed_time=8.05s
-epoch 83 - val-ppl: 19.7, train-ppl: 16.1, elapsed_time=8.16s
-epoch 84 - val-ppl: 18.9, train-ppl: 15.6, elapsed_time=8.01s
-epoch 85 - val-ppl: 18.7, train-ppl: 15.3, elapsed_time=8.02s
-epoch 86 - val-ppl: 18.4, train-ppl: 15.0, elapsed_time=8.13s
-epoch 87 - val-ppl: 18.1, train-ppl: 14.7, elapsed_time=8.06s
-epoch 88 - val-ppl: 18.2, train-ppl: 14.4, elapsed_time=8.24s
-epoch 89 - val-ppl: 17.2, train-ppl: 14.1, elapsed_time=8.08s
-<BOS> yes <EOS>
-<BOS> tesla is working hard to help stop global warming <EOS>
-<BOS> i think so <EOS>
-<BOS> parachute ##s soon this year has still need the step % of australia ? <EOS>
-<BOS> ##ress , a few days of by , i are encourage the general ##cic ##al & amp ; x has gone <EOS>
-<BOS> knew yeah <EOS>
-<BOS> card <EOS>
-epoch 90 - val-ppl: 16.5, train-ppl: 13.6, elapsed_time=8.04s
-epoch 91 - val-ppl: 15.8, train-ppl: 13.5, elapsed_time=7.96s
-epoch 92 - val-ppl: 15.9, train-ppl: 13.5, elapsed_time=8.08s
-epoch 93 - val-ppl: 16.0, train-ppl: 13.0, elapsed_time=8.01s
-epoch 94 - val-ppl: 15.4, train-ppl: 12.7, elapsed_time=8.15s
-epoch 95 - val-ppl: 15.2, train-ppl: 12.5, elapsed_time=8.07s
-epoch 96 - val-ppl: 14.6, train-ppl: 12.2, elapsed_time=8.08s
-epoch 97 - val-ppl: 14.3, train-ppl: 11.9, elapsed_time=8.03s
-epoch 98 - val-ppl: 14.0, train-ppl: 11.8, elapsed_time=8.06s
-epoch 99 - val-ppl: 13.7, train-ppl: 11.5, elapsed_time=8.08s
-<BOS> yes <EOS>
-<BOS> tesla solar ##glass roof <EOS>
-<BOS> i think so <EOS>
-<BOS> curve is to do about the future star ##link team . that is why we should do that on the best of the car . <EOS>
-<BOS> loser <EOS>
-<BOS> jagged the onion article to me <EOS>
-<BOS> hedge ##gio for dumb ##r launch <EOS>
+<BOS> swiftly ' s it will be a difference with that top of merlin that month <EOS>
+<BOS> module cool : <EOS>
+<BOS> ##tt <EOS>
+<BOS> ##ole ##s , s has been assembled by by ukraine ! ! <EOS>
 <BOS> yes <EOS>
 train results (ppl):
-[1305.6789350516224, 845.86263684997, 810.8656850976239, 752.3279007844, 669.5563720586275, 577.1095782017555, 480.0001909023331, 422.28619732107444, 378.7794577753235, 346.8006404025751, 328.9993781795271, 295.023901698471, 274.7163450753499, 257.1893253857491, 243.14822819140082, 226.69380274682402, 212.66145552951156, 199.39069648405774, 188.0066582297968, 177.59295243594386, 166.48309703312236, 157.09717070299484, 150.98361536773507, 141.8938936326436, 133.17551167444728, 127.00195064308932, 119.27468787024607, 114.50583325407328, 108.93045278270077, 105.02389256370674, 99.05852057946936, 95.22140833591165, 90.94816266424485, 86.54499985955842, 82.97179240169855, 79.02737913092318, 75.83935661106455, 73.34233528674743, 69.39265432267787, 65.55975118653164, 63.047593452731945, 61.076931019379046, 58.64234475771594, 56.125803832995516, 53.31804244832972, 51.53842460147631, 49.64179863843529, 47.27820981466976, 45.808192144443, 43.56610624886485, 42.1804384848126, 40.034479579454164, 39.012395270456615, 37.63804124662073, 36.2651359852244, 35.017249431503195, 34.036049211056785, 32.84720066756053, 32.38832319387434, 30.696240928331143, 29.869554596309086, 28.957046999818495, 27.99326492611223, 26.972413206965268, 26.016177145446598, 25.40731703212511, 24.52199030390878, 23.716518188473025, 23.572907724477016, 22.904839845775072, 22.260126874348842, 21.737373882374936, 21.235969951171977, 20.41873950145925, 19.954953112119423, 19.351536836834654, 18.83549510023915, 18.306083318648735, 18.24020294153047, 17.645513801016772, 17.077180721348775, 16.739185330827976, 16.41447765112394, 16.12210768448833, 15.61871530577052, 15.295025251831525, 15.017815850039396, 14.748480120745795, 14.444014359127369, 14.063023951955389, 13.623722473773936, 13.455723899259057, 13.451949505604997, 12.966896230714303, 12.651606844581487, 12.490485520929905, 12.228382283639036, 11.85618949740687, 11.776500747855518, 11.47607392094925]
+[1374.9096568801267, 871.5071107142411, 825.2600633472292, 808.571157472928, 766.7911976346721, 665.1227668041786, 603.8897814447722, 527.065818649985, 457.9507032325068, 412.9453058772666, 379.4956152419505, 354.36553831953296, 331.92183797199317, 312.74475506415666, 292.54305041962857, 272.75015703719595, 260.91806366602424, 242.5757582771841, 229.3600740342809, 214.58093983448472, 202.9243450897021, 194.9401085185102, 182.09240859751324, 174.076385248668, 163.5975846786925, 157.05203215781776, 149.2795046868424, 141.68222646525916, 135.6162474665624, 128.85634209341615, 123.26858028237689, 119.69501728127722, 112.37217263750375, 106.94543909533648, 102.02079243345935, 98.07803622978896, 94.18338041309647, 90.19682852889349, 85.72956021676764, 83.1081280939552, 79.31375807380186, 76.75531969518195, 73.58616322910943, 71.65596834222919, 68.61771426541296, 65.15445933060478, 63.23866145666057, 60.95971945949975, 58.8439650882474, 56.71526679268145, 54.401979600795066, 52.726308033816075, 50.870829158563524, 49.93798625407633, 48.22823291954732, 45.64725960177253, 44.53494671294569, 43.356716190143594, 42.37887086114152, 40.93250201080192, 39.329878040762196, 38.44364872004297, 36.813567404871485, 35.782985895969226, 34.71629273509383, 33.85576605713246, 32.972527849051424, 32.195109893729565, 30.983176230881217, 30.498956242347656, 29.448538063561447, 28.82068422441097, 28.44223307235116, 27.35176219136054, 26.71536716900133, 26.20778865369309, 25.54367263117828, 24.8775462156976, 24.2501092910314, 23.775502624490155, 23.08282784396733, 22.608692507123358, 21.764612199681356, 21.332457562429813, 20.987624798963612, 20.47689402827306, 19.977258609607052, 19.710695388020802, 19.135868802499136, 19.10383703735004, 18.37573900357944, 18.083387967611156, 17.91759851905425, 17.502096657353732, 17.159736483448626, 16.687997138713694, 16.21148997344661, 16.07787238617195, 15.860872469215131, 15.50081954633939]
 val results (ppl):
-[892.5748042877406, 824.0080536490533, 817.4063297890038, 722.4888037795705, 647.081069032429, 556.0222092846986, 477.07168068257715, 438.40729412216166, 415.3689032668472, 407.51391354697074, 337.74513766937196, 326.33581259940007, 290.1146381446405, 274.2833244793518, 259.99455008444914, 247.5678140922649, 233.2271106577873, 220.37128063621967, 208.03647479229937, 196.12995860408986, 188.45289207962182, 182.5723814226246, 171.55866998389806, 159.31933431694526, 154.4759714802085, 145.93307392073086, 139.42264498369667, 132.56348553305153, 128.9494955566581, 120.13263679432916, 118.646366236513, 110.83472171747277, 106.60227294447209, 101.49508691521443, 97.40253372588064, 92.88697931218213, 89.5357381476775, 87.1775143331622, 81.55360705630726, 79.8527807278637, 74.62897880006926, 73.56396549755746, 70.27533558901871, 66.9521413476575, 64.635154069428, 64.96751013310987, 60.21291183549694, 57.24659275535446, 54.280662441874576, 56.3499967558995, 51.08217844498333, 48.28733776935244, 49.01049008013337, 46.478274788965244, 43.299284752262, 44.370641324637454, 42.438305189627876, 40.29065493480465, 37.92162353596125, 37.41898252182033, 35.500117289030385, 35.106161166438405, 34.599797340106775, 32.25395419110763, 37.33754867406809, 31.48575241847634, 30.87178175421989, 32.285085355609986, 29.325069948005417, 28.998848500385474, 26.715143509155613, 27.183384670023045, 25.096759454647255, 24.626292687259333, 25.326984047345533, 23.182354780782283, 23.768705060831056, 23.02106394720773, 21.83339895230619, 21.065789260276123, 21.12161315122077, 20.395193501409267, 20.434218796137646, 19.70533288905529, 18.89915495297347, 18.705950223602034, 18.373918761126937, 18.058923469316504, 18.174285454898886, 17.21917091597553, 16.471165338566745, 15.768618607134492, 15.909296857060243, 16.001495636720943, 15.387756585100483, 15.249936226223069, 14.590562016029711, 14.269581779704872, 13.986611155552373, 13.679100565904665]
+[914.5884718741818, 871.3720884384862, 834.1165991923127, 815.9743092332629, 737.9251405732327, 661.9528740822032, 588.8387880030483, 520.8360057953572, 476.073870420825, 432.55389593881745, 400.2407709376305, 377.45335788235974, 351.1535684459969, 334.4829172062605, 312.6462460060139, 294.883099528278, 279.8930992486193, 261.41486680974515, 249.44679089816987, 236.9546541565091, 223.0487778287479, 212.58482950918642, 201.61776370713181, 192.11671628004876, 181.62777475457074, 177.44635481999754, 165.50509451733228, 159.82000242038197, 151.59005379348008, 148.5871217986373, 144.37600025459903, 134.0338959872841, 131.27380489637088, 123.14611980697887, 120.6781137451107, 118.21078797812523, 113.26531949379125, 106.02824001370243, 102.19576882249098, 99.58207257998544, 93.5997219155344, 93.12669899608643, 86.74188697520216, 84.71987448605168, 81.18687391927573, 81.46036438884354, 75.38038047920942, 74.20444571013532, 70.34815060693965, 70.96101452577567, 65.04106917118732, 63.912818739430605, 62.01967931388647, 59.837846115802286, 57.11754969415207, 56.159138806973424, 54.63279793484109, 62.39617728369871, 51.453587351883606, 48.80961613867527, 49.56500667233677, 46.31439103521817, 45.89842993270476, 45.7031493190627, 46.10114152045466, 42.210132022076486, 40.43655309670499, 40.587918390994304, 38.36056795934111, 40.27934819107456, 37.11200938248989, 37.00327514662536, 34.960336354493236, 33.16017853515975, 32.9274361783248, 32.14167255181283, 31.421947710495402, 31.312623340047363, 30.40295637279091, 29.748940894380976, 28.365676095046265, 28.21362060975631, 28.54337194358003, 25.895358571843143, 25.39690569354656, 27.772839639150178, 25.668381232668263, 24.37005216912153, 24.386799275373605, 24.76701784779442, 23.1857547453226, 22.211292285377613, 21.213775494203702, 21.57593291523042, 20.61747911183997, 20.605045632808796, 20.60082486653525, 19.709350300685394, 18.652202696266187, 18.20681764981928]
 ------------------
