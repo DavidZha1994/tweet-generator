@@ -165,21 +165,16 @@ def load_data_gatsby(batch_size, num_steps,
     return data_iter, data_iter.vocab
 
 
-def brewed_dataLoader(which_data, data_dir, tokenization='char'):  # which_ds could be 'training', 'validation'
-
-    # Subword-based tokenization
-    # tokenize = BertTokenizer.from_pretrained("bert-base-uncased").tokenize
-    # Character-based tokenization
-    # tokenize = lambda x:x
-    # Word-based tokenization
-    tokenize = lambda x: x.split()
-
+def get_tokenization_fn(tokenization='char'):
     if tokenization == 'char':
         # character level tokenization
         tokenize = lambda x: x
     elif tokenization == 'word':
         # word level tokenization
-        tokenize = lambda x: x.split()
+        # first the string is split at spaces and some special characters, afterwards "' characters are removed from each token
+        # and lastly empty characters '' are removed.
+        tokenize = lambda x: list(filter(lambda z: z != '', map(lambda y: re.sub("[\"\']", '', y),
+                                 re.split("(?=&amp;)|(?=[()!.?,$~+*])|(?<=[()!.?,$~+*])|\d| ", x.removesuffix("\n")))))
     elif tokenization == 'subword':
         # sub-word level tokenization
         tokenize = BertTokenizer.from_pretrained("bert-base-uncased").tokenize
@@ -187,8 +182,21 @@ def brewed_dataLoader(which_data, data_dir, tokenization='char'):  # which_ds co
         tokenizer = GPT2Tokenizer('gpt2tokenizer/vocab.json', 'gpt2tokenizer/merges.txt')
         tokenizer.pad_token = tokenizer.eos_token
         tokenize = tokenizer.tokenize
+    elif tokenization == 'gpt2':
+        tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+        tokenizer.pad_token = tokenizer.eos_token
+        tokenize = tokenizer.tokenize
     else:
-        raise Exception("Wrong parameter for 'tokenization'-argument please use one of these: 'char', 'word', 'subword'")
+        raise Exception(
+            "Wrong parameter for 'tokenization'-argument please use one of these: 'char', 'word', 'subword'")
+
+    return tokenize
+
+
+def brewed_dataLoader(which_data, data_dir, tokenization='char'):  # which_ds could be 'training', 'validation'
+
+    tokenize = get_tokenization_fn(tokenization)
+
 
     # it is for character/word-based tokenization
     text_field = torchtext.data.Field(sequential=True,  # text sequence
@@ -242,6 +250,23 @@ class Accumulator:
 
     def __getitem__(self, idx):
         return self.data[idx]
+
+
+def get_prompts():
+    prompts = set()
+    with open("./dataset/combined_Musk_tweets_cleaned.txt") as file:
+        for line in file:
+            beginning = line.split(' ')[0]
+
+            beginning = beginning.replace('\n', '')
+            beginning = beginning.replace('\\', '')
+            beginning = beginning.replace('.', '')
+            beginning = beginning.replace('!', '')
+            beginning = beginning.replace('\"', '')
+            if len(beginning) > 1:
+                prompts.add(beginning)
+
+    return sorted(list(prompts))
 
 
 def get_device():
