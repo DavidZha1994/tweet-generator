@@ -1,5 +1,5 @@
 import torch
-from models import StackedLstm, LSTM, GRU, RNNModelScratch
+from models import StackedLstm, LSTM, GRU, VanillaRNN
 from utils import brewed_dataLoader, get_tokenization_fn, get_prompts
 import pandas as pd
 
@@ -13,7 +13,7 @@ _, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader('training', csv_dir, t
 vocab = vocab_itos, vocab_stoi, vocab_size
 
 models = {
-    'rnn_scratch': RNNModelScratch,
+    'rnn_scratch': VanillaRNN,
     'lstm': LSTM,
     'stacked_lstm': StackedLstm,
     'gru': GRU,
@@ -68,7 +68,7 @@ def format_output(output, tokenization, vocab_itos):
         return formatted
 
 
-inputs = ["This"] #get_prompts()
+inputs = get_prompts()
 outputs = []
 for inp in inputs:
     output = predict(inp, 50, model, vocab, 'cuda:0')
@@ -80,4 +80,4 @@ df = pd.DataFrame(data=data, columns=['prompt', 'output'])
 df = df.drop(df[df.output == ''].index)
 
 
-# df.to_csv(f"./sample_generated_tweets/{SELECTED_MODEL}_{TOKENIZER_TYPE}.csv", mode="w+")
+df.to_csv(f"./sample_generated_tweets/{SELECTED_MODEL}_{TOKENIZER_TYPE}.csv", mode="w+")

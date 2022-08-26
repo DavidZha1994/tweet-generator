@@ -4,6 +4,9 @@ from torch.nn import functional as F
 
 
 class TweetGenerator(nn.Module):
+    """
+    vanilla RNN using the pytorch modules.
+    """
     def __init__(self, input_size, hidden_size, device='cpu', n_layers=1):
         super(TweetGenerator, self).__init__()
 
@@ -30,11 +33,11 @@ class TweetGenerator(nn.Module):
         return output, h_state
 
 
-class RNNModelScratch(nn.Module):
-    """A RNN Model implemented from scratch."""
+class VanillaRNN(nn.Module):
+    """The vanilla RNN model implemented from scratch."""
 
     def __init__(self, vocab_size, num_hiddens, device='cpu'):
-        super(RNNModelScratch, self).__init__()
+        super(VanillaRNN, self).__init__()
 
         input_size = output_size = vocab_size
         self.vocab_size, self.num_hiddens = vocab_size, num_hiddens
@@ -44,6 +47,14 @@ class RNNModelScratch(nn.Module):
         self.h2o = nn.Linear(num_hiddens, output_size, device=device)
 
     def forward(self, X, state=None):
+        """
+        Forward pass of the model. If no state is passed a new hidden state will be initialized.
+
+        :param X: Batch of sequences to pass through the net and generate new outputs for.
+        Required in sequence first, not batch first format!
+        :param state: hidden state h
+        :return: tuple of predictions for each time step and hidden state.
+        """
         X = F.one_hot(X.T, self.vocab_size).type(torch.float32)
         # Shape of `X`: (`sequence_size`,`batch_size`, `vocab_size`)
 
@@ -54,6 +65,7 @@ class RNNModelScratch(nn.Module):
         outputs = []
         # Shape of `X_step`: (`batch_size`, `vocab_size`)
         for X_step in X:
+            # process each time step in the sequence and get a prediction for each time step.
             H = torch.tanh(self.i2h(torch.cat((X_step, H), 1)))
             Y = self.h2o(H)
             outputs.append(Y)
@@ -61,10 +73,14 @@ class RNNModelScratch(nn.Module):
         return torch.cat(outputs, dim=0), (H,)
 
     def begin_state(self, batch_size, device):
+        # init the hitten state with zeros
         return torch.zeros((batch_size, self.num_hiddens), device=device)
 
 
 class LstmCell(nn.Module):
+    """
+    LSTM Cell implemented from scratch.
+    """
     def __init__(self, input_size, output_size, device='cpu'):
         super(LstmCell, self).__init__()
 
@@ -74,6 +90,7 @@ class LstmCell(nn.Module):
         self.input_size, self.output_size = input_size, output_size
         num_hiddens = output_size
 
+        # define the different layers needed for the cell
         # reference: https://en.wikipedia.org/wiki/Long_short-term_memory#LSTM_with_a_forget_gate
         self.in2f = nn.Linear(input_size + num_hiddens, output_size, device=device)
         self.in2i = nn.Linear(input_size + num_hiddens, output_size, device=device)
@@ -178,7 +195,7 @@ class StackedLstm(nn.Module):
                                                                                      device=device)
 
 class StackedLstm3(nn.Module):
-    """A RNN Model implemented from scratch."""
+    """A RNN with 3 vertically stacked LSTM cells"""
 
     def __init__(self, vocab_size, num_hiddens, device):
         super(StackedLstm3, self).__init__()
@@ -226,7 +243,7 @@ class StackedLstm3(nn.Module):
 
 
 class GRU(nn.Module):
-    """A RNN Model implemented from scratch."""
+    """The gated recurrent unit (GRU) implemented from scratch."""
 
     def __init__(self, vocab_size, num_hiddens, device):
         super(GRU, self).__init__()

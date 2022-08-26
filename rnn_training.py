@@ -2,7 +2,6 @@ import math
 import time
 
 import torch
-import regex
 import re
 from torch import nn
 import logging
@@ -13,37 +12,58 @@ import sys
 import pathlib
 import torchtext
 from random import choice
-from models import StackedLstm, RNNModelScratch, TweetGenerator, LSTM, GRU, StackedLstm3
+from models import StackedLstm, VanillaRNN, LSTM, GRU
 
 is_logger_adjusted = False
 TOKENIZER_TYPE = 'char'
 
 def predict(prefix, num_preds, net, vocab, device):
     """Generate new characters following the `prefix`."""
+
+    # unpack the vocab to use
     vocab_itos, vocab_stoi, _ = vocab
     state = None
     outputs = [vocab_stoi[prefix[0]]]
     get_input = lambda: torch.tensor([outputs[-1]], device=device).reshape((1, 1))
-    for y in prefix[1:]:  # Warm-up period
+
+    # Warm-up period
+    for y in prefix[1:]:
         _, state = net(get_input(), state)
         outputs.append(vocab_stoi[y])
-    for _ in range(num_preds):  # Predict `num_preds` steps
+    # Generate 'num_preds' tokens after the warm up period
+    for _ in range(num_preds):
+        # do the forward pass through the network
         y, state = net(get_input(), state)
+        # add predicted token
         outputs.append(int(y.argmax(dim=1).reshape(1)))
 
         if outputs[-1] == vocab_stoi['<EOS>']:
             break
+
+    # create a single string from the generated tokens
     return ' '.join([vocab_itos[i] for i in outputs])
 
 
 @torch.no_grad()
 def evaluate(net, val_iter, loss, device, vocab):
-    metric_emb = Accumulator(2)
-    metric_words = Accumulator(2)
+    """
+    Evaluate the net (e.g. with a validation data set).
 
+    :param net: net to evaluate
+    :param val_iter: iterator holding the data set
+    :param loss: loss function that should be used
+    :param device: device to run the computations on (cpu or cuda:x)
+    :param vocab: vocabulary for the network
+    :return: tuple of token level perplexity and word level perplexity
+    """
+
+    # init accumulators to store entropies for later conversion to perplexity
+    metric_emb = Accumulator(2)  # one for the token level
+    metric_words = Accumulator(2)  # one for the word level
+
+    # do the actual forward pass for each batch
     for batch in val_iter:
         seq = batch.content[0]
-        batch_size = batch.batch_size
         X = seq[:, :-1]
         Y = seq[:, 1:]
 
@@ -62,7 +82,7 @@ def evaluate(net, val_iter, loss, device, vocab):
 
 
 def grad_clipping(net, theta):
-    """Clip the gradient."""
+    """Clip the gradient to prevent exploding gradients."""
     params = [p for p in net.parameters() if p.requires_grad]
 
     norm = torch.sqrt(sum(torch.sum((p.grad ** 2)) for p in params))
@@ -93,9 +113,19 @@ def count_words(encoding, tokenization, vocab):
 
 
 def train_epoch(net, train_iter, loss, updater, device, vocab):
-    """Train a net within one epoch"""
+    """
+    Train a net for one epoch.
+
+    :param net: network to train.
+    :param train_iter: training iterator holding the training data.
+    :param loss: loss function. Use cross-entropy loss to retrieve reasonable perplexity values.
+    :param updater: torch updater for the back propagation.
+    :param device: Device to run the computations on (cpu or cuda:x)
+    :param vocab: vocab used with the tokenizer.
+    :return: triple of perplexity on token level, perplexity on word level, runtime
+    """
     start_time = time.time()
-    metric_embedding = Accumulator(2)  # accumulator for loss normalized by the sequence length on embedding level
+    metric_embedding = Accumulator(2)  # accumulator for loss normalized by the sequence length on token level
     metric_words = Accumulator(2)  # accumulator for loss normalized by the sequence length on word level
 
     for batch in train_iter:
@@ -156,6 +186,7 @@ def train(net, train_iter, val_iter, vocab, lr, num_epochs, device, logger=None,
             vocab_itos = vocab[0]
 
             if logger is not None:
+                # generate some sample sequences
                 logger.info(predict_seq(['<BOS>']))
                 logger.info(predict_seq(['<BOS>', vocab_itos[21]]))
                 logger.info(predict_seq(['<BOS>', vocab_itos[22]]))
@@ -210,15 +241,15 @@ def create_logger(project_dir: str, file_name: str):
 def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str = 'subword', epochs: int = 500,
                    num_hiddens: int = 64, metric='word'):
     """
+    Run an experiment (i.e. the training and validation process) for a model-tokenizer combination.
 
-
-    :param experiment_name:
-    :param model:
-    :param tokenization:
-    :param epochs:
-    :param num_hiddens:
+    :param experiment_name: The name of the experiment which is also the name of the generated log file.
+    :param model: model to use for the experiment. Options are: 'lstm', 'gru', 'stacked_lstm', 'rnn_scratch' (vanilla rnn)
+    :param tokenization: tokenizer to use for the experiment. Options are 'char', 'word, 'gpt2', 'gpt2-trained'.
+    :param epochs: number of epochs to train for.
+    :param num_hiddens: number of hidden units for the network.
     :param metric: If set to word the perplexity is normalized with the word count, otherwise with the token count.
-    :return:
+    :return: None
     """
     # necessary to get the tokenization when doing the evaluation
     global TOKENIZER_TYPE
@@ -234,12 +265,10 @@ def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str 
                 f"{tokenization=} {epochs=} {num_hiddens=} device={get_device()}")
 
     models = {
-        'rnn_scratch': RNNModelScratch,
+        'rnn_scratch': VanillaRNN,
         'lstm': LSTM,
         'stacked_lstm': StackedLstm,
-        'rnn_torch': TweetGenerator,
         'gru': GRU,
-        'stacked_lstm3': StackedLstm3
     }
 
     batch_size = 64
@@ -269,23 +298,24 @@ def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str 
 
 
 if __name__ == '__main__':
-    # run_experiment('gru-subword', 'gru', epochs=100, num_hiddens=128)
-    # run_experiment('rnn_scr-subword', 'rnn_scratch', epochs=100, num_hiddens=128)
-    # run_experiment('lstm-subword2', 'lstm', epochs=100, num_hiddens=128)
-    # run_experiment('lstm_stacked-subword', 'stacked_lstm', epochs=100, num_hiddens=128)
-    # run_experiment('gru-char', 'gru', epochs=100, num_hiddens=128, tokenization='char')
-    # run_experiment('rnn_scr-char', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='char')
-    # run_experiment('lstm-char', 'lstm', epochs=100, num_hiddens=128, tokenization='char')
-    # run_experiment('lstm_stacked-char', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='char')
+    # train all model-tokenizer combinations for the RNNs
+    run_experiment('gru-subword', 'gru', epochs=100, num_hiddens=128)
+    run_experiment('rnn_scr-subword', 'rnn_scratch', epochs=100, num_hiddens=128)
+    run_experiment('lstm-subword', 'lstm', epochs=100, num_hiddens=128)
+    run_experiment('lstm_stacked-subword', 'stacked_lstm', epochs=100, num_hiddens=128)
+    run_experiment('gru-char', 'gru', epochs=100, num_hiddens=128, tokenization='char')
+    run_experiment('rnn_scr-char', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='char')
+    run_experiment('lstm-char', 'lstm', epochs=100, num_hiddens=128, tokenization='char')
+    run_experiment('lstm_stacked-char', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='char')
     run_experiment('gru-word-fixed', 'gru', epochs=100, num_hiddens=128, tokenization='word')
     run_experiment('rnn_scr-word-fixed', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='word')
     run_experiment('lstm-word-fixed', 'lstm', epochs=100, num_hiddens=128, tokenization='word')
     run_experiment('lstm_stacked-word-fixed', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='word')
-    # run_experiment('gru-gpt-word', 'gru', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
-    # run_experiment('rnn_scr-gpt-word', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
-    # run_experiment('lstm-gpt-word', 'lstm', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
-    # run_experiment('lstm_stacked-gpt-word', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
-    # run_experiment('gru-gpttoken', 'gru', epochs=100, num_hiddens=128, tokenization='gpt2')
-    # run_experiment('rnn_scr-gpttoken', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='gpt2')
-    # run_experiment('lstm-gpttoken', 'lstm', epochs=100, num_hiddens=128, tokenization='gpt2')
-    # run_experiment('lstm_stacked-gpttoken', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='gpt2')
+    run_experiment('gru-gpt-word', 'gru', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
+    run_experiment('rnn_scr-gpt-word', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
+    run_experiment('lstm-gpt-word', 'lstm', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
+    run_experiment('lstm_stacked-gpt-word', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='gpt2-trained')
+    run_experiment('gru-gpttoken', 'gru', epochs=100, num_hiddens=128, tokenization='gpt2')
+    run_experiment('rnn_scr-gpttoken', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='gpt2')
+    run_experiment('lstm-gpttoken', 'lstm', epochs=100, num_hiddens=128, tokenization='gpt2')
+    run_experiment('lstm_stacked-gpttoken', 'stacked_lstm', epochs=100, num_hiddens=128, tokenization='gpt2')
