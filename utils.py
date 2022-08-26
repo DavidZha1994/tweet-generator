@@ -171,7 +171,10 @@ def get_tokenization_fn(tokenization='char'):
         tokenize = lambda x: x
     elif tokenization == 'word':
         # word level tokenization
-        tokenize = lambda x: x.split()
+        # first the string is split at spaces and some special characters, afterwards "' characters are removed from each token
+        # and lastly empty characters '' are removed.
+        tokenize = lambda x: list(filter(lambda z: z != '', map(lambda y: re.sub("[\"\']", '', y),
+                                 re.split("(?=&amp;)|(?=[()!.?,$~+*])|(?<=[()!.?,$~+*])|\d| ", x.removesuffix("\n")))))
     elif tokenization == 'subword':
         # sub-word level tokenization
         tokenize = BertTokenizer.from_pretrained("bert-base-uncased").tokenize

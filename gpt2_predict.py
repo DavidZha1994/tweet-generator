@@ -4,7 +4,8 @@ import pandas as pd
 from utils import get_prompts
 
 selection = "gpt2_tokenizer_scratch"
-input_prompts = get_prompts()
+# input_prompts = get_prompts()
+input_prompts = ["This"]
 returned_seqs = 1
 
 options = {
@@ -53,6 +54,6 @@ for output, prompt in zip(generation_outputs, input_prompts):
 data = [[prompt, output['generated_text']] for prompt, output in zip(prompts, outputs)]
 df = pd.DataFrame(data=data, columns=['prompt', 'output'])
 
-df.to_csv(file_path, mode="w+")
+# df.to_csv(file_path, mode="w+")
 
 print(generation_outputs)
