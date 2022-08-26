@@ -299,10 +299,6 @@ def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str 
 
 if __name__ == '__main__':
     # train all model-tokenizer combinations for the RNNs
-    run_experiment('gru-subword', 'gru', epochs=100, num_hiddens=128)
-    run_experiment('rnn_scr-subword', 'rnn_scratch', epochs=100, num_hiddens=128)
-    run_experiment('lstm-subword', 'lstm', epochs=100, num_hiddens=128)
-    run_experiment('lstm_stacked-subword', 'stacked_lstm', epochs=100, num_hiddens=128)
     run_experiment('gru-char', 'gru', epochs=100, num_hiddens=128, tokenization='char')
     run_experiment('rnn_scr-char', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='char')
     run_experiment('lstm-char', 'lstm', epochs=100, num_hiddens=128, tokenization='char')
