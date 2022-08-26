@@ -5,3 +5,5 @@ levenshtein~=0.20.1
 torchtext~=0.6.0
 transformers~=4.19.2
 tokenizers~=0.12.1
+torch~=1.11.0
+cleantext~=1.1.4
