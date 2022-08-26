@@ -68,7 +68,7 @@ def format_output(output, tokenization, vocab_itos):
         return formatted
 
 
-inputs = get_prompts()
+inputs = ["This"] #get_prompts()
 outputs = []
 for inp in inputs:
     output = predict(inp, 50, model, vocab, 'cuda:0')
@@ -80,4 +80,4 @@ df = pd.DataFrame(data=data, columns=['prompt', 'output'])
 df = df.drop(df[df.output == ''].index)
 
 
-df.to_csv(f"./sample_generated_tweets/{SELECTED_MODEL}_{TOKENIZER_TYPE}.csv", mode="w+")
+# df.to_csv(f"./sample_generated_tweets/{SELECTED_MODEL}_{TOKENIZER_TYPE}.csv", mode="w+")
