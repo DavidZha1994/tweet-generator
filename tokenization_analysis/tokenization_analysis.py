@@ -14,8 +14,8 @@ from tokenizers.implementations import ByteLevelBPETokenizer, CharBPETokenizer, 
 from tokenizers import Tokenizer
 from transformers import BertTokenizer, GPT2Tokenizer
 
-from models import RNNModelScratch, RNNModelPyTorch
-from train_rnn_torch import create_logger, get_device, train, run_experiment
+from models import VanillaRNN, TweetGenerator
+from rnn_training import create_logger, get_device, train, run_experiment, run_experiment_encodings
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 nltk.download('punkt')
@@ -54,10 +54,10 @@ def split_combi_dataset():
         Split the data set into training - and test - and validation test sets
         with ratios 50% 25% 25%.
     """
-    combined_csv = pd.read_csv('../dataset/realdonaldtrump_cleaned.csv')
+    combined_csv = pd.read_csv('../dataset/trump_combined_clean.csv')
 
-    if not os.path.exists("../dataset/trump_combined_clean.csv"):
-        combined_csv.to_csv("./dataset/trump_combined_clean.csv", index=False, encoding='utf-8')
+    if not os.path.exists("./dataset/trump_combined_clean.csv"):
+        combined_csv.to_csv("../dataset/trump_combined_clean.csv", index=False, encoding='utf-8')
 
     df = combined_csv[0:int(combined_csv.shape[0] / 2)]
     df.to_csv('./dataset/trump_train.csv', index=False)  # training dataset contains the first 50% of the whole set
@@ -430,8 +430,8 @@ def run_experiment_for_rq(experiment_name: str, model: str = 'rnn_torch', tokeni
                 f"{tokenization=} {epochs=} {num_hiddens=} device={get_device()}")
 
     models = {
-        'rnn_scratch': RNNModelScratch,
-        'rnn_torch': RNNModelPyTorch,
+        'rnn_scratch': VanillaRNN,
+        'rnn_torch': TweetGenerator,
     }
 
     batch_size = 64
@@ -469,13 +469,13 @@ def train_rnn_from_torch_with_tokenizers():
     run_experiment('rnn_torch-char', 'rnn_torch', epochs=100, num_hiddens=128, tokenization='char')
     run_experiment('rnn_torch-word', 'rnn_torch', epochs=100, num_hiddens=128, tokenization='word')
     run_experiment('rnn_torch-subword', 'rnn_torch', epochs=100, num_hiddens=128, tokenization='subword')
-    run_experiment('rnn_torch-subword-wordLevel', 'rnn_torch', epochs=100, num_hiddens=128, tokenization='subword',
+    run_experiment_encodings('rnn_torch-subword-wordLevel', 'rnn_torch', epochs=100, num_hiddens=128, tokenization='subword',
                    level_type='wordLevel')
-    run_experiment('rnn_torch-subword-byteLevel', 'rnn_torch', epochs=100, num_hiddens=128, tokenization='subword',
+    run_experiment_encodings('rnn_torch-subword-byteLevel', 'rnn_torch', epochs=100, num_hiddens=128, tokenization='subword',
                    level_type='byteLevel')
-    run_experiment('rnn_torch-subword-charLevel', 'rnn_torch', epochs=100, num_hiddens=128, tokenization='subword',
+    run_experiment_encodings('rnn_torch-subword-charLevel', 'rnn_torch', epochs=100, num_hiddens=128, tokenization='subword',
                    level_type='charLevel')
-    run_experiment('rnn_torch-subword-sentenceLevel', 'rnn_torch', epochs=100, num_hiddens=128, tokenization='subword',
+    run_experiment_encodings('rnn_torch-subword-sentenceLevel', 'rnn_torch', epochs=100, num_hiddens=128, tokenization='subword',
                    level_type='sentenceLevel')
 
 
@@ -487,13 +487,13 @@ def train_rnn_from_scratch_with_tokenizers():
     run_experiment('rnn_scr-char', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='char')
     run_experiment('rnn_scr-word', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='word')
     run_experiment('rnn_scr-subword', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='subword')
-    run_experiment('rnn_scr-subword-wordLevel', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='subword',
+    run_experiment_encodings('rnn_scr-subword-wordLevel', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='subword',
                    level_type='wordLevel')
-    run_experiment('rnn_scr-subword-byteLevel', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='subword',
+    run_experiment_encodings('rnn_scr-subword-byteLevel', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='subword',
                    level_type='byteLevel')
-    run_experiment('rnn_scr-subword-charLevel', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='subword',
+    run_experiment_encodings('rnn_scr-subword-charLevel', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='subword',
                    level_type='charLevel')
-    run_experiment('rnn_scr-subword-sentenceLevel', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='subword',
+    run_experiment_encodings('rnn_scr-subword-sentenceLevel', 'rnn_scratch', epochs=100, num_hiddens=128, tokenization='subword',
                    level_type='sentenceLevel')
 
 
@@ -501,9 +501,9 @@ def train_musk_trump_tokenizers_from_scratch():
     """
         train musk-and trump tokenizer from scratch by initializing BertWordPieceTokenizer from Transformers
     """
-    train_tokenizer(training_source_dir='./dataset/train_cleaned.csv', tokenizer_name='BERT',
+    train_tokenizer(training_source_dir='../dataset/train_cleaned.csv', tokenizer_name='BERT',
                     tokenizer_prefix='musk_train')
-    train_tokenizer(training_source_dir='./dataset/trump_train.csv', tokenizer_name='BERT',
+    train_tokenizer(training_source_dir='../dataset/trump_train.csv', tokenizer_name='BERT',
                     tokenizer_prefix='trump_train')
 
 
@@ -511,8 +511,8 @@ def train_gpt2_tokenizer_from_scratch():
     """
         train GPT2 tokenizer from scratch by initializing BertWordPieceTokenizer from Transformers
     """
-    train_gpt2_tokenizer(training_source_dir='./dataset/trump_train.csv', tokenizer_name='gpt2_trump_tokenizer')
-    train_gpt2_tokenizer(training_source_dir='./dataset/train_cleaned.csv', tokenizer_name='gpt2_musk_tokenizer')
+    train_gpt2_tokenizer(training_source_dir='../dataset/trump_train.csv', tokenizer_name='gpt2_trump_tokenizer')
+    train_gpt2_tokenizer(training_source_dir='../dataset/train_cleaned.csv', tokenizer_name='gpt2_musk_tokenizer')
 
 
 if __name__ == '__main__':

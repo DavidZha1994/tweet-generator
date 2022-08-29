@@ -5,14 +5,14 @@ import torch
 import re
 from torch import nn
 import logging
-from utils import Accumulator, brewed_dataLoader, get_device
+from utils import Accumulator, brewed_dataLoader, get_device, brewed_dataLoader_encodings
 import matplotlib.pyplot as plt
 import os
 import sys
 import pathlib
 import torchtext
 from random import choice
-from models import StackedLstm, VanillaRNN, LSTM, GRU
+from models import StackedLstm, VanillaRNN, LSTM, GRU, TweetGenerator
 
 is_logger_adjusted = False
 TOKENIZER_TYPE = 'char'
@@ -268,7 +268,8 @@ def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str 
         'rnn_scratch': VanillaRNN,
         'lstm': LSTM,
         'stacked_lstm': StackedLstm,
-        'gru': GRU,
+        'rnn_torch': TweetGenerator,
+        'gru': GRU
     }
 
     batch_size = 64
@@ -291,6 +292,56 @@ def run_experiment(experiment_name: str, model: str = 'lstm', tokenization: str 
 
     lr = 0.001
     train(net, train_iter, val_iter, vocab, lr, epochs, get_device(), logger, experiment_name, metric)
+
+    torch.save(net.state_dict(), f"{project_dir}/checkpoints/{experiment_name}_ep{epochs}.ckpt")
+
+    logger.info(f"------------------")
+
+
+def run_experiment_encodings(experiment_name: str, model: str = 'rnn_torch', tokenization: str = 'subword',
+                   epochs: int = 500,
+                   num_hiddens: int = 64,
+                   level_type: str = ''):
+    project_dir = pathlib.Path(os.path.abspath(__file__)).parent
+    pathlib.Path.mkdir(project_dir / 'plots', exist_ok=True)
+    csv_dir = project_dir / 'dataset'
+    project_dir, csv_dir = str(project_dir), str(csv_dir)
+
+    logger = create_logger(project_dir, experiment_name)
+    logger.info(f"Starting run {experiment_name} with {model=} "
+                f"{tokenization=} {epochs=} {num_hiddens=} device={get_device()}")
+
+    models = {
+        'rnn_scratch': VanillaRNN,
+        'lstm': LSTM,
+        'stacked_lstm': StackedLstm,
+        'rnn_torch': TweetGenerator,
+        'gru': GRU
+    }
+
+    batch_size = 64
+
+    train_data, vocab_stoi, vocab_itos, vocab_size = brewed_dataLoader_encodings('training', csv_dir,
+                                                                       tokenization=tokenization,
+                                                                       level_type=level_type)
+    val_data, _, _, _ = brewed_dataLoader_encodings('validation', csv_dir, tokenization=tokenization,
+                                          level_type=level_type)
+    vocab = vocab_itos, vocab_stoi, vocab_size
+
+    train_iter = torchtext.data.BucketIterator(train_data,
+                                               batch_size=batch_size,
+                                               sort_key=lambda x: len(x.content),
+                                               sort_within_batch=True)
+    val_iter = torchtext.data.BucketIterator(val_data,
+                                             batch_size=16,
+                                             sort_key=lambda x: len(x.content),
+                                             sort_within_batch=True)
+
+    architecture = models[model]
+    net = architecture(vocab_size, num_hiddens, get_device())
+
+    lr = 0.001
+    train(net, train_iter, val_iter, vocab, lr, epochs, get_device(), logger, experiment_name)
 
     torch.save(net.state_dict(), f"{project_dir}/checkpoints/{experiment_name}_ep{epochs}.ckpt")
 
