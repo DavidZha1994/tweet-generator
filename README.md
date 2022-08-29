@@ -45,14 +45,6 @@ To view the tokenization analysis you can check the generated files in the direc
 # load trained tokenizer
 
 tok = Tokenizer.from_file('./tokenization_analysis/my_token/GPT2_trump_train_tokenizer.json')
-tok.save(path='./tokenization_analysis/my_token/vocab.json')
-res = tok.encode("Vaccines are just the start. Its also capable in theory of curing almost anything. "
-                 "fukushima Turns medicine into a software &amp; simulation problem.")
-print(res.ids)
-res_ids = res.ids
-print(tok.decode(res_ids))
-preprocessing('./dataset/combined_Musks_tweets.csv', './dataset/combined_Musks_tweets_cleaned.csv')
-csv2txt('./dataset/combined_Musks_tweets_cleaned.csv', './dataset/combined_Musks_tweets_cleaned.txt', 'content')
 
 # load trained GPT2 tokenizer
 
